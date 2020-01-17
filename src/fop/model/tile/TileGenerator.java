@@ -58,7 +58,7 @@ public class TileGenerator {
 			Node tile = tnl.item(i);
 			NamedNodeMap tileAttributes = tile.getAttributes();
 
-			// Depending on the ammount of tiles of a type, create the tile x times
+			// Depending on the amount of tiles of a type, create the tile x times
 			for (int j = 0; j < Integer.valueOf(tileAttributes.getNamedItem("ammount").getNodeValue()); j++) {
 
 				Tile newTile;
@@ -100,7 +100,7 @@ public class TileGenerator {
 							newTile.getNode(Position.valueOf(nodeAttributes.getNamedItem("b").getNodeValue()))));
 				}
 
-				// If there is no start tile yet, save it seperately
+				// If there is no start tile yet, save it separately
 				if (startTile == null && newTile.getType().equals(GameConstants.START_TILE_TYPE))
 					startTile = newTile;
 				else
@@ -110,10 +110,10 @@ public class TileGenerator {
 		}
 
 	}
-	
+
 	public Tile getInitTile(TileType type) {
-		
-		return tiles.stream().filter(x -> x.getType().equals(type)).findFirst().orElse(null); 
+
+		return tiles.stream().filter(x -> x.getType().equals(type)).findFirst().orElse(null);
 	}
 
 	/**
@@ -124,6 +124,7 @@ public class TileGenerator {
 	public List<Tile> getTiles() {
 		return tiles;
 	}
+
 	public void setTiles(List<Tile> tiles) {
 		this.tiles = tiles;
 	}

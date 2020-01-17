@@ -54,9 +54,10 @@ public class GameController implements GameControllerMethods {
 		board = new Gameboard();
 		gameplay = new GamePlay(this);
 		boardPanel = new GameBoardPanel(this);
-		stackPanel = new TileStackPanel(); 
+		stackPanel = new TileStackPanel();
 
 	}
+
 	/**
 	 * Sets up the Window
 	 */
@@ -72,10 +73,11 @@ public class GameController implements GameControllerMethods {
 		window.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		window.setMinimumSize(new Dimension(400, 300));
 	}
-	
+
 	/**
 	 * Sets up the View
-	 * @param view 
+	 * 
+	 * @param view
 	 */
 	public void setView(JPanel view) {
 		window.setContentPane(view);

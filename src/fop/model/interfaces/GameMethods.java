@@ -19,8 +19,10 @@ public interface GameMethods {
 		}
 		Carcassonne.main(null);
 	}
+
 	/**
-	 * deletes the highscore entries 
+	 * deletes the highscore entries
+	 * 
 	 * @param message
 	 */
 	public static void deleteHighScoreEntries(int message) {
@@ -28,21 +30,13 @@ public interface GameMethods {
 			Resources ressources = Resources.getInstance();
 			try {
 				ressources.clearEntries();
-				MessagesConstants.sucessFullDeleted();
+				MessagesConstants.successfullDeleted();
 				GoToMainMenu();
 			} catch (IOException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
-		} 
+		}
 	}
-
-
-	
-
-
-
-
-
 
 }

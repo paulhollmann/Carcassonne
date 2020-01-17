@@ -18,7 +18,7 @@ import fop.model.tile.Position;
  * of the MeepleOverlayPanel to get the spacing right.
  *
  */
-public class TemporaryMeeplePanel extends MeeplePanel implements GameConstants{
+public class TemporaryMeeplePanel extends MeeplePanel implements GameConstants {
 
 	/**
 	 * A meeple panel without a position is considered not to be a spot to place a
@@ -34,7 +34,8 @@ public class TemporaryMeeplePanel extends MeeplePanel implements GameConstants{
 		this.colour = player.getColor();
 
 		try {
-			meepleImage = ImageIO.read(getClass().getResource(MEEPLE_FOLDER + colour.toString().toLowerCase() + "_outline.png"));
+			meepleImage = ImageIO
+					.read(getClass().getResource(MEEPLE_FOLDER + colour.toString().toLowerCase() + "_outline.png"));
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
@@ -48,7 +49,8 @@ public class TemporaryMeeplePanel extends MeeplePanel implements GameConstants{
 			@Override
 			public void mouseEntered(MouseEvent event) {
 				try {
-					meepleImage = ImageIO.read(getClass().getResource(MEEPLE_FOLDER + colour.toString().toLowerCase() + ".png"));
+					meepleImage = ImageIO
+							.read(getClass().getResource(MEEPLE_FOLDER + colour.toString().toLowerCase() + ".png"));
 				} catch (IOException e) {
 					e.printStackTrace();
 				}
@@ -58,7 +60,8 @@ public class TemporaryMeeplePanel extends MeeplePanel implements GameConstants{
 			@Override
 			public void mouseExited(MouseEvent event) {
 				try {
-					meepleImage = ImageIO.read(getClass().getResource(MEEPLE_FOLDER + colour.toString().toLowerCase() + "_outline.png"));
+					meepleImage = ImageIO.read(
+							getClass().getResource(MEEPLE_FOLDER + colour.toString().toLowerCase() + "_outline.png"));
 				} catch (IOException e) {
 					e.printStackTrace();
 				}
@@ -69,7 +72,7 @@ public class TemporaryMeeplePanel extends MeeplePanel implements GameConstants{
 	}
 
 	/**
-	 * returns the position 
+	 * returns the position
 	 */
 	public Position getPosition() {
 		return position;

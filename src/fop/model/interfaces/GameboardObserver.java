@@ -5,6 +5,7 @@ import fop.model.gameplay.Gameboard;
 public interface GameboardObserver extends Observer<Gameboard> {
 	/**
 	 * creates a new Tile
+	 * 
 	 * @param id
 	 * @param rotation
 	 * @param x

@@ -17,7 +17,6 @@ import fop.model.tile.Position;
  * A MeeplePanel is one of nine Panels inside a MeepleOverlayPanel. It is either
  * a possible spot to place a Meeple on or not, in which case it is still part
  * of the MeepleOverlayPanel to get the spacing right.
- * 
  *
  */
 public class MeeplePanel extends JPanel implements GameConstants {

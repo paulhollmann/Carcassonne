@@ -35,29 +35,31 @@ public enum MeepleColor {
 		}
 	}
 
-	public static Color[] availableMeepleColors = { Color.YELLOW, Color.BLACK, Color.BLUE, Color.GREEN, Color.GRAY, Color.RED};
-	
+	public static Color[] availableMeepleColors = { Color.YELLOW, Color.BLACK, Color.BLUE, Color.GREEN, Color.GRAY,
+			Color.RED };
+
 	/**
-	 * Converts a java.awt.Color to a MeepleColor 
+	 * Converts a java.awt.Color to a MeepleColor
+	 * 
 	 * @param color
 	 * @return MeepleColor
 	 */
 	public static MeepleColor toMeepleColor(Color color) {
-		if(color .equals(Color.YELLOW)) {
+		if (color.equals(Color.YELLOW)) {
 			return YELLOW;
-		}else if(color .equals(Color.BLACK)) {
+		} else if (color.equals(Color.BLACK)) {
 			return BLACK;
-		}else if(color .equals(Color.BLUE)) {
+		} else if (color.equals(Color.BLUE)) {
 			return BLUE;
-		}else if(color .equals(Color.GREEN)) {
+		} else if (color.equals(Color.GREEN)) {
 			return GREEN;
-		}else if(color .equals(Color.GRAY)) {
+		} else if (color.equals(Color.GRAY)) {
 			return GREY;
-		}else if(color .equals(Color.RED)) {
+		} else if (color.equals(Color.RED)) {
 			return RED;
 		}
-		
-		return null; 
+
+		return null;
 	}
 
 }

@@ -60,7 +60,7 @@ public interface GamePlayMethods {
 	public void nextRound();
 
 	/**
-	 * inits a the Gameboard
+	 * initializes a the Gameboard
 	 * 
 	 * @param gc
 	 */
@@ -79,25 +79,24 @@ public interface GamePlayMethods {
 	 * @param gc
 	 */
 	public void setupListeners();
-	
+
 	/**
 	 * Returns the player whose turn it is.
 	 * 
 	 * @return the player whose turn it is.
 	 */
-	public  Player currentPlayer();
+	public Player currentPlayer();
 
 	/**
-	 * inits a game
+	 * initializes a game
 	 */
-	public void initGame(); 
-
+	public void initGame();
 
 	/**
-	 * the mode were the player sets a tile 
+	 * the mode were the player sets a tile
 	 */
 	public void placing_Tile_Mode();
-	
+
 	/**
 	 * the mode were the player sets a Meeple
 	 */
@@ -105,8 +104,9 @@ public interface GamePlayMethods {
 
 	/**
 	 * returns the winners from the game
+	 * 
 	 * @param players
 	 * @return
 	 */
-	public List<Player> getWinners(List<Player>players);
+	public List<Player> getWinners(List<Player> players);
 }

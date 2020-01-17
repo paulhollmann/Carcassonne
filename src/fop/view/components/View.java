@@ -79,7 +79,7 @@ public abstract class View extends Container implements ActionListener, GameCons
 	}
 
 	/**
-	 * creates a button with the constants form GameConstants and the given text
+	 * creates a button with the constants from GameConstants and the given text
 	 * 
 	 * @param text
 	 * @return
@@ -94,8 +94,10 @@ public abstract class View extends Container implements ActionListener, GameCons
 		this.add(button);
 		return button;
 	}
+
 	/**
-	 * calculates the text size and returns it 
+	 * calculates the text size and returns it
+	 * 
 	 * @param text
 	 * @param font
 	 * @return
@@ -107,16 +109,20 @@ public abstract class View extends Container implements ActionListener, GameCons
 		int height = (int) (font.getStringBounds(text, frc).getHeight());
 		return new Dimension(width, height);
 	}
+
 	/**
 	 * calculates the label size and returns it
+	 * 
 	 * @param label
 	 * @return
 	 */
 	private Dimension calculateLabelSize(JLabel label) {
 		return calculateTextSize(label.getText(), label.getFont());
 	}
+
 	/**
 	 * creates a label with the given parameters where the text is NOT underlined
+	 * 
 	 * @param text
 	 * @param fontSize
 	 * @return
@@ -124,8 +130,10 @@ public abstract class View extends Container implements ActionListener, GameCons
 	protected JLabel createLabel(String text, int fontSize) {
 		return createLabel(text, fontSize, false);
 	}
+
 	/**
 	 * creates a label where the text can be underlined
+	 * 
 	 * @param text
 	 * @param fontSize
 	 * @param underline
@@ -146,8 +154,10 @@ public abstract class View extends Container implements ActionListener, GameCons
 		add(label);
 		return label;
 	}
+
 	/**
-	 * creates the Text Pane for the info View 
+	 * creates the Text Pane for the info View
+	 * 
 	 * @return
 	 */
 	protected JTextPane createTextPane() {
@@ -157,8 +167,10 @@ public abstract class View extends Container implements ActionListener, GameCons
 				BorderFactory.createCompoundBorder(new LineBorder(Color.BLACK), new EmptyBorder(3, 3, 3, 3)));
 		return textPane;
 	}
+
 	/**
-	 * creats a error Message with given text and title 
+	 * creates an error Message with given text and title
+	 * 
 	 * @param text
 	 * @param title
 	 */

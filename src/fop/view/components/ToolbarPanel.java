@@ -15,7 +15,7 @@ import fop.model.interfaces.Observer;
 import fop.model.player.Player;
 
 /**
- * creates a ToolbarPanel which displays Playername und updates the score.
+ * creates a ToolbarPanel which displays Player name and updates the score.
  *
  */
 public class ToolbarPanel extends JPanel implements Observer<List<Player>> {

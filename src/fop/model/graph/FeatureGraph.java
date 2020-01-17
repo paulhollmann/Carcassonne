@@ -7,6 +7,7 @@ public class FeatureGraph extends Graph<FeatureType> {
 
 	/**
 	 * adds an Edge between NodeA and node B
+	 * 
 	 * @param nodeA
 	 * @param nodeB
 	 */

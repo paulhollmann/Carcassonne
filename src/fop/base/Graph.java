@@ -7,18 +7,10 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 /**
- * Diese Klasse representiert einen generischen Graphen mit einer Liste aus
- * Knoten und Kanten.
- *
- * @param <T> Die zugrundeliegende Datenstruktur, beispielsweise
- *            {@link game.map.Castle}
- */
-
-/**
  * This class represents a graph from type <T> This graph is created by two
  * lists. first list of edges second list of nodes
  *
- * @param <T>
+ * @param <T> underlying data structure, for example {@link game.map.Castle}
  */
 public class Graph<T> {
 
@@ -52,11 +44,11 @@ public class Graph<T> {
 	}
 
 	/**
-	 * returns the edge of 2 nodes if exists. 
-	 * else returns null
+	 * returns the edge of 2 nodes if exists. else returns null
+	 * 
 	 * @param nodeA
 	 * @param nodeB
-	 * @return edge 
+	 * @return edge
 	 */
 	private Edge<T> getEdge(Node<T> nodeA, Node<T> nodeB) {
 		return this.edges.stream().filter(edge -> edge.hasEdge(nodeA, nodeB)).findFirst().orElse(null);
@@ -85,7 +77,6 @@ public class Graph<T> {
 	public List<Edge<T>> getEdges(Node<T> node) {
 		return this.edges.stream().filter(edge -> edge.contains(node)).collect(Collectors.toList());
 	}
-
 
 	/**
 	 * Returns all nodes with inputed value

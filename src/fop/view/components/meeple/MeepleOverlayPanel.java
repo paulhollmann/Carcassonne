@@ -1,4 +1,4 @@
-package fop.view.components.meeple; 
+package fop.view.components.meeple;
 
 import java.awt.Dimension;
 import java.awt.GridLayout;
@@ -12,6 +12,7 @@ public class MeepleOverlayPanel extends JLabel {
 
 	/**
 	 * Creates the MeepleOverlayPanel with given size
+	 * 
 	 * @param size
 	 */
 	public MeepleOverlayPanel(int size) {
@@ -21,6 +22,7 @@ public class MeepleOverlayPanel extends JLabel {
 
 	/**
 	 * returns the MeepleOverplay panel with meeples from the player
+	 * 
 	 * @param meepleSpots
 	 * @param size
 	 * @param player

@@ -12,12 +12,11 @@ import javax.swing.JPanel;
 import fop.model.interfaces.GameConstants;
 import fop.model.tile.TileType;
 
-
 /**
  * This class creates a Tile
  *
  */
-public class TilePanel extends JPanel implements GameConstants{
+public class TilePanel extends JPanel implements GameConstants {
 
 	private BufferedImage tileImage;
 	private TileType type;
@@ -29,10 +28,12 @@ public class TilePanel extends JPanel implements GameConstants{
 		this.setPreferredSize(new Dimension(size, size));
 		setType(type);
 	}
-/**
- * sets the Type and the picture of the Tile
- * @param type
- */
+
+	/**
+	 * sets the Type and the picture of the Tile
+	 * 
+	 * @param type
+	 */
 	public void setType(TileType type) {
 		this.type = type;
 		try {
@@ -41,10 +42,12 @@ public class TilePanel extends JPanel implements GameConstants{
 			e.printStackTrace();
 		}
 	}
-/**
- * Returns the typ of the Tile
- * @return
- */
+
+	/**
+	 * Returns the type of the Tile
+	 * 
+	 * @return
+	 */
 	public TileType getType() {
 		return type;
 	}
@@ -56,11 +59,12 @@ public class TilePanel extends JPanel implements GameConstants{
 		g2d.rotate(Math.toRadians(rotation), getWidth() / 2, getHeight() / 2);
 		g2d.drawImage(tileImage, 0, 0, getWidth(), getHeight(), null);
 	}
-	
-/**
- * rotates the tile
- * @param rotation
- */
+
+	/**
+	 * rotates the tile
+	 * 
+	 * @param rotation
+	 */
 	public void setRotation(int rotation) {
 		this.rotation = rotation;
 	}

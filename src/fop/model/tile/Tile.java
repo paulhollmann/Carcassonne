@@ -21,12 +21,12 @@ import fop.model.graph.FeatureNode;
 import fop.model.player.Player;
 
 /**
- * This class represents a tile 
+ * This class represents a tile
  */
 public class Tile {
-	
+
 	private TileType type;
-	private SortedMap<Position, FeatureNode> nodes; 
+	private SortedMap<Position, FeatureNode> nodes;
 	private List<Edge<FeatureType>> edges;
 	private final boolean pennant;
 	private int rotation;
@@ -35,6 +35,7 @@ public class Tile {
 
 	/**
 	 * creates a tile via TileType
+	 * 
 	 * @param type
 	 */
 	public Tile(TileType type) {
@@ -46,6 +47,7 @@ public class Tile {
 
 	/**
 	 * creates a tile via TileType and coatOfArms
+	 * 
 	 * @param type
 	 * @param coatOfArms
 	 */
@@ -55,31 +57,39 @@ public class Tile {
 		edges = new LinkedList<Edge<FeatureType>>();
 		this.pennant = coatOfArms;
 	}
+
 	/**
 	 * Returns the Tile Type
+	 * 
 	 * @return
 	 */
 	public TileType getType() {
 		return type;
 	}
+
 	/**
 	 * adds a node at the given position and given node
+	 * 
 	 * @param position
 	 * @param node
 	 */
 	protected void addNode(Position position, FeatureNode node) {
 		nodes.put(position, node);
 	}
+
 	/**
-	 * returns the Node ad given position
+	 * returns the Node at given position
+	 * 
 	 * @param position
 	 * @return
 	 */
 	public FeatureNode getNode(Position position) {
 		return nodes.get(position);
 	}
+
 	/**
 	 * checks if given node is available
+	 * 
 	 * @param node
 	 * @return
 	 */
@@ -90,31 +100,39 @@ public class Tile {
 		}
 		return false;
 	}
+
 	/**
-	 * adds an Edge 
+	 * adds an Edge
+	 * 
 	 * @param edge
 	 * @return
 	 */
 	public boolean addEdge(Edge<FeatureType> edge) {
 		return edges.add(edge);
 	}
+
 	/**
 	 * adds the given position
+	 * 
 	 * @param p
 	 * @return
 	 */
 	public FeatureType featureAtPosition(Position p) {
 		return nodes.get(p).getType();
 	}
+
 	/**
 	 * return all the nodes
+	 * 
 	 * @return
 	 */
 	public Collection<FeatureNode> getNodes() {
 		return nodes.values();
 	}
+
 	/**
-	 * return all the Edges 
+	 * return all the Edges
+	 * 
 	 * @return
 	 */
 	public List<Edge<FeatureType>> getEdges() {
@@ -156,7 +174,6 @@ public class Tile {
 	public int getRotation() {
 		return rotation;
 	}
-
 
 	/**
 	 * Returns if this tile has a pennant.
@@ -206,9 +223,9 @@ public class Tile {
 				return n.getPlayer();
 		return null;
 	}
-	
+
 	public void setGraph(List<Edge<FeatureType>> edges) {
-		this.edges = edges; 
+		this.edges = edges;
 	}
 
 }

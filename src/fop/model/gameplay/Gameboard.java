@@ -74,13 +74,12 @@ public class Gameboard extends Observable<Gameboard> {
 
 		// Check top tile
 		// TODO
-			// This might be helpful:
-			// As we already ensured that the tile on top exists and fits the tile at x, y,
-			// we know that if the feature of its top is a ROAD, the feature at the bottom
-			// of the tile on top is a ROAD aswell. As every ROAD has FIELD nodes as
-			// neighbours on both sides, we can connect those nodes of the two tiles. The
-			// same logic applies to the next three routines.
-
+		// This might be helpful:
+		// As we already ensured that the tile on top exists and fits the tile at x, y,
+		// we know that if the feature of its top is a ROAD, the feature at the bottom
+		// of the tile on top is a ROAD as well. As every ROAD has FIELD nodes as
+		// neighbors on both sides, we can connect those nodes of the two tiles. The
+		// same logic applies to the next three routines.
 
 		// Check left tile
 		// TODO
@@ -127,18 +126,18 @@ public class Gameboard extends Observable<Gameboard> {
 	 */
 	public boolean isTileAllowedAnywhere(Tile newTile) {
 		// Iterate over all tiles
-			// check top
-			// TODO
+		// check top
+		// TODO
 
-			// check left
-			// TODO
+		// check left
+		// TODO
 
-			// check right
-			// TODO
+		// check right
+		// TODO
 
-			// check bottom
-			// TODO
-		
+		// check bottom
+		// TODO
+
 		// no valid position was found
 		return false;
 	}
@@ -148,14 +147,16 @@ public class Gameboard extends Observable<Gameboard> {
 	 * each adjacent tile).
 	 */
 	public void calculateMonasteries(State state) {
-		//the methods getNode() and getType of class Tile and FeatureNode might be helpful
-		
-		//Check all surrounding tiles and add the points
-				
-		//Points are given if the landscape is complete or the game is over
-		//Meeples are just returned in case of state == State.GAME_OVER
-				
-		//After adding the points to the overall points of the player, set the score to 1 again
+		// the methods getNode() and getType of class Tile and FeatureNode might be
+		// helpful
+
+		// Check all surrounding tiles and add the points
+
+		// Points are given if the landscape is complete or the game is over
+		// Meeples are just returned in case of state == State.GAME_OVER
+
+		// After adding the points to the overall points of the player, set the score to
+		// 1 again
 	}
 
 	/**
@@ -184,12 +185,11 @@ public class Gameboard extends Observable<Gameboard> {
 	 */
 	public void calculatePoints(FeatureType type, State state) {
 		List<Node<FeatureType>> nodeList = new ArrayList<>(graph.getNodes(type));
-		
-		// queue defines the connected graph. If this queue is empty, every node in this graph will be visited.
+
+		// queue defines the connected graph. If this queue is empty, every node in this
+		// graph will be visited.
 		// if nodeList is non-empty, insert the next node of nodeList into this queue
 		ArrayDeque<Node<FeatureType>> queue = new ArrayDeque<>();
-		
-
 
 		int score = 0;
 		boolean completed = true; // Is the feature completed? Is set to false if a node is visited that does not
@@ -198,15 +198,14 @@ public class Gameboard extends Observable<Gameboard> {
 		queue.push(nodeList.remove(0));
 		// Iterate as long as the queue is not empty
 		// Remember: queue defines a connected graph
-		
-		//TODO
-		
+
+		// TODO
+
 		// Hint:
 		// If there is one straight positioned node that does not connect to another
 		// tile, the feature cannot be completed.
 
-
-		//TODO
+		// TODO
 	}
 
 	/**
@@ -234,7 +233,7 @@ public class Gameboard extends Observable<Gameboard> {
 
 	/**
 	 * Returns the spots on the most recently placed tile on which it is allowed to
-	 * place a meeple .
+	 * place a meeple.
 	 * 
 	 * @return The spots on which it is allowed to place a meeple as a boolean array
 	 *         representing the tile split in nine cells from top left, to right, to
@@ -312,11 +311,12 @@ public class Gameboard extends Observable<Gameboard> {
 	public Tile[][] getBoard() {
 		return board;
 	}
-	
+
 	public FeatureGraph getGraph() {
 		return this.graph;
 	}
+
 	public void setFeatureGraph(FeatureGraph graph) {
-		this.graph = graph; 
+		this.graph = graph;
 	}
 }

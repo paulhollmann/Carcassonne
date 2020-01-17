@@ -4,7 +4,8 @@ import fop.model.player.Player;
 import fop.model.tile.Position;
 
 /**
- * This class creates a TempoaryMeepleOverlayPanel, were all the possible Meeples are shown
+ * This class creates a TempoaryMeepleOverlayPanel, were all the possible
+ * Meeples are shown
  *
  */
 public class TemporaryMeepleOverlayPanel extends MeepleOverlayPanel {

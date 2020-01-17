@@ -17,7 +17,7 @@ import fop.model.interfaces.ValueListener;
 import fop.view.components.View;
 
 /**
- * This class handles the number of which will be set in the StartGame Area
+ * This class handles the number which will be set in the StartGame Area
  *
  */
 public class NumberChooser extends JComponent implements MouseListener, GameConstants {
@@ -74,7 +74,7 @@ public class NumberChooser extends JComponent implements MouseListener, GameCons
 	}
 
 	/**
-	 * adds an ValueListner, cahnges the value
+	 * adds an ValueListener, changes the value
 	 * 
 	 * @param valueListener
 	 */

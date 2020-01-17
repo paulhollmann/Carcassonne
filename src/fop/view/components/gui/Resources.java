@@ -30,16 +30,16 @@ public class Resources implements GameConstants {
 	private boolean resourcesLoaded;
 
 	/**
-	 * Privater Konstruktor, dieser wird normalerweise nur einmal aufgerufen
+	 * private constructor, normally called once
 	 */
 	private Resources() {
 		this.resourcesLoaded = false;
 	}
 
 	/**
-	 * Gibt die Instanz des Resourcen Managers zur√ºck oder erzeugt eine neue
+	 * returns the instance of the resource manager or creates a new one
 	 * 
-	 * @return Resourcen Manager
+	 * @return resources
 	 */
 	public static Resources getInstance() {
 		if (instance == null) {
@@ -51,9 +51,9 @@ public class Resources implements GameConstants {
 	}
 
 	/**
-	 * L√§dt alle Resourcen
+	 * loads all resources
 	 * 
-	 * @return true, wenn alle Resourcen erfolgreich geladen wurden
+	 * @return true, if all resources were loaded successfully
 	 */
 	public boolean load() {
 		if (resourcesLoaded)
@@ -78,9 +78,9 @@ public class Resources implements GameConstants {
 	}
 
 	/**
-	 * Speichert bestimmte Resourcen, zurzeit nur den Highscore-Table
+	 * saves determined resources, for now only the Highscore table
 	 * 
-	 * @return gibt true zur√ºck, wenn erfolgreich gespeichert wurde
+	 * @return true, if saved successfully
 	 */
 	public boolean save() {
 		try {
@@ -93,10 +93,12 @@ public class Resources implements GameConstants {
 	}
 
 	/**
+	 * please translate
+	 * 
 	 * Diese Methode speichert alle Objekte des Typs {@link ScoreEntry} in der
 	 * Textdatei "highscores.txt" Jede Zeile stellt dabei einen ScoreEntry dar.
 	 * Sollten Probleme auftreten, muss eine {@link IOException} geworfen werden.
-	 * Die Eintr√§ge sind in der Liste {@link #scoreEntries} zu finden.
+	 * Die Eintr‰ge sind in der Liste {@link #scoreEntries} zu finden.
 	 * 
 	 * @see ScoreEntry#write(PrintWriter)
 	 * @throws IOException Eine IOException wird geworfen, wenn Probleme beim
@@ -107,9 +109,11 @@ public class Resources implements GameConstants {
 	}
 
 	/**
-	 * L√§dt den Highscore-Table aus der Datei "highscores.txt". Dabei wird die
-	 * Liste {@link #scoreEntries} neu erzeugt und bef√ºllt. Beachte dabei, dass die
-	 * Liste nach dem Einlen absteigend nach den Punktzahlen sortiert sein muss.
+	 * please translate
+	 * 
+	 * L‰dt den Highscore-Table aus der Datei "highscores.txt". Dabei wird die
+	 * Liste {@link #scoreEntries} neu erzeugt und bef¸llt. Beachte dabei, dass die
+	 * Liste nach dem Einlesen absteigend nach den Punktzahlen sortiert sein muss.
 	 * Sollte eine Exception auftreten, kann diese ausgegeben werden, sie sollte
 	 * aber nicht weitergegeben werden, da sonst das Laden der restlichen Resourcen
 	 * abgebrochen wird ({@link #load()}).
@@ -125,11 +129,13 @@ public class Resources implements GameConstants {
 	}
 
 	/**
-	 * F√ºgt ein {@link ScoreEntry}-Objekt der Liste von Eintr√§gen hinzu. Beachte:
-	 * Nach dem Einf√ºgen muss die Liste nach den Punktzahlen absteigend sortiert
+	 * please translate
+	 * 
+	 * F‰ngt ein {@link ScoreEntry}-Objekt der Liste von Eintr‰gen hinzu. Beachte:
+	 * Nach dem Einf¸gen muss die Liste nach den Punktzahlen absteigend sortiert
 	 * bleiben.
 	 * 
-	 * @param scoreEntry Der einzuf√ºgende Eintrag
+	 * @param scoreEntry Der einzuf¸gende Eintrag
 	 * @see ScoreEntry#compareTo(ScoreEntry)
 	 */
 

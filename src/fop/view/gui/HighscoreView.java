@@ -49,10 +49,9 @@ public class HighscoreView extends View {
 		btnBack = createButton("Back");
 		btnClear = createButton("Delete");
 		lblTitle = createLabel("Highscores", 45, true);
-		
+
 		Resources resources = Resources.getInstance();
 		// TODO
-		
 
 		scrollPane = new JScrollPane();
 		add(scrollPane);
@@ -64,8 +63,8 @@ public class HighscoreView extends View {
 			GameMethods.GoToMainMenu();
 
 		} else {
-				int message = MessagesConstants.deleteHighScore();
-				GameMethods.deleteHighScoreEntries(message);
+			int message = MessagesConstants.deleteHighScore();
+			GameMethods.deleteHighScoreEntries(message);
 		}
 	}
 }

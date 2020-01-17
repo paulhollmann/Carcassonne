@@ -7,7 +7,7 @@ import fop.model.interfaces.PlayerMethods;
 import fop.model.tile.Position;
 import fop.model.tile.Tile;
 
-public class Player implements PlayerMethods{
+public class Player implements PlayerMethods {
 
 	private MeepleColor color;
 	private String name;
@@ -21,17 +21,16 @@ public class Player implements PlayerMethods{
 		this.meeples = GameConstants.NUMBER_OF_MEEPLES;
 	}
 
-	
 	@Override
 	public MeepleColor getColor() {
 		return color;
 	}
-	
+
 	@Override
 	public String getName() {
 		return name;
 	}
-	
+
 	@Override
 	public void addScore(int score) {
 		this.score += score;
@@ -46,27 +45,27 @@ public class Player implements PlayerMethods{
 	public int getMeepleAmount() {
 		return meeples;
 	}
-	
+
 	@Override
 	public void removeMeeple() {
 		meeples--;
 	}
-	
+
 	@Override
 	public void returnMeeple() {
 		meeples++;
 	}
-	
+
 	public void draw(GamePlay gp, Tile tile) {
 		GameController gc = gp.getGameController();
 		// TODO
 	}
-	
+
 	public void placeMeeple(GamePlay gp) {
 		GameController gc = gp.getGameController();
-		//TODO
-		//if no position is allowed, you have to call nextRound() by yourself. 
-		//to place a meeple, call gp.placeMeeple(...).
+		// TODO
+		// if no position is allowed, you have to call nextRound() by yourself.
+		// to place a meeple, call gp.placeMeeple(...).
 	}
-	
+
 }

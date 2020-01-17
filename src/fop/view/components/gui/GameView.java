@@ -26,16 +26,16 @@ public class GameView extends JPanel implements GameViewMethods {
 	public GameView(GameController gc) {
 		setLayout(new BorderLayout());
 		this.setPreferredSize(new Dimension(1200, 900));
-		
+
 		// Toolbar at the Top
 		toolbarPanel = new ToolbarPanel(gc.getPlayers());
 		this.add(toolbarPanel, BorderLayout.NORTH);
 
-		// Tile stack on the Right 
+		// Tile stack on the Right
 		tileStackPanel = new TileStackPanel();
 		this.add(tileStackPanel, BorderLayout.EAST);
 
-		// game board (the wrapper is needed to be able to drag the board around. it can
+		// gameboard (the wrapper is needed to be able to drag the board around. it can
 		// be understood as a window that you look through onto the gameboard, only
 		// seeing part of it)
 		gameBoardPanel = new GameBoardPanel(gc);
@@ -60,7 +60,6 @@ public class GameView extends JPanel implements GameViewMethods {
 			}
 		});
 
-
 		// bottom status bar
 		statusbarPanel = new JTextArea();
 		statusbarPanel.setEditable(false);
@@ -71,14 +70,17 @@ public class GameView extends JPanel implements GameViewMethods {
 	public GameBoardPanel getGameBoardPanel() {
 		return gameBoardPanel;
 	}
+
 	@Override
 	public TileStackPanel getTileStackPanel() {
 		return tileStackPanel;
 	}
+
 	@Override
 	public ToolbarPanel getToolbarPanel() {
 		return toolbarPanel;
 	}
+
 	@Override
 	public void setStatusbarPanel(String status, Color color) {
 		statusbarPanel.setForeground(color);

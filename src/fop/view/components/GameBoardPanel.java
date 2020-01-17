@@ -34,7 +34,7 @@ public class GameBoardPanel extends JPanel implements Observer<Gameboard> {
 
 	/**
 	 * This represents a tile that might be placed but was not yet placed, so it is
-	 * only temporarily overlayed. Other than tiles that have already be placed, it
+	 * only temporarily overlaid. Other than tiles that have already be placed, it
 	 * might still change its rotation. It gets its type and rotation by listening
 	 * to the TileStack (it is always the top tile on the tile stack).
 	 * 

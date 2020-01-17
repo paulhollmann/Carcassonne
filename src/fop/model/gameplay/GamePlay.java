@@ -23,7 +23,7 @@ public class GamePlay extends Observable<List<Player>> implements GamePlayMethod
 
 		this.gc = gc;
 	}
-	
+
 	public GameController getGameController() {
 		return this.gc;
 	}
@@ -56,7 +56,7 @@ public class GamePlay extends Observable<List<Player>> implements GamePlayMethod
 
 	@Override
 	public void nextRound() {
-		if(!currentPlayer().getName().equals("AI"))
+		if (!currentPlayer().getName().equals("AI"))
 			gc.getGameBoardPanel().removeTempMeepleOverlay();
 		if (gc.getTileStack().remainingTiles() == 0)
 			gc.setState(State.GAME_OVER);
@@ -103,7 +103,7 @@ public class GamePlay extends Observable<List<Player>> implements GamePlayMethod
 
 	@Override
 	public void initGame() {
-		gc.setPlayers(Players.getPLayers());
+		gc.setPlayers(Players.getPlayers());
 		gc.setBoard(new Gameboard());
 		gc.setTileStack(new TileStack());
 		GameView view = new GameView(gc);
@@ -119,7 +119,7 @@ public class GamePlay extends Observable<List<Player>> implements GamePlayMethod
 
 	@Override
 	public void placing_Tile_Mode() {
-		if(currentPlayer().getName().equals("AI")) {
+		if (currentPlayer().getName().equals("AI")) {
 			Tile tile = gc.getTileStack().pickUpTile();
 			currentPlayer().draw(this, tile);
 			gc.getTileStack().push(gc.getTileStack());
@@ -136,8 +136,8 @@ public class GamePlay extends Observable<List<Player>> implements GamePlayMethod
 
 		gc.getTileStack().push(gc.getTileStack()); // pushes tile stack to observers (= TileStackPanel)
 		gc.getGameView().getToolbarPanel().showSkipButton(false);
-		gc.getGameView().setStatusbarPanel(
-				MessagesConstants.playerPlacingTile(currentPlayer().getName()), currentPlayer().getColor().getMeepleColor());
+		gc.getGameView().setStatusbarPanel(MessagesConstants.playerPlacingTile(currentPlayer().getName()),
+				currentPlayer().getColor().getMeepleColor());
 	}
 
 	@Override
@@ -150,14 +150,15 @@ public class GamePlay extends Observable<List<Player>> implements GamePlayMethod
 
 			Tile newestTile = gc.getGameBoard().getNewestTile();
 			boolean[] meepleSpots = gc.getGameBoard().getMeepleSpots();
-			if(currentPlayer().getName().equals("AI")) {
+			if (currentPlayer().getName().equals("AI")) {
 				currentPlayer().placeMeeple(this);
-			}else if (meepleSpots != null && !currentPlayer().getName().equals("AI")) {
+			} else if (meepleSpots != null && !currentPlayer().getName().equals("AI")) {
 				gc.getGameBoardPanel().showTemporaryMeepleOverlay(meepleSpots, newestTile.x, newestTile.y,
 						currentPlayer());
 				gc.getTileStackPanel().hideTopTile();
 				gc.getGameView().getToolbarPanel().showSkipButton(true);
-				gc.getGameView().setStatusbarPanel(MessagesConstants.playerPlacingMeeple(currentPlayer().getName()),  currentPlayer().getColor().getMeepleColor());
+				gc.getGameView().setStatusbarPanel(MessagesConstants.playerPlacingMeeple(currentPlayer().getName()),
+						currentPlayer().getColor().getMeepleColor());
 				// Now waiting for user input
 			} else {
 				// If there are no possibilities of placing a meeple, skip to the next round
@@ -166,21 +167,21 @@ public class GamePlay extends Observable<List<Player>> implements GamePlayMethod
 			}
 		}
 	}
-	
+
 	public void game_Over_Mode() {
 		gc.getGameBoard().calculatePoints(gc.getState());
 		gc.getGameBoard().push(gc.getGameBoard());
 		push(gc.getPlayers());
 		gc.getGameView().getToolbarPanel().showSkipButton(false);
-		gc.getGameView().setStatusbarPanel(MessagesConstants.getWinnersMessage(getWinners(gc.getPlayers())), WINNING_MESSAGE_COLOR);
+		gc.getGameView().setStatusbarPanel(MessagesConstants.getWinnersMessage(getWinners(gc.getPlayers())),
+				WINNING_MESSAGE_COLOR);
 
 		MessagesConstants.showWinner(getWinners(gc.getPlayers()));
 		GameMethods.GoToMainMenu();
 	}
 
-	
 	@Override
-	public	List<Player> getWinners(List<Player>players) {
+	public List<Player> getWinners(List<Player> players) {
 		List<Player> winners = new LinkedList<Player>();
 		int highestScore = 0;
 		for (Player p : players)

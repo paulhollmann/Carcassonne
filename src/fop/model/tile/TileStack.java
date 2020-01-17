@@ -27,11 +27,12 @@ public class TileStack extends Observable<TileStack> {
 
 		cardstack.add(0, generator.getStartTile());
 	}
+
 	public TileStack(List<Tile> cardstack) {
 		this.cardstack = new LinkedList<Tile>();
 		this.generator = new TileGenerator();
 		this.generator.setTiles(cardstack);
-		
+
 		for (Tile tile : this.generator.getTiles()) {
 			this.cardstack.add(0, tile);
 		}
@@ -86,8 +87,9 @@ public class TileStack extends Observable<TileStack> {
 	public void discardTopTile() {
 		cardstack.remove(0);
 	}
+
 	public TileGenerator getTileGenerator() {
 		return this.generator;
 	}
-	
+
 }

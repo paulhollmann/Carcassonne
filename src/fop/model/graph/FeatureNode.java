@@ -21,28 +21,35 @@ public class FeatureNode extends Node<FeatureType> {
 		super(type);
 		this.connectsTiles = false;
 	}
+
 	/**
-	 * sets the Meeple Spot to true 
+	 * sets the Meeple Spot to true
 	 */
 	public void setMeepleSpot() {
 		this.meepleSpot = true;
 	}
+
 	/**
-	 * checks if it has a Meeple Spot 
+	 * checks if it has a Meeple Spot
+	 * 
 	 * @return
 	 */
 	public boolean hasMeepleSpot() {
 		return meepleSpot;
 	}
+
 	/**
 	 * sets a Player
+	 * 
 	 * @param p
 	 */
 	public void setPlayer(Player p) {
 		meeple = p;
 	}
+
 	/**
-	 * check if a meeple has been set 
+	 * check if a meeple has been set
+	 * 
 	 * @return
 	 */
 	public boolean hasMeeple() {
@@ -51,28 +58,35 @@ public class FeatureNode extends Node<FeatureType> {
 		else
 			return false;
 	}
+
 	/**
-	 * gets the player 
+	 * gets the player
+	 * 
 	 * @return
 	 */
 	public Player getPlayer() {
 		return meeple;
 	}
+
 	/**
 	 * returns the Feature Type
+	 * 
 	 * @return
 	 */
 	public FeatureType getType() {
 		return getValue();
 	}
+
 	/**
-	 * sets the ConnectsTiles to true 
+	 * sets the ConnectsTiles to true
 	 */
 	protected void setConnectsTiles() {
 		connectsTiles = true;
 	}
+
 	/**
-	 * returns if it is conected Tiles 
+	 * returns if it is connecting Tiles
+	 * 
 	 * @return
 	 */
 	public boolean isConnectingTiles() {

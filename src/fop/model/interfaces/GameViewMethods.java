@@ -7,23 +7,31 @@ import fop.view.components.ToolbarPanel;
 import fop.view.components.tile.TileStackPanel;
 
 public interface GameViewMethods {
+
 	/**
-	 * Returns the GameBoardPanel 
+	 * Returns the GameBoardPanel
+	 * 
 	 * @return
 	 */
 	public GameBoardPanel getGameBoardPanel();
+
 	/**
 	 * Returns the TileStackPanel
+	 * 
 	 * @return
 	 */
 	public TileStackPanel getTileStackPanel();
+
 	/**
 	 * Returns the ToolbarPanel
+	 * 
 	 * @return
 	 */
 	public ToolbarPanel getToolbarPanel();
+
 	/**
-	 * writes the given text with the given color into the StatusbarPanel 
+	 * writes the given text with the given color into the StatusbarPanel
+	 * 
 	 * @param status
 	 * @param color
 	 */
