@@ -5,7 +5,6 @@ import fop.view.gui.GameWindow;
 
 /**
  * Starts the game
- *
  */
 public class Carcassonne {
 
