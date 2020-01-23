@@ -4,6 +4,7 @@ import fop.view.components.gui.Resources;
 import fop.view.gui.GameWindow;
 
 /**
+ * Niklas 
  * Starts the game
  */
 public class Carcassonne {
