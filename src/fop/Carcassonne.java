@@ -4,7 +4,9 @@ import fop.view.components.gui.Resources;
 import fop.view.gui.GameWindow;
 
 /**
- * Niklas 
+ * @author Niklas
+ * @author Paul
+ * 
  * Starts the game
  */
 public class Carcassonne {
