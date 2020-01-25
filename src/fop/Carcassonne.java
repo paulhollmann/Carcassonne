@@ -7,6 +7,7 @@ import fop.view.gui.GameWindow;
  * @author Niklas
  * @author Paul
  * @author Robin
+ * @author Tobi
  * 
  * Starts the game
  */
