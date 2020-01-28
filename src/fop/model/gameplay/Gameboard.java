@@ -102,18 +102,82 @@ public class Gameboard extends Observable<Gameboard> {
 	 */
 	public boolean isTileAllowed(Tile t, int x, int y) {
 
+		boolean top = false;
+		boolean left = false;
+		boolean right = false;
+		boolean bottom = false;
+		boolean result = false;
+		
+		boolean topNull = false;
+		boolean leftNull = false;
+		boolean rightNull = false;
+		boolean bottomNull = false;
+		
+		Tile[][] board = this.getBoard();
 		// Check top tile
 		// TODO
-
+		if(board[x-1][y] != null) {
+			if(t.getNode(TOP) == board[x-1][y].getNode(BOTTOM) && 
+			   t.getNode(TOPLEFT) == board[x-1][y].getNode(BOTTOMLEFT) && 
+			   t.getNode(TOPRIGHT) == board[x-1][y].getNode(BOTTOMRIGHT)) {
+				top = true;
+			}
+		}
+		else {
+			topNull = true;
+			top = true;
+		}
 		// Check left tile
 		// TODO
-
+		if(board[x][y-1] != null) {
+			if(t.getNode(LEFT) == board[x][y-1].getNode(RIGHT) && 
+			   t.getNode(TOPLEFT) == board[x-1][y-1].getNode(TOPRIGHT) && 
+			   t.getNode(BOTTOMLEFT) == board[x-1][y-1].getNode(BOTTOMRIGHT)) {
+				left = true;
+			}
+		}
+		else {
+			leftNull = false;
+			left = true;
+		}
 		// Check right tile
 		// TODO
-
+		if(board[x][y+1] != null) {
+			if(t.getNode(RIGHT) == board[x][y+1].getNode(LEFT) && 
+			   t.getNode(TOPRIGHT) == board[x][y+1].getNode(TOPLEFT) && 
+			   t.getNode(BOTTOMRIGHT) == board[x][y+1].getNode(BOTTOMLEFT)) {
+				right = true;
+			}
+		}
+		else {
+			rightNull = false;
+			right = true;
+		}		
 		// Check bottom tile
 		// TODO
-		return false;
+		if(board[x+1][y] != null) {
+			if(t.getNode(BOTTOM) == board[x+1][y].getNode(LEFT) && 
+			   t.getNode(BOTTOMLEFT) == board[x+1][y].getNode(TOPLEFT) && 
+			   t.getNode(BOTTOMRIGHT) == board[x+1][y].getNode(TOPRIGHT)) {
+				bottom = true;
+			}
+		}
+		else {
+			bottomNull = false;
+			bottom = true;
+		}
+		
+		//end result
+		if(top && left && right && bottom) {
+			if(topNull && leftNull && rightNull && bottomNull) {
+				result = false;
+			}
+			else {
+				result = true;
+			}
+		}
+		
+		return result;
 	}
 
 	/**
