@@ -137,7 +137,7 @@ public class Gameboard extends Observable<Gameboard> {
 			}
 		}
 		else {
-			leftNull = false;
+			leftNull = true;
 			left = true;
 		}
 		// Check right tile
@@ -150,7 +150,7 @@ public class Gameboard extends Observable<Gameboard> {
 			}
 		}
 		else {
-			rightNull = false;
+			rightNull = true;
 			right = true;
 		}		
 		// Check bottom tile
@@ -163,7 +163,7 @@ public class Gameboard extends Observable<Gameboard> {
 			}
 		}
 		else {
-			bottomNull = false;
+			bottomNull = true;
 			bottom = true;
 		}
 		
