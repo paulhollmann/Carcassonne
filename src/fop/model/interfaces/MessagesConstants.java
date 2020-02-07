@@ -101,7 +101,7 @@ public interface MessagesConstants {
 	/**
 	 * shows if all is deleted
 	 */
-	public static void successfullDeleted() {
+	public static void sucessFullDeleted() {
 		JOptionPane.showMessageDialog(null, "Entries are deleted successfully", "Deleted", JOptionPane.OK_OPTION);
 	}
 }

@@ -103,7 +103,7 @@ public class GamePlay extends Observable<List<Player>> implements GamePlayMethod
 
 	@Override
 	public void initGame() {
-		gc.setPlayers(Players.getPlayers());
+		gc.setPlayers(Players.getPLayers());
 		gc.setBoard(new Gameboard());
 		gc.setTileStack(new TileStack());
 		GameView view = new GameView(gc);

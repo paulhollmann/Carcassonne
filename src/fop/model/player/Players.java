@@ -11,7 +11,7 @@ public class Players {
 
 	/**
 	 * adds a player to the static list
-	 * 
+	 *
 	 * @param player
 	 */
 	public static void addPlayer(Player player) {
@@ -27,11 +27,11 @@ public class Players {
 	}
 
 	/**
-	 * returns the current Players
-	 * 
+	 * returns the current Players (PLayers)
+	 *
 	 * @return
 	 */
-	public static LinkedList<Player> getPlayers() {
+	public static LinkedList<Player> getPLayers() {
 
 		return players;
 	}

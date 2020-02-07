@@ -30,7 +30,7 @@ public interface GameMethods {
 			Resources ressources = Resources.getInstance();
 			try {
 				ressources.clearEntries();
-				MessagesConstants.successfullDeleted();
+				MessagesConstants.sucessFullDeleted();
 				GoToMainMenu();
 			} catch (IOException e) {
 				// TODO Auto-generated catch block
