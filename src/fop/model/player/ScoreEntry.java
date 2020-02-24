@@ -2,8 +2,6 @@ package fop.model.player;
 
 import java.io.PrintWriter;
 import java.util.Date;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 public class ScoreEntry implements Comparable<ScoreEntry> {
 
@@ -13,7 +11,7 @@ public class ScoreEntry implements Comparable<ScoreEntry> {
 
 	/**
 	 * creates a score entry
-	 * 
+	 *
 	 * @param name
 	 * @param score
 	 * @param date
@@ -26,7 +24,7 @@ public class ScoreEntry implements Comparable<ScoreEntry> {
 
 	/**
 	 * creates a score entry via player
-	 * 
+	 *
 	 * @param player
 	 */
 	public ScoreEntry(Player player) {
@@ -45,7 +43,7 @@ public class ScoreEntry implements Comparable<ScoreEntry> {
 
 	/**
 	 * prints a new highscore entry
-	 * 
+	 *
 	 * @param printWriter
 	 */
 	public void write(PrintWriter printWriter) {
@@ -54,18 +52,32 @@ public class ScoreEntry implements Comparable<ScoreEntry> {
 
 	/**
 	 * reads a score entry and checks if it is allowed
-	 * 
+	 *
 	 * @param line
 	 * @return
 	 */
 	public static ScoreEntry read(String line) {
 		// TODO
+
+		try {
+			String[] data = line.split(";");
+			for (Player player : Players.getPLayers()) {
+				if (player.getName().equals(data[0]))
+					if (Long.parseLong(data[1]) >= 0)
+						if (Integer.parseInt(data[2]) >= 0)
+							return new ScoreEntry(data[0], Integer.parseInt(data[2]),
+									new Date(Integer.parseInt(data[1])));
+			}
+		} catch (Exception e) {
+			return null;
+		}
+
 		return null;
 	}
 
 	/**
 	 * returns the current Date
-	 * 
+	 *
 	 * @return
 	 */
 	public Date getDate() {
@@ -74,7 +86,7 @@ public class ScoreEntry implements Comparable<ScoreEntry> {
 
 	/**
 	 * returns the name
-	 * 
+	 *
 	 * @return
 	 */
 	public String getName() {
@@ -83,7 +95,7 @@ public class ScoreEntry implements Comparable<ScoreEntry> {
 
 	/**
 	 * returns the score
-	 * 
+	 *
 	 * @return
 	 */
 	public int getScore() {
