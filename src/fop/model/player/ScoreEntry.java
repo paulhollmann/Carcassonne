@@ -48,6 +48,7 @@ public class ScoreEntry implements Comparable<ScoreEntry> {
 	 */
 	public void write(PrintWriter printWriter) {
 		// TODO
+		printWriter.append(this.getName() + ";" + this.getDate().getTime() + ";" + this.getScore());
 	}
 
 	/**
