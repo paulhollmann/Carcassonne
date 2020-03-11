@@ -17,6 +17,7 @@ import java.util.SortedMap;
 import java.util.TreeMap;
 
 import fop.base.Edge;
+import fop.base.Node;
 import fop.model.graph.FeatureNode;
 import fop.model.player.Player;
 
@@ -149,18 +150,70 @@ public class Tile {
 		return nodes.get(p);
 	}
 
+	/*public void rotateEdge(Edge edge) {
+		edges.		
+	}*/ //TODO
+	
 	/**
 	 * Rotates this tile 90 degree to the right and updates the position and
 	 * direction of its nodes accordingly.
 	 */
 	public void rotateRight() {
 		SortedMap<Position, FeatureNode> rotatedNodes = new TreeMap<Position, FeatureNode>();
+		List<Edge<FeatureType>> rotatedEdges = new LinkedList<Edge<FeatureType>>();
 
 		// Iterate over all positions of the tile
+		
+		//get nodes
+		FeatureNode topLeftFN = nodes.get(TOPLEFT);
+		FeatureNode topFN = nodes.get(TOP);
+		FeatureNode topRightFN = nodes.get(TOPRIGHT);
+		
+		FeatureNode rightFN = nodes.get(RIGHT);
+		
+		FeatureNode bottomRightFN = nodes.get(BOTTOMRIGHT);
+		FeatureNode bottomFN = nodes.get(BOTTOM);
+		FeatureNode bottomLeftFN = nodes.get(BOTTOMLEFT);
+		
+		FeatureNode leftFN = nodes.get(LEFT);
+		
+		FeatureNode centerFN = nodes.get(CENTER);
+		
 		// rotate nodes
+
+		rotatedNodes.put(TOPLEFT, bottomLeftFN);
+		rotatedNodes.put(TOP, leftFN);
+		rotatedNodes.put(TOPRIGHT, topLeftFN);
+		
+		rotatedNodes.put(RIGHT, topFN);
+		
+		rotatedNodes.put(BOTTOMRIGHT, topRightFN);
+		rotatedNodes.put(BOTTOM, rightFN);
+		rotatedNodes.put(BOTTOMLEFT, bottomRightFN);
+		
+		rotatedNodes.put(LEFT, bottomFN);
+		
+		rotatedNodes.put(CENTER, centerFN);
+		
+		//rotate edges
+		/*if(edges.isEmpty()) {
+			//TODO
+		}
+		else {
+			for(int i=0;i<edges.size();i++) {
+				Edge<FeatureType> edge = edges.get(i);
+				rotateEdge(edge);
+			}
+		}*/
+		
 		// TODO
 
 		nodes = rotatedNodes;
+		rotation = rotation + 90;
+		if(rotation == 360) {
+			rotation = 0;
+		}
+		//edges = rotatedEdges;
 
 		// set rotation
 		// TODO

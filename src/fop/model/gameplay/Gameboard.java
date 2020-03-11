@@ -190,18 +190,96 @@ public class Gameboard extends Observable<Gameboard> {
 	 */
 	public boolean isTileAllowedAnywhere(Tile newTile) {
 		// Iterate over all tiles
+		for(int i=0;i<tiles.size();i++) {
+			Tile currentTile = tiles.get(i);
+			int x = currentTile.x;
+			int y = currentTile.y;	
+							
 		// check top
 		// TODO
+			if(board[x-1][y] != null) {
+				if(isTileAllowed(newTile,x-1,y)) {
+					return true;
+				}
+				newTile.rotateRight();
+				if(isTileAllowed(newTile,x-1,y)) {
+					return true;
+				}
+				newTile.rotateRight();
+				if(isTileAllowed(newTile,x-1,y)) {
+					return true;
+				}
+				newTile.rotateRight();
+				if(isTileAllowed(newTile,x-1,y)) {
+					return true;
+				}
+				newTile.rotateRight();
+			}
 
 		// check left
 		// TODO
+			if(board[x][y-1] != null) {
+				if(isTileAllowed(newTile,x,y-1)) {
+					return true;
+				}
+				newTile.rotateRight();
+				if(isTileAllowed(newTile,x,y-1)) {
+					return true;
+				}
+				newTile.rotateRight();
+				if(isTileAllowed(newTile,x,y-1)) {
+					return true;
+				}
+				newTile.rotateRight();
+				if(isTileAllowed(newTile,x,y-1)) {
+					return true;
+				}
+				newTile.rotateRight();
+			}
 
 		// check right
 		// TODO
+			if(board[x][y+1] != null) {
+				if(isTileAllowed(newTile,x,y+1)) {
+					return true;
+				}
+				newTile.rotateRight();
+				if(isTileAllowed(newTile,x,y+1)) {
+					return true;
+				}
+				newTile.rotateRight();
+				if(isTileAllowed(newTile,x,y+1)) {
+					return true;
+				}
+				newTile.rotateRight();
+				if(isTileAllowed(newTile,x,y+1)) {
+					return true;
+				}
+				newTile.rotateRight();
+			}
 
 		// check bottom
 		// TODO
+			if(board[x+1][y] != null) {
+				if(isTileAllowed(newTile,x+1,y)) {
+					return true;
+				}
+				newTile.rotateRight();
+				if(isTileAllowed(newTile,x+1,y)) {
+					return true;
+				}
+				newTile.rotateRight();
+				if(isTileAllowed(newTile,x+1,y)) {
+					return true;
+				}
+				newTile.rotateRight();
+				if(isTileAllowed(newTile,x+1,y)) {
+					return true;
+				}
+				newTile.rotateRight();
+			}
 
+		}
 		// no valid position was found
 		return false;
 	}
