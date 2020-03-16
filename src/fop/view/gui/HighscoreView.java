@@ -2,11 +2,17 @@ package fop.view.gui;
 
 import java.awt.event.ActionEvent;
 import java.text.SimpleDateFormat;
+import java.util.LinkedList;
 
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
+import javax.swing.table.TableColumn;
+import javax.swing.text.AttributeSet;
+import javax.swing.text.Document;
+import javax.swing.text.Element;
+import javax.swing.text.TableView.TableRow;
 
 import fop.controller.GameController;
 import fop.model.interfaces.GameConstants;
@@ -53,8 +59,20 @@ public class HighscoreView extends View {
 		Resources resources = Resources.getInstance();
 		// TODO
 
-		scrollPane = new JScrollPane();
+	
+		String[]  headerData = {"Date", "Name", "Score"};
+		String[][] rowData = new String[resources.getScoreEntries().size()][3];
+		int i = 0;
+		for (ScoreEntry se : resources.getScoreEntries()) {
+			rowData[i] = se.toArray();
+			i++;
+		}
+		
+		scoreTable = new JTable(rowData, headerData);
+		scrollPane = new JScrollPane(scoreTable);
+		scoreTable.setFillsViewportHeight(true);
 		add(scrollPane);
+		
 	}
 
 	@Override

@@ -133,7 +133,7 @@ public class Resources implements GameConstants {
 				scoreEntries.add(se);
 		}
 		br.close();
-		scoreEntries.sort((s1, s2) -> s1.getScore() - s2.getScore());
+		scoreEntries.sort((s1, s2) -> s2.getScore() - s1.getScore());
 		// TODO check sorting maybe wrong way
 	}
 

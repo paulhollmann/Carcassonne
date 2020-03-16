@@ -62,13 +62,11 @@ public class ScoreEntry implements Comparable<ScoreEntry> {
 
 		try {
 			String[] data = line.split(";");
-			for (Player player : Players.getPLayers()) {
-				if (player.getName().equals(data[0]))
-					if (Long.parseLong(data[1]) >= 0)
-						if (Integer.parseInt(data[2]) >= 0)
-							return new ScoreEntry(data[0], Integer.parseInt(data[2]),
-									new Date(Integer.parseInt(data[1])));
-			}
+			if (!data[0].isEmpty())
+				if (Long.parseLong(data[1]) >= 0)
+					if (Integer.parseInt(data[2]) >= 0)
+						return new ScoreEntry(data[0], Integer.parseInt(data[2]), new Date(Long.parseLong(data[1])));
+
 		} catch (Exception e) {
 			return null;
 		}
@@ -101,6 +99,15 @@ public class ScoreEntry implements Comparable<ScoreEntry> {
 	 */
 	public int getScore() {
 		return this.score;
+	}
+
+	/**
+	 * Creates a string array
+	 * 
+	 * @return the values as an string array
+	 */
+	public String[] toArray() {
+		return new String[] { this.getDate().toString(), this.getName(), Integer.toString(this.getScore()) };
 	}
 
 }
