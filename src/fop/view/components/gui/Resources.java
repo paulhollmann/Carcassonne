@@ -102,8 +102,10 @@ public class Resources implements GameConstants {
 	private void saveScoreEntries() throws IOException {
 		// TODO
 		PrintWriter pw = new PrintWriter(HIGHSCORE_FILE);
-		for (ScoreEntry se : scoreEntries)
+		for (ScoreEntry se : scoreEntries) {
 			se.write(pw);
+			pw.write("\n");
+		}
 		pw.close();
 	}
 
@@ -116,6 +118,7 @@ public class Resources implements GameConstants {
 	 * eine Exception auftreten, kann diese ausgegeben werden, sie sollte aber nicht
 	 * weitergegeben werden, da sonst das Laden der restlichen Resourcen abgebrochen
 	 * wird ({@link #load()}).
+	 * 
 	 * @throws IOException wenn irgentetwas schief läuft
 	 *
 	 * @see ScoreEntry#read(String)

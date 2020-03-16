@@ -2,10 +2,14 @@ package fop.view.gui;
 
 import java.awt.event.ActionEvent;
 import java.text.SimpleDateFormat;
+import java.util.Comparator;
 import java.util.LinkedList;
 
+import javax.swing.ButtonGroup;
 import javax.swing.JButton;
+import javax.swing.JComponent;
 import javax.swing.JLabel;
+import javax.swing.JRadioButton;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.table.TableColumn;
@@ -33,6 +37,9 @@ public class HighscoreView extends View {
 	private JTable scoreTable;
 	private JLabel lblTitle;
 	private JScrollPane scrollPane;
+	private String[]  headerData;
+	
+	
 
 	public HighscoreView(GameWindow gameWindow) {
 		super(gameWindow);
@@ -56,24 +63,28 @@ public class HighscoreView extends View {
 		btnClear = createButton("Delete");
 		lblTitle = createLabel("Highscores", 45, true);
 
-		Resources resources = Resources.getInstance();
+		
 		// TODO
 
-	
-		String[]  headerData = {"Date", "Name", "Score"};
+		Resources resources = Resources.getInstance();
 		String[][] rowData = new String[resources.getScoreEntries().size()][3];
+		LinkedList<ScoreEntry> localScores = new LinkedList<>(resources.getScoreEntries());
 		int i = 0;
-		for (ScoreEntry se : resources.getScoreEntries()) {
+		for (ScoreEntry se : localScores) {
 			rowData[i] = se.toArray();
 			i++;
 		}
 		
+		
+		headerData = new String[]{"Date", "Name", "Score"};
 		scoreTable = new JTable(rowData, headerData);
 		scrollPane = new JScrollPane(scoreTable);
-		scoreTable.setFillsViewportHeight(true);
+
 		add(scrollPane);
 		
-	}
+		}
+	
+
 
 	@Override
 	public void actionPerformed(ActionEvent actionEvent) {
