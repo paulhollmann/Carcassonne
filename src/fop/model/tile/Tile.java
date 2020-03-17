@@ -196,7 +196,7 @@ public class Tile {
 		rotatedNodes.put(CENTER, centerFN);
 
 		// rotate edges
-
+		// unsinnig
 		if (edges.isEmpty()) {
 			rotatedEdges = edges;
 		} else {

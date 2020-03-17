@@ -80,15 +80,19 @@ public class Gameboard extends Observable<Gameboard> {
 		// of the tile on top is a ROAD as well. As every ROAD has FIELD nodes as
 		// neighbors on both sides, we can connect those nodes of the two tiles. The
 		// same logic applies to the next three routines.
+		Tile top = board[x][y - 1];
 
 		// Check left tile
 		// TODO
+		Tile left = board[x - 1][y];
 
 		// Check right tile
 		// TODO
+		Tile right = board[x + 1][y];
 
 		// Check bottom tile
 		// TODO
+		Tile bottom = board[x][y + 1];
 	}
 
 	/**
@@ -107,76 +111,88 @@ public class Gameboard extends Observable<Gameboard> {
 		boolean right = false;
 		boolean bottom = false;
 		boolean result = false;
-		
+
 		boolean topNull = false;
 		boolean leftNull = false;
 		boolean rightNull = false;
 		boolean bottomNull = false;
-		
+
 		Tile[][] board = this.getBoard();
 		// Check top tile
 		// TODO
-		if(board[x-1][y] != null) {
-			if(t.getNode(TOP) == board[x-1][y].getNode(BOTTOM) && 
-			   t.getNode(TOPLEFT) == board[x-1][y].getNode(BOTTOMLEFT) && 
-			   t.getNode(TOPRIGHT) == board[x-1][y].getNode(BOTTOMRIGHT)) {
+		if (board[x][y - 1] != null) {
+			if (t.getNode(TOP) == board[x][y - 1].getNode(BOTTOM)) {
 				top = true;
+				if (t.getNode(TOPLEFT) != null)
+					if (t.getNode(TOPLEFT) != board[x][y - 1].getNode(BOTTOMLEFT))
+						top = false;
+				if (t.getNode(TOPRIGHT) != null)
+					if (t.getNode(TOPRIGHT) != board[x][y - 1].getNode(BOTTOMRIGHT))
+						top = false;
 			}
-		}
-		else {
+		} else {
 			topNull = true;
 			top = true;
 		}
 		// Check left tile
 		// TODO
-		if(board[x][y-1] != null) {
-			if(t.getNode(LEFT) == board[x][y-1].getNode(RIGHT) && 
-			   t.getNode(TOPLEFT) == board[x-1][y-1].getNode(TOPRIGHT) && 
-			   t.getNode(BOTTOMLEFT) == board[x-1][y-1].getNode(BOTTOMRIGHT)) {
+		if (board[x - 1][y] != null) {
+			if (t.getNode(LEFT) == board[x - 1][y].getNode(RIGHT)) {
 				left = true;
+				if (t.getNode(TOPLEFT) != null)
+					if (t.getNode(TOPLEFT) != board[x - 1][y].getNode(TOPRIGHT))
+						top = false;
+				if (t.getNode(TOPRIGHT) != null)
+					if (t.getNode(BOTTOMLEFT) != board[x - 1][y].getNode(BOTTOMRIGHT))
+						top = false;
 			}
-		}
-		else {
+		} else {
 			leftNull = true;
 			left = true;
 		}
 		// Check right tile
 		// TODO
-		if(board[x][y+1] != null) {
-			if(t.getNode(RIGHT) == board[x][y+1].getNode(LEFT) && 
-			   t.getNode(TOPRIGHT) == board[x][y+1].getNode(TOPLEFT) && 
-			   t.getNode(BOTTOMRIGHT) == board[x][y+1].getNode(BOTTOMLEFT)) {
+		if (board[x + 1][y] != null) {
+			if (t.getNode(RIGHT) == board[x + 1][y].getNode(LEFT)) {
 				right = true;
+				if (t.getNode(TOPLEFT) != null)
+					if (t.getNode(TOPRIGHT) != board[x + 1][y].getNode(TOPLEFT))
+						top = false;
+				if (t.getNode(TOPRIGHT) != null)
+					if (t.getNode(BOTTOMRIGHT) != board[x + 1][y].getNode(BOTTOMLEFT))
+						top = false;
 			}
-		}
-		else {
+		} else {
 			rightNull = true;
 			right = true;
-		}		
+		}
 		// Check bottom tile
 		// TODO
-		if(board[x+1][y] != null) {
-			if(t.getNode(BOTTOM) == board[x+1][y].getNode(LEFT) && 
-			   t.getNode(BOTTOMLEFT) == board[x+1][y].getNode(TOPLEFT) && 
-			   t.getNode(BOTTOMRIGHT) == board[x+1][y].getNode(TOPRIGHT)) {
+		if (board[x][y + 1] != null) {
+			if (t.getNode(BOTTOM) == board[x][y + 1].getNode(LEFT)) {
 				bottom = true;
+				if (t.getNode(TOPLEFT) != null)
+					if (t.getNode(BOTTOMLEFT) != board[x][y + 1].getNode(TOPLEFT))
+						top = false;
+				if (t.getNode(TOPRIGHT) != null)
+					if (t.getNode(BOTTOMRIGHT) != board[x][y + 1].getNode(TOPRIGHT))
+						top = false;
 			}
-		}
-		else {
+		} else {
 			bottomNull = true;
 			bottom = true;
 		}
-		
-		//end result
-		if(top && left && right && bottom) {
-			if(topNull && leftNull && rightNull && bottomNull) {
+
+		// end result
+		if (top && left && right && bottom) {
+			if (topNull && leftNull && rightNull && bottomNull) {
 				result = false;
-			}
-			else {
+			} else {
 				result = true;
+				System.out.println("TileAllowed");
 			}
 		}
-		
+
 		return result;
 	}
 
@@ -190,90 +206,90 @@ public class Gameboard extends Observable<Gameboard> {
 	 */
 	public boolean isTileAllowedAnywhere(Tile newTile) {
 		// Iterate over all tiles
-		for(int i=0;i<tiles.size();i++) {
+		for (int i = 0; i < tiles.size(); i++) {
 			Tile currentTile = tiles.get(i);
 			int x = currentTile.x;
-			int y = currentTile.y;	
-							
-		// check top
-		// TODO
-			if(board[x-1][y] != null) {
-				if(isTileAllowed(newTile,x-1,y)) {
+			int y = currentTile.y;
+
+			// check top
+			// TODO
+			if (board[x][y - 1] != null) {
+				if (isTileAllowed(newTile, x, y - 1)) {
 					return true;
 				}
 				newTile.rotateRight();
-				if(isTileAllowed(newTile,x-1,y)) {
+				if (isTileAllowed(newTile, x, y - 1)) {
 					return true;
 				}
 				newTile.rotateRight();
-				if(isTileAllowed(newTile,x-1,y)) {
+				if (isTileAllowed(newTile, x, y - 1)) {
 					return true;
 				}
 				newTile.rotateRight();
-				if(isTileAllowed(newTile,x-1,y)) {
+				if (isTileAllowed(newTile, x, y - 1)) {
 					return true;
 				}
 				newTile.rotateRight();
 			}
 
-		// check left
-		// TODO
-			if(board[x][y-1] != null) {
-				if(isTileAllowed(newTile,x,y-1)) {
+			// check left
+			// TODO
+			if (board[x - 1][y] != null) {
+				if (isTileAllowed(newTile, x - 1, y)) {
 					return true;
 				}
 				newTile.rotateRight();
-				if(isTileAllowed(newTile,x,y-1)) {
+				if (isTileAllowed(newTile, x - 1, y)) {
 					return true;
 				}
 				newTile.rotateRight();
-				if(isTileAllowed(newTile,x,y-1)) {
+				if (isTileAllowed(newTile, x - 1, y)) {
 					return true;
 				}
 				newTile.rotateRight();
-				if(isTileAllowed(newTile,x,y-1)) {
-					return true;
-				}
-				newTile.rotateRight();
-			}
-
-		// check right
-		// TODO
-			if(board[x][y+1] != null) {
-				if(isTileAllowed(newTile,x,y+1)) {
-					return true;
-				}
-				newTile.rotateRight();
-				if(isTileAllowed(newTile,x,y+1)) {
-					return true;
-				}
-				newTile.rotateRight();
-				if(isTileAllowed(newTile,x,y+1)) {
-					return true;
-				}
-				newTile.rotateRight();
-				if(isTileAllowed(newTile,x,y+1)) {
+				if (isTileAllowed(newTile, x - 1, y)) {
 					return true;
 				}
 				newTile.rotateRight();
 			}
 
-		// check bottom
-		// TODO
-			if(board[x+1][y] != null) {
-				if(isTileAllowed(newTile,x+1,y)) {
+			// check right
+			// TODO
+			if (board[x + 1][y] != null) {
+				if (isTileAllowed(newTile, x + 1, y)) {
 					return true;
 				}
 				newTile.rotateRight();
-				if(isTileAllowed(newTile,x+1,y)) {
+				if (isTileAllowed(newTile, x + 1, y)) {
 					return true;
 				}
 				newTile.rotateRight();
-				if(isTileAllowed(newTile,x+1,y)) {
+				if (isTileAllowed(newTile, x + 1, y)) {
 					return true;
 				}
 				newTile.rotateRight();
-				if(isTileAllowed(newTile,x+1,y)) {
+				if (isTileAllowed(newTile, x + 1, y)) {
+					return true;
+				}
+				newTile.rotateRight();
+			}
+
+			// check bottom
+			// TODO
+			if (board[x][y + 1] != null) {
+				if (isTileAllowed(newTile, x, y + 1)) {
+					return true;
+				}
+				newTile.rotateRight();
+				if (isTileAllowed(newTile, x, y + 1)) {
+					return true;
+				}
+				newTile.rotateRight();
+				if (isTileAllowed(newTile, x, y + 1)) {
+					return true;
+				}
+				newTile.rotateRight();
+				if (isTileAllowed(newTile, x, y + 1)) {
 					return true;
 				}
 				newTile.rotateRight();
@@ -281,6 +297,7 @@ public class Gameboard extends Observable<Gameboard> {
 
 		}
 		// no valid position was found
+		System.out.println("No valid position was found");
 		return false;
 	}
 
