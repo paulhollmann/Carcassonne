@@ -347,16 +347,42 @@ public class Gameboard extends Observable<Gameboard> {
 	 * each adjacent tile).
 	 */
 	public void calculateMonasteries(State state) {
-		// the methods getNode() and getType of class Tile and FeatureNode might be
-		// helpful
-
-		// Check all surrounding tiles and add the points
-
-		// Points are given if the landscape is complete or the game is over
-		// Meeples are just returned in case of state == State.GAME_OVER
-
-		// After adding the points to the overall points of the player, set the score to
-		// 1 again
+		for (int i = 0; i < tiles.size(); i++) {
+			Tile currentTile = tiles.get(i);
+			
+			// the methods getNode() and getType of class Tile and FeatureNode might be
+			// helpful
+			FeatureNode centerNode = currentTile.getNode(Position.CENTER);
+			if (centerNode == null)
+				continue;
+			if (centerNode.getType() == FeatureType.MONASTERY) {
+				int score = 0;
+				int x = currentTile.x;
+				int y = currentTile.y;
+				// Check all surrounding tiles and add the points
+				for (int j = -1; j <= 1; j++) {
+					for (int j2 = -1; j2 <= 1; j2++) {
+						if (board[x+j][y] != null)
+							score++;
+					}
+				}
+				
+				// Points are given if the landscape is complete or the game is over
+				// Meeples are just returned in case of state == State.GAME_OVER
+				if (score == 9) {
+					centerNode.getPlayer().addScore(score);
+//					centerNode.setMeepleSpot(false);
+					centerNode.getPlayer().returnMeeple();
+					
+				}
+				if (state == State.GAME_OVER) {
+					centerNode.getPlayer().addScore(score);
+				}
+			}
+			// After adding the points to the overall points of the player, set the score to
+			// 1 again
+			
+		}
 	}
 
 	/**
