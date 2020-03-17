@@ -212,10 +212,10 @@ public class Gameboard extends Observable<Gameboard> {
 		if (board[x][y + 1] != null) {
 			if (t.getNode(BOTTOM).getType() == board[x][y + 1].getNode(TOP).getType()) {
 				bottom = true;
-				if (t.getNode(BOTTOMLEFT) != null && board[x + 1][y].getNode(TOPLEFT) != null)
+				if (t.getNode(BOTTOMLEFT) != null && board[x][y + 1].getNode(TOPLEFT) != null)
 					if (t.getNode(BOTTOMLEFT).getType() != board[x][y + 1].getNode(TOPLEFT).getType())
 						top = false;
-				if (t.getNode(BOTTOMRIGHT) != null && board[x + 1][y].getNode(TOPRIGHT) != null)
+				if (t.getNode(BOTTOMRIGHT) != null && board[x][y + 1].getNode(TOPRIGHT) != null)
 					if (t.getNode(BOTTOMRIGHT).getType() != board[x][y + 1].getNode(TOPRIGHT).getType())
 						top = false;
 			}
