@@ -77,9 +77,9 @@ public class Gameboard extends Observable<Gameboard> {
 				graph.addEdge(t.getNode(TOPLEFT), topTile.getNode(BOTTOMLEFT));
 				graph.addEdge(t.getNode(TOPRIGHT), topTile.getNode(BOTTOMRIGHT));
 			}
-			if (t.getNode(LEFT).getType() == ROAD && topTile.getNode(BOTTOMLEFT) != null)
+			if (t.getNode(LEFT).getType() == ROAD && topTile.getNode(BOTTOMLEFT).getType() != null)
 				graph.addEdge(t.getNode(TOPLEFT), topTile.getNode(BOTTOMLEFT));
-			if (t.getNode(RIGHT).getType() == ROAD && topTile.getNode(BOTTOMRIGHT) != null)
+			if (t.getNode(RIGHT).getType() == ROAD && topTile.getNode(BOTTOMRIGHT).getType() != null)
 				graph.addEdge(t.getNode(TOPRIGHT), topTile.getNode(BOTTOMRIGHT));
 		}
 
@@ -92,9 +92,9 @@ public class Gameboard extends Observable<Gameboard> {
 				graph.addEdge(t.getNode(TOPLEFT), leftTile.getNode(TOPRIGHT));
 				graph.addEdge(t.getNode(BOTTOMLEFT), leftTile.getNode(BOTTOMRIGHT));
 			}
-			if (t.getNode(TOP).getType() == ROAD && leftTile.getNode(TOPRIGHT) != null)
+			if (t.getNode(TOP).getType() == ROAD && leftTile.getNode(TOPRIGHT).getType() != null)
 				graph.addEdge(t.getNode(TOPLEFT), leftTile.getNode(TOPRIGHT));
-			if (t.getNode(BOTTOM).getType() == ROAD && leftTile.getNode(BOTTOMRIGHT) != null)
+			if (t.getNode(BOTTOM).getType() == ROAD && leftTile.getNode(BOTTOMRIGHT).getType() != null)
 				graph.addEdge(t.getNode(BOTTOMLEFT), leftTile.getNode(BOTTOMRIGHT));
 		}
 
@@ -107,9 +107,9 @@ public class Gameboard extends Observable<Gameboard> {
 				graph.addEdge(t.getNode(TOPRIGHT), rightTile.getNode(TOPLEFT));
 				graph.addEdge(t.getNode(BOTTOMRIGHT), rightTile.getNode(BOTTOMLEFT));
 			}
-			if (t.getNode(TOP).getType() == ROAD && rightTile.getNode(TOPLEFT) != null)
+			if (t.getNode(TOP).getType() == ROAD && rightTile.getNode(TOPLEFT).getType() != null)
 				graph.addEdge(t.getNode(TOPRIGHT), rightTile.getNode(TOPLEFT));
-			if (t.getNode(BOTTOM).getType() == ROAD && rightTile.getNode(BOTTOMLEFT) != null)
+			if (t.getNode(BOTTOM).getType() == ROAD && rightTile.getNode(BOTTOMLEFT).getType() != null)
 				graph.addEdge(t.getNode(BOTTOMRIGHT), rightTile.getNode(BOTTOMLEFT));
 		}
 
@@ -122,9 +122,9 @@ public class Gameboard extends Observable<Gameboard> {
 				graph.addEdge(t.getNode(BOTTOMLEFT), bottomTile.getNode(TOPLEFT));
 				graph.addEdge(t.getNode(BOTTOMRIGHT), bottomTile.getNode(TOPRIGHT));
 			}
-			if (t.getNode(LEFT).getType() == ROAD && bottomTile.getNode(TOPLEFT) != null)
+			if (t.getNode(LEFT).getType() == ROAD && bottomTile.getNode(TOPLEFT).getType() != null)
 				graph.addEdge(t.getNode(BOTTOMLEFT), bottomTile.getNode(TOPLEFT));
-			if (t.getNode(RIGHT).getType() == ROAD && bottomTile.getNode(TOPRIGHT) != null)
+			if (t.getNode(RIGHT).getType() == ROAD && bottomTile.getNode(TOPRIGHT).getType() != null)
 				graph.addEdge(t.getNode(BOTTOMRIGHT), bottomTile.getNode(TOPRIGHT));
 		}
 
