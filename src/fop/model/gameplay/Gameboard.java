@@ -2,7 +2,6 @@ package fop.model.gameplay;
 
 import static fop.model.tile.FeatureType.CASTLE;
 import static fop.model.tile.FeatureType.FIELDS;
-import static fop.model.tile.FeatureType.MONASTERY;
 import static fop.model.tile.FeatureType.ROAD;
 import static fop.model.tile.Position.BOTTOM;
 import static fop.model.tile.Position.BOTTOMLEFT;
@@ -15,11 +14,8 @@ import static fop.model.tile.Position.TOPRIGHT;
 
 import java.util.ArrayDeque;
 import java.util.ArrayList;
-import java.util.Collections;
-import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
-import java.util.stream.Collectors;
 
 import fop.base.Edge;
 import fop.base.Node;
@@ -74,25 +70,70 @@ public class Gameboard extends Observable<Gameboard> {
 
 		// Check top tile
 		// TODO
+		if (board[x][y - 1] != null) {
+			Tile topTile = board[x][y - 1];
+			graph.addEdge(t.getNode(TOP), topTile.getNode(BOTTOM));
+			if (t.getNode(TOP).getType() == ROAD) {
+				graph.addEdge(t.getNode(TOPLEFT), topTile.getNode(BOTTOMLEFT));
+				graph.addEdge(t.getNode(TOPRIGHT), topTile.getNode(BOTTOMRIGHT));
+			}
+			if (t.getNode(LEFT).getType() == ROAD && topTile.getNode(BOTTOMLEFT) != null)
+				graph.addEdge(t.getNode(TOPLEFT), topTile.getNode(BOTTOMLEFT));
+			if (t.getNode(RIGHT).getType() == ROAD && topTile.getNode(BOTTOMRIGHT) != null)
+				graph.addEdge(t.getNode(TOPRIGHT), topTile.getNode(BOTTOMRIGHT));
+		}
+
+		// Check left tile
+		// TODO
+		if (board[x - 1][y] != null) {
+			Tile leftTile = board[x - 1][y];
+			graph.addEdge(t.getNode(LEFT), leftTile.getNode(RIGHT));
+			if (t.getNode(LEFT).getType() == ROAD) {
+				graph.addEdge(t.getNode(TOPLEFT), leftTile.getNode(TOPRIGHT));
+				graph.addEdge(t.getNode(BOTTOMLEFT), leftTile.getNode(BOTTOMRIGHT));
+			}
+			if (t.getNode(TOP).getType() == ROAD && leftTile.getNode(TOPRIGHT) != null)
+				graph.addEdge(t.getNode(TOPLEFT), leftTile.getNode(TOPRIGHT));
+			if (t.getNode(BOTTOM).getType() == ROAD && leftTile.getNode(BOTTOMRIGHT) != null)
+				graph.addEdge(t.getNode(BOTTOMLEFT), leftTile.getNode(BOTTOMRIGHT));
+		}
+
+		// Check right tile
+		// TODO
+		if (board[x + 1][y] != null) {
+			Tile rightTile = board[x + 1][y];
+			graph.addEdge(t.getNode(RIGHT), rightTile.getNode(LEFT));
+			if (t.getNode(RIGHT).getType() == ROAD) {
+				graph.addEdge(t.getNode(TOPRIGHT), rightTile.getNode(TOPLEFT));
+				graph.addEdge(t.getNode(BOTTOMRIGHT), rightTile.getNode(BOTTOMLEFT));
+			}
+			if (t.getNode(TOP).getType() == ROAD && rightTile.getNode(TOPLEFT) != null)
+				graph.addEdge(t.getNode(TOPRIGHT), rightTile.getNode(TOPLEFT));
+			if (t.getNode(BOTTOM).getType() == ROAD && rightTile.getNode(BOTTOMLEFT) != null)
+				graph.addEdge(t.getNode(BOTTOMRIGHT), rightTile.getNode(BOTTOMLEFT));
+		}
+
+		// Check bottom tile
+		// TODO
+		if (board[x][y + 1] != null) {
+			Tile bottomTile = board[x][y + 1];
+			graph.addEdge(t.getNode(BOTTOM), bottomTile.getNode(TOP));
+			if (t.getNode(BOTTOM).getType() == ROAD) {
+				graph.addEdge(t.getNode(BOTTOMLEFT), bottomTile.getNode(TOPLEFT));
+				graph.addEdge(t.getNode(BOTTOMRIGHT), bottomTile.getNode(TOPRIGHT));
+			}
+			if (t.getNode(LEFT).getType() == ROAD && bottomTile.getNode(TOPLEFT) != null)
+				graph.addEdge(t.getNode(BOTTOMLEFT), bottomTile.getNode(TOPLEFT));
+			if (t.getNode(RIGHT).getType() == ROAD && bottomTile.getNode(TOPRIGHT) != null)
+				graph.addEdge(t.getNode(BOTTOMRIGHT), bottomTile.getNode(TOPRIGHT));
+		}
+
 		// This might be helpful:
 		// As we already ensured that the tile on top exists and fits the tile at x, y,
 		// we know that if the feature of its top is a ROAD, the feature at the bottom
 		// of the tile on top is a ROAD as well. As every ROAD has FIELD nodes as
 		// neighbors on both sides, we can connect those nodes of the two tiles. The
 		// same logic applies to the next three routines.
-		Tile top = board[x][y - 1];
-
-		// Check left tile
-		// TODO
-		Tile left = board[x - 1][y];
-
-		// Check right tile
-		// TODO
-		Tile right = board[x + 1][y];
-
-		// Check bottom tile
-		// TODO
-		Tile bottom = board[x][y + 1];
 	}
 
 	/**
