@@ -121,13 +121,13 @@ public class Gameboard extends Observable<Gameboard> {
 		// Check top tile
 		// TODO
 		if (board[x][y - 1] != null) {
-			if (t.getNode(TOP) == board[x][y - 1].getNode(BOTTOM)) {
+			if (t.getNode(TOP).getType() == board[x][y - 1].getNode(BOTTOM).getType()) {
 				top = true;
-				if (t.getNode(TOPLEFT) != null)
-					if (t.getNode(TOPLEFT) != board[x][y - 1].getNode(BOTTOMLEFT))
+				if (t.getNode(TOPLEFT) != null && board[x][y - 1].getNode(BOTTOMLEFT) != null)
+					if (t.getNode(TOPLEFT).getType() != board[x][y - 1].getNode(BOTTOMLEFT).getType())
 						top = false;
-				if (t.getNode(TOPRIGHT) != null)
-					if (t.getNode(TOPRIGHT) != board[x][y - 1].getNode(BOTTOMRIGHT))
+				if (t.getNode(TOPRIGHT) != null && board[x][y - 1].getNode(BOTTOMRIGHT) != null)
+					if (t.getNode(TOPRIGHT).getType() != board[x][y - 1].getNode(BOTTOMRIGHT).getType())
 						top = false;
 			}
 		} else {
@@ -137,13 +137,13 @@ public class Gameboard extends Observable<Gameboard> {
 		// Check left tile
 		// TODO
 		if (board[x - 1][y] != null) {
-			if (t.getNode(LEFT) == board[x - 1][y].getNode(RIGHT)) {
+			if (t.getNode(LEFT).getType() == board[x - 1][y].getNode(RIGHT).getType()) {
 				left = true;
-				if (t.getNode(TOPLEFT) != null)
-					if (t.getNode(TOPLEFT) != board[x - 1][y].getNode(TOPRIGHT))
+				if (t.getNode(TOPLEFT) != null && board[x - 1][y].getNode(TOPRIGHT) != null)
+					if (t.getNode(TOPLEFT).getType() != board[x - 1][y].getNode(TOPRIGHT).getType())
 						top = false;
-				if (t.getNode(TOPRIGHT) != null)
-					if (t.getNode(BOTTOMLEFT) != board[x - 1][y].getNode(BOTTOMRIGHT))
+				if (t.getNode(BOTTOMLEFT) != null && board[x - 1][y].getNode(BOTTOMRIGHT) != null)
+					if (t.getNode(BOTTOMLEFT).getType() != board[x - 1][y].getNode(BOTTOMRIGHT).getType())
 						top = false;
 			}
 		} else {
@@ -153,13 +153,13 @@ public class Gameboard extends Observable<Gameboard> {
 		// Check right tile
 		// TODO
 		if (board[x + 1][y] != null) {
-			if (t.getNode(RIGHT) == board[x + 1][y].getNode(LEFT)) {
+			if (t.getNode(RIGHT).getType() == board[x + 1][y].getNode(LEFT).getType()) {
 				right = true;
-				if (t.getNode(TOPLEFT) != null)
-					if (t.getNode(TOPRIGHT) != board[x + 1][y].getNode(TOPLEFT))
+				if (t.getNode(TOPRIGHT) != null && board[x + 1][y].getNode(TOPLEFT) != null)
+					if (t.getNode(TOPRIGHT).getType() != board[x + 1][y].getNode(TOPLEFT).getType())
 						top = false;
-				if (t.getNode(TOPRIGHT) != null)
-					if (t.getNode(BOTTOMRIGHT) != board[x + 1][y].getNode(BOTTOMLEFT))
+				if (t.getNode(BOTTOMRIGHT) != null && board[x + 1][y].getNode(BOTTOMLEFT) != null)
+					if (t.getNode(BOTTOMRIGHT).getType() != board[x + 1][y].getNode(BOTTOMLEFT).getType())
 						top = false;
 			}
 		} else {
@@ -169,13 +169,13 @@ public class Gameboard extends Observable<Gameboard> {
 		// Check bottom tile
 		// TODO
 		if (board[x][y + 1] != null) {
-			if (t.getNode(BOTTOM) == board[x][y + 1].getNode(LEFT)) {
+			if (t.getNode(BOTTOM).getType() == board[x][y + 1].getNode(TOP).getType()) {
 				bottom = true;
-				if (t.getNode(TOPLEFT) != null)
-					if (t.getNode(BOTTOMLEFT) != board[x][y + 1].getNode(TOPLEFT))
+				if (t.getNode(BOTTOMLEFT) != null && board[x + 1][y].getNode(TOPLEFT) != null)
+					if (t.getNode(BOTTOMLEFT).getType() != board[x][y + 1].getNode(TOPLEFT).getType())
 						top = false;
-				if (t.getNode(TOPRIGHT) != null)
-					if (t.getNode(BOTTOMRIGHT) != board[x][y + 1].getNode(TOPRIGHT))
+				if (t.getNode(BOTTOMRIGHT) != null && board[x + 1][y].getNode(TOPRIGHT) != null)
+					if (t.getNode(BOTTOMRIGHT).getType() != board[x][y + 1].getNode(TOPRIGHT).getType())
 						top = false;
 			}
 		} else {
