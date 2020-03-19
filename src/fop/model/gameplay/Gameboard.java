@@ -73,13 +73,13 @@ public class Gameboard extends Observable<Gameboard> {
 		if (board[x][y - 1] != null) {
 			Tile topTile = board[x][y - 1];
 			graph.addEdge(t.getNode(TOP), topTile.getNode(BOTTOM));
+			
 			if (t.getNode(TOP).getType() == ROAD) {
 				graph.addEdge(t.getNode(TOPLEFT), topTile.getNode(BOTTOMLEFT));
 				graph.addEdge(t.getNode(TOPRIGHT), topTile.getNode(BOTTOMRIGHT));
-			}
-			if (t.getNode(LEFT).getType() == ROAD && topTile.getNode(BOTTOMLEFT).getType() != null)
+			} else if (t.getNode(LEFT).getType() == ROAD && topTile.getNode(LEFT).getType() == ROAD)
 				graph.addEdge(t.getNode(TOPLEFT), topTile.getNode(BOTTOMLEFT));
-			if (t.getNode(RIGHT).getType() == ROAD && topTile.getNode(BOTTOMRIGHT).getType() != null)
+			else if (t.getNode(RIGHT).getType() == ROAD && topTile.getNode(RIGHT).getType() == ROAD)
 				graph.addEdge(t.getNode(TOPRIGHT), topTile.getNode(BOTTOMRIGHT));
 		}
 
@@ -88,13 +88,13 @@ public class Gameboard extends Observable<Gameboard> {
 		if (board[x - 1][y] != null) {
 			Tile leftTile = board[x - 1][y];
 			graph.addEdge(t.getNode(LEFT), leftTile.getNode(RIGHT));
+			
 			if (t.getNode(LEFT).getType() == ROAD) {
 				graph.addEdge(t.getNode(TOPLEFT), leftTile.getNode(TOPRIGHT));
 				graph.addEdge(t.getNode(BOTTOMLEFT), leftTile.getNode(BOTTOMRIGHT));
-			}
-			if (t.getNode(TOP).getType() == ROAD && leftTile.getNode(TOPRIGHT).getType() != null)
+			} else if (t.getNode(TOP).getType() == ROAD && leftTile.getNode(TOP).getType() == ROAD)
 				graph.addEdge(t.getNode(TOPLEFT), leftTile.getNode(TOPRIGHT));
-			if (t.getNode(BOTTOM).getType() == ROAD && leftTile.getNode(BOTTOMRIGHT).getType() != null)
+			else if (t.getNode(BOTTOM).getType() == ROAD && leftTile.getNode(BOTTOM).getType() == ROAD)
 				graph.addEdge(t.getNode(BOTTOMLEFT), leftTile.getNode(BOTTOMRIGHT));
 		}
 
@@ -103,13 +103,13 @@ public class Gameboard extends Observable<Gameboard> {
 		if (board[x + 1][y] != null) {
 			Tile rightTile = board[x + 1][y];
 			graph.addEdge(t.getNode(RIGHT), rightTile.getNode(LEFT));
+			
 			if (t.getNode(RIGHT).getType() == ROAD) {
 				graph.addEdge(t.getNode(TOPRIGHT), rightTile.getNode(TOPLEFT));
 				graph.addEdge(t.getNode(BOTTOMRIGHT), rightTile.getNode(BOTTOMLEFT));
-			}
-			if (t.getNode(TOP).getType() == ROAD && rightTile.getNode(TOPLEFT).getType() != null)
+			} else if (t.getNode(TOP).getType() == ROAD && rightTile.getNode(TOP).getType() == ROAD)
 				graph.addEdge(t.getNode(TOPRIGHT), rightTile.getNode(TOPLEFT));
-			if (t.getNode(BOTTOM).getType() == ROAD && rightTile.getNode(BOTTOMLEFT).getType() != null)
+			else if (t.getNode(BOTTOM).getType() == ROAD && rightTile.getNode(BOTTOM).getType() == ROAD)
 				graph.addEdge(t.getNode(BOTTOMRIGHT), rightTile.getNode(BOTTOMLEFT));
 		}
 
@@ -118,13 +118,13 @@ public class Gameboard extends Observable<Gameboard> {
 		if (board[x][y + 1] != null) {
 			Tile bottomTile = board[x][y + 1];
 			graph.addEdge(t.getNode(BOTTOM), bottomTile.getNode(TOP));
+			
 			if (t.getNode(BOTTOM).getType() == ROAD) {
 				graph.addEdge(t.getNode(BOTTOMLEFT), bottomTile.getNode(TOPLEFT));
 				graph.addEdge(t.getNode(BOTTOMRIGHT), bottomTile.getNode(TOPRIGHT));
-			}
-			if (t.getNode(LEFT).getType() == ROAD && bottomTile.getNode(TOPLEFT).getType() != null)
+			} else if (t.getNode(LEFT).getType() == ROAD && bottomTile.getNode(LEFT).getType() == ROAD)
 				graph.addEdge(t.getNode(BOTTOMLEFT), bottomTile.getNode(TOPLEFT));
-			if (t.getNode(RIGHT).getType() == ROAD && bottomTile.getNode(TOPRIGHT).getType() != null)
+			else if (t.getNode(RIGHT).getType() == ROAD && bottomTile.getNode(RIGHT).getType() == ROAD)
 				graph.addEdge(t.getNode(BOTTOMRIGHT), bottomTile.getNode(TOPRIGHT));
 		}
 
@@ -206,7 +206,6 @@ public class Gameboard extends Observable<Gameboard> {
 				result = false;
 			} else {
 				result = true;
-				System.out.println("TileAllowed");
 			}
 		}
 
@@ -314,7 +313,6 @@ public class Gameboard extends Observable<Gameboard> {
 
 		}
 		// no valid position was found
-		System.out.println("No valid position was found");
 		return false;
 	}
 
