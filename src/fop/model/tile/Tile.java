@@ -160,7 +160,8 @@ public class Tile {
 	 */
 	public void rotateRight() {
 		SortedMap<Position, FeatureNode> rotatedNodes = new TreeMap<Position, FeatureNode>();
-		List<Edge<FeatureType>> rotatedEdges = new LinkedList<Edge<FeatureType>>();
+		// nicht notwendig, da Nodes noch fortbestehen, aber an andere Position wechseln
+//		List<Edge<FeatureType>> rotatedEdges = new LinkedList<Edge<FeatureType>>();
 
 		// Iterate over all positions of the tile
 
@@ -181,82 +182,87 @@ public class Tile {
 
 		// rotate nodes
 
-		rotatedNodes.put(TOPLEFT, bottomLeftFN);
+		if (bottomLeftFN != null)
+			rotatedNodes.put(TOPLEFT, bottomLeftFN);
 		rotatedNodes.put(TOP, leftFN);
-		rotatedNodes.put(TOPRIGHT, topLeftFN);
+		if (topLeftFN != null)
+			rotatedNodes.put(TOPRIGHT, topLeftFN);
 
 		rotatedNodes.put(RIGHT, topFN);
 
-		rotatedNodes.put(BOTTOMRIGHT, topRightFN);
+		if (topRightFN != null)
+			rotatedNodes.put(BOTTOMRIGHT, topRightFN);
 		rotatedNodes.put(BOTTOM, rightFN);
-		rotatedNodes.put(BOTTOMLEFT, bottomRightFN);
+		if (bottomRightFN != null)
+			rotatedNodes.put(BOTTOMLEFT, bottomRightFN);
 
 		rotatedNodes.put(LEFT, bottomFN);
 
-		rotatedNodes.put(CENTER, centerFN);
+		if (centerFN != null)
+			rotatedNodes.put(CENTER, centerFN);
 
 		// rotate edges
-		// unsinnig
-		if (edges.isEmpty()) {
-			rotatedEdges = edges;
-		} else {
-			for (int i = 0; i < edges.size(); i++) {
-
-				Edge<FeatureType> currentEdge = edges.get(i);
-
-				// find rotated Node A
-				Node<FeatureType> NodeA = currentEdge.getNodeA();
-				Node<FeatureType> newNodeA;
-				if (NodeA == topLeftFN) {
-					newNodeA = rotatedNodes.get(TOPRIGHT);
-				} else if (NodeA == topFN) {
-					newNodeA = rotatedNodes.get(RIGHT);
-				} else if (NodeA == topRightFN) {
-					newNodeA = rotatedNodes.get(BOTTOMRIGHT);
-				} else if (NodeA == rightFN) {
-					newNodeA = rotatedNodes.get(BOTTOM);
-				} else if (NodeA == bottomRightFN) {
-					newNodeA = rotatedNodes.get(BOTTOMLEFT);
-				} else if (NodeA == bottomFN) {
-					newNodeA = rotatedNodes.get(LEFT);
-				} else if (NodeA == bottomLeftFN) {
-					newNodeA = rotatedNodes.get(TOPLEFT);
-				} else if (NodeA == leftFN) {
-					newNodeA = rotatedNodes.get(TOP);
-				} else {
-					newNodeA = rotatedNodes.get(CENTER);
-				}
-
-				// find rotated Node B
-				Node<FeatureType> NodeB = currentEdge.getNodeB();
-				Node<FeatureType> newNodeB;
-				if (NodeB == topLeftFN) {
-					newNodeB = rotatedNodes.get(TOPRIGHT);
-				} else if (NodeB == topFN) {
-					newNodeB = rotatedNodes.get(RIGHT);
-				} else if (NodeB == topRightFN) {
-					newNodeB = rotatedNodes.get(BOTTOMRIGHT);
-				} else if (NodeB == rightFN) {
-					newNodeB = rotatedNodes.get(BOTTOM);
-				} else if (NodeB == bottomRightFN) {
-					newNodeB = rotatedNodes.get(BOTTOMLEFT);
-				} else if (NodeB == bottomFN) {
-					newNodeB = rotatedNodes.get(LEFT);
-				} else if (NodeB == bottomLeftFN) {
-					newNodeB = rotatedNodes.get(TOPLEFT);
-				} else if (NodeB == leftFN) {
-					newNodeB = rotatedNodes.get(TOP);
-				} else {
-					newNodeB = rotatedNodes.get(CENTER);
-				}
-				
-				Edge<FeatureType> resultEdge = new Edge<FeatureType>(newNodeA, newNodeB);
-				rotatedEdges.add(resultEdge);
-			}
-		}
+		// unsinnig ?!
+//		if (edges.isEmpty()) {
+//			rotatedEdges = edges;
+//		} else {
+//			for (int i = 0; i < edges.size(); i++) {
+//
+//				Edge<FeatureType> currentEdge = edges.get(i);
+//
+//				// find rotated Node A
+//				Node<FeatureType> NodeA = currentEdge.getNodeA();
+//				Node<FeatureType> newNodeA;
+//				if (NodeA == topLeftFN) {
+//					newNodeA = rotatedNodes.get(TOPRIGHT);
+//				} else if (NodeA == topFN) {
+//					newNodeA = rotatedNodes.get(RIGHT);
+//				} else if (NodeA == topRightFN) {
+//					newNodeA = rotatedNodes.get(BOTTOMRIGHT);
+//				} else if (NodeA == rightFN) {
+//					newNodeA = rotatedNodes.get(BOTTOM);
+//				} else if (NodeA == bottomRightFN) {
+//					newNodeA = rotatedNodes.get(BOTTOMLEFT);
+//				} else if (NodeA == bottomFN) {
+//					newNodeA = rotatedNodes.get(LEFT);
+//				} else if (NodeA == bottomLeftFN) {
+//					newNodeA = rotatedNodes.get(TOPLEFT);
+//				} else if (NodeA == leftFN) {
+//					newNodeA = rotatedNodes.get(TOP);
+//				} else {
+//					newNodeA = rotatedNodes.get(CENTER);
+//				}
+//
+//				// find rotated Node B
+//				Node<FeatureType> NodeB = currentEdge.getNodeB();
+//				Node<FeatureType> newNodeB;
+//				if (NodeB == topLeftFN) {
+//					newNodeB = rotatedNodes.get(TOPRIGHT);
+//				} else if (NodeB == topFN) {
+//					newNodeB = rotatedNodes.get(RIGHT);
+//				} else if (NodeB == topRightFN) {
+//					newNodeB = rotatedNodes.get(BOTTOMRIGHT);
+//				} else if (NodeB == rightFN) {
+//					newNodeB = rotatedNodes.get(BOTTOM);
+//				} else if (NodeB == bottomRightFN) {
+//					newNodeB = rotatedNodes.get(BOTTOMLEFT);
+//				} else if (NodeB == bottomFN) {
+//					newNodeB = rotatedNodes.get(LEFT);
+//				} else if (NodeB == bottomLeftFN) {
+//					newNodeB = rotatedNodes.get(TOPLEFT);
+//				} else if (NodeB == leftFN) {
+//					newNodeB = rotatedNodes.get(TOP);
+//				} else {
+//					newNodeB = rotatedNodes.get(CENTER);
+//				}
+//				
+//				Edge<FeatureType> resultEdge = new Edge<FeatureType>(newNodeA, newNodeB);
+//				rotatedEdges.add(resultEdge);
+//			}
+//		}
 
 		nodes = rotatedNodes;
-		edges = rotatedEdges;
+//		edges = rotatedEdges;
 
 		// set rotation
 		
