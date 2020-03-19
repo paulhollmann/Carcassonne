@@ -4,7 +4,7 @@ import fop.view.components.gui.Resources;
 import fop.view.gui.GameWindow;
 
 /**
- * @author Niklass
+ * @author Niklas
  * @author Paul
  * @author Robin
  * @author Tobi

@@ -164,12 +164,6 @@ public class Gameboard extends Observable<Gameboard> {
 		if (board[x][y - 1] != null) {
 			if (t.getNode(TOP).getType() == board[x][y - 1].getNode(BOTTOM).getType()) {
 				top = true;
-				if (t.getNode(TOPLEFT) != null && board[x][y - 1].getNode(BOTTOMLEFT) != null)
-					if (t.getNode(TOPLEFT).getType() != board[x][y - 1].getNode(BOTTOMLEFT).getType())
-						top = false;
-				if (t.getNode(TOPRIGHT) != null && board[x][y - 1].getNode(BOTTOMRIGHT) != null)
-					if (t.getNode(TOPRIGHT).getType() != board[x][y - 1].getNode(BOTTOMRIGHT).getType())
-						top = false;
 			}
 		} else {
 			topNull = true;
@@ -180,12 +174,6 @@ public class Gameboard extends Observable<Gameboard> {
 		if (board[x - 1][y] != null) {
 			if (t.getNode(LEFT).getType() == board[x - 1][y].getNode(RIGHT).getType()) {
 				left = true;
-				if (t.getNode(TOPLEFT) != null && board[x - 1][y].getNode(TOPRIGHT) != null)
-					if (t.getNode(TOPLEFT).getType() != board[x - 1][y].getNode(TOPRIGHT).getType())
-						top = false;
-				if (t.getNode(BOTTOMLEFT) != null && board[x - 1][y].getNode(BOTTOMRIGHT) != null)
-					if (t.getNode(BOTTOMLEFT).getType() != board[x - 1][y].getNode(BOTTOMRIGHT).getType())
-						top = false;
 			}
 		} else {
 			leftNull = true;
@@ -196,12 +184,6 @@ public class Gameboard extends Observable<Gameboard> {
 		if (board[x + 1][y] != null) {
 			if (t.getNode(RIGHT).getType() == board[x + 1][y].getNode(LEFT).getType()) {
 				right = true;
-				if (t.getNode(TOPRIGHT) != null && board[x + 1][y].getNode(TOPLEFT) != null)
-					if (t.getNode(TOPRIGHT).getType() != board[x + 1][y].getNode(TOPLEFT).getType())
-						top = false;
-				if (t.getNode(BOTTOMRIGHT) != null && board[x + 1][y].getNode(BOTTOMLEFT) != null)
-					if (t.getNode(BOTTOMRIGHT).getType() != board[x + 1][y].getNode(BOTTOMLEFT).getType())
-						top = false;
 			}
 		} else {
 			rightNull = true;
@@ -212,12 +194,6 @@ public class Gameboard extends Observable<Gameboard> {
 		if (board[x][y + 1] != null) {
 			if (t.getNode(BOTTOM).getType() == board[x][y + 1].getNode(TOP).getType()) {
 				bottom = true;
-				if (t.getNode(BOTTOMLEFT) != null && board[x][y + 1].getNode(TOPLEFT) != null)
-					if (t.getNode(BOTTOMLEFT).getType() != board[x][y + 1].getNode(TOPLEFT).getType())
-						top = false;
-				if (t.getNode(BOTTOMRIGHT) != null && board[x][y + 1].getNode(TOPRIGHT) != null)
-					if (t.getNode(BOTTOMRIGHT).getType() != board[x][y + 1].getNode(TOPRIGHT).getType())
-						top = false;
 			}
 		} else {
 			bottomNull = true;
