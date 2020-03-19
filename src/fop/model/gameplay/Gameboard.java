@@ -73,7 +73,7 @@ public class Gameboard extends Observable<Gameboard> {
 		if (board[x][y - 1] != null) {
 			Tile topTile = board[x][y - 1];
 			graph.addEdge(t.getNode(TOP), topTile.getNode(BOTTOM));
-			
+
 			if (t.getNode(TOP).getType() == ROAD) {
 				graph.addEdge(t.getNode(TOPLEFT), topTile.getNode(BOTTOMLEFT));
 				graph.addEdge(t.getNode(TOPRIGHT), topTile.getNode(BOTTOMRIGHT));
@@ -88,7 +88,7 @@ public class Gameboard extends Observable<Gameboard> {
 		if (board[x - 1][y] != null) {
 			Tile leftTile = board[x - 1][y];
 			graph.addEdge(t.getNode(LEFT), leftTile.getNode(RIGHT));
-			
+
 			if (t.getNode(LEFT).getType() == ROAD) {
 				graph.addEdge(t.getNode(TOPLEFT), leftTile.getNode(TOPRIGHT));
 				graph.addEdge(t.getNode(BOTTOMLEFT), leftTile.getNode(BOTTOMRIGHT));
@@ -103,7 +103,7 @@ public class Gameboard extends Observable<Gameboard> {
 		if (board[x + 1][y] != null) {
 			Tile rightTile = board[x + 1][y];
 			graph.addEdge(t.getNode(RIGHT), rightTile.getNode(LEFT));
-			
+
 			if (t.getNode(RIGHT).getType() == ROAD) {
 				graph.addEdge(t.getNode(TOPRIGHT), rightTile.getNode(TOPLEFT));
 				graph.addEdge(t.getNode(BOTTOMRIGHT), rightTile.getNode(BOTTOMLEFT));
@@ -118,7 +118,7 @@ public class Gameboard extends Observable<Gameboard> {
 		if (board[x][y + 1] != null) {
 			Tile bottomTile = board[x][y + 1];
 			graph.addEdge(t.getNode(BOTTOM), bottomTile.getNode(TOP));
-			
+
 			if (t.getNode(BOTTOM).getType() == ROAD) {
 				graph.addEdge(t.getNode(BOTTOMLEFT), bottomTile.getNode(TOPLEFT));
 				graph.addEdge(t.getNode(BOTTOMRIGHT), bottomTile.getNode(TOPRIGHT));
@@ -323,7 +323,7 @@ public class Gameboard extends Observable<Gameboard> {
 	public void calculateMonasteries(State state) {
 		for (int i = 0; i < tiles.size(); i++) {
 			Tile currentTile = tiles.get(i);
-			
+
 			// the methods getNode() and getType of class Tile and FeatureNode might be
 			// helpful
 			FeatureNode centerNode = currentTile.getNode(Position.CENTER);
@@ -336,26 +336,28 @@ public class Gameboard extends Observable<Gameboard> {
 				// Check all surrounding tiles and add the points
 				for (int j = -1; j <= 1; j++) {
 					for (int j2 = -1; j2 <= 1; j2++) {
-						if (board[x+j][y] != null)
+						if (board[x + j][y] != null)
 							score++;
 					}
 				}
-				
+
 				// Points are given if the landscape is complete or the game is over
 				// Meeples are just returned in case of state == State.GAME_OVER
-				if (score == 9) {
-					centerNode.getPlayer().addScore(score);
+				if (centerNode.hasMeeple()) {
+					if (score == 9) {
+						centerNode.getPlayer().addScore(score);
 //					centerNode.setMeepleSpot(false);
-					centerNode.getPlayer().returnMeeple();
-					
-				}
-				if (state == State.GAME_OVER) {
-					centerNode.getPlayer().addScore(score);
+						centerNode.getPlayer().returnMeeple();
+
+					}
+					if (state == State.GAME_OVER) {
+						centerNode.getPlayer().addScore(score);
+					}
 				}
 			}
 			// After adding the points to the overall points of the player, set the score to
 			// 1 again
-			
+
 		}
 	}
 
