@@ -347,9 +347,8 @@ public class Gameboard extends Observable<Gameboard> {
 				// Meeples are just returned in case of state == State.GAME_OVER
 				if (score == 9) {
 					centerNode.getPlayer().addScore(score);
-//					centerNode.setMeepleSpot(false);
 					centerNode.getPlayer().returnMeeple();
-
+					centerNode.setPlayer(null);
 				}
 				if (state == State.GAME_OVER) {
 					centerNode.getPlayer().addScore(score);
