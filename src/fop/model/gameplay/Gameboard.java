@@ -331,7 +331,7 @@ public class Gameboard extends Observable<Gameboard> {
 			FeatureNode centerNode = currentTile.getNode(Position.CENTER);
 			if (centerNode == null)
 				continue;
-			if (centerNode.getType() == FeatureType.MONASTERY || centerNode.hasMeeple()) {
+			if (centerNode.getType() == FeatureType.MONASTERY && centerNode.hasMeeple()) {
 				int score = 0;
 				int x = currentTile.x;
 				int y = currentTile.y;
