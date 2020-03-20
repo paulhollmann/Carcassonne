@@ -41,7 +41,6 @@ public class Resources implements GameConstants {
 			instance = new Resources();
 			instance.load();
 		}
-
 		return instance;
 	}
 
@@ -55,13 +54,10 @@ public class Resources implements GameConstants {
 			return true;
 
 		try {
-
 			// Load font
 			celticFont = loadFont("celtic.ttf");
-
 			// Load score entries
 			loadScoreEntries();
-
 			resourcesLoaded = true;
 			return true;
 		} catch (Exception ex) {
@@ -118,7 +114,7 @@ public class Resources implements GameConstants {
 	 * eine Exception auftreten, kann diese ausgegeben werden, sie sollte aber nicht
 	 * weitergegeben werden, da sonst das Laden der restlichen Resourcen abgebrochen
 	 * wird ({@link #load()}).
-	 * 
+	 *
 	 * @throws IOException wenn irgentetwas schief läuft
 	 *
 	 * @see ScoreEntry#read(String)
@@ -152,11 +148,9 @@ public class Resources implements GameConstants {
 	 */
 
 	public void addScoreEntry(ScoreEntry scoreEntry) {
-		// TODO
 		if (scoreEntry != null)
 			scoreEntries.add(scoreEntry);
 		scoreEntries.sort((s1, s2) -> s1.getScore() - s2.getScore());
-		// TODO check sorting maybe wrong way
 	}
 
 	/**
