@@ -331,7 +331,7 @@ public class Gameboard extends Observable<Gameboard> {
 			FeatureNode centerNode = currentTile.getNode(Position.CENTER);
 			if (centerNode == null)
 				continue;
-			if (centerNode.getType() == FeatureType.MONASTERY) {
+			if (centerNode.getType() == FeatureType.MONASTERY || centerNode.hasMeeple()) {
 				int score = 0;
 				int x = currentTile.x;
 				int y = currentTile.y;
@@ -345,16 +345,14 @@ public class Gameboard extends Observable<Gameboard> {
 
 				// Points are given if the landscape is complete or the game is over
 				// Meeples are just returned in case of state == State.GAME_OVER
-				if (centerNode.hasMeeple()) {
-					if (score == 9) {
-						centerNode.getPlayer().addScore(score);
+				if (score == 9) {
+					centerNode.getPlayer().addScore(score);
 //					centerNode.setMeepleSpot(false);
-						centerNode.getPlayer().returnMeeple();
+					centerNode.getPlayer().returnMeeple();
 
-					}
-					if (state == State.GAME_OVER) {
-						centerNode.getPlayer().addScore(score);
-					}
+				}
+				if (state == State.GAME_OVER) {
+					centerNode.getPlayer().addScore(score);
 				}
 			}
 			// After adding the points to the overall points of the player, set the score to
@@ -413,10 +411,10 @@ public class Gameboard extends Observable<Gameboard> {
 			List<Edge<FeatureType>> edges = graph.getEdges(node);
 			for (Edge<FeatureType> edge : edges) {
 				Node<FeatureType> nextNode = edge.getOtherNode(node);
-				if (!visitedNodes.contains(nextNode)) {
-					queue.push(nextNode);
-					visitedNodes.add(nextNode);
-				}
+//				if (!visitedNodes.contains(nextNode)) {
+//					queue.push(nextNode);
+//					visitedNodes.add(nextNode);
+//				}
 			}
 		}
 
