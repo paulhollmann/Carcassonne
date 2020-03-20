@@ -42,7 +42,7 @@ public class ScoreEntry implements Comparable<ScoreEntry> {
 	}
 
 	/**
-	 * prints a new highscore entry
+	 * prints a new high score entry
 	 *
 	 * @param printWriter
 	 */
@@ -53,24 +53,20 @@ public class ScoreEntry implements Comparable<ScoreEntry> {
 
 	/**
 	 * reads a score entry and checks if it is allowed
-	 *
 	 * @param line
-	 * @return
+	 * @return a new ScoreEntry iff valid else null
 	 */
 	public static ScoreEntry read(String line) {
 		// TODO
-
 		try {
 			String[] data = line.split(";");
 			if (!data[0].isEmpty())
 				if (Long.parseLong(data[1]) >= 0)
 					if (Integer.parseInt(data[2]) >= 0)
 						return new ScoreEntry(data[0], Integer.parseInt(data[2]), new Date(Long.parseLong(data[1])));
-
 		} catch (Exception e) {
 			return null;
 		}
-
 		return null;
 	}
 
@@ -103,7 +99,7 @@ public class ScoreEntry implements Comparable<ScoreEntry> {
 
 	/**
 	 * Creates a string array
-	 * 
+	 *
 	 * @return the values as an string array
 	 */
 	public String[] toArray() {
