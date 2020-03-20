@@ -150,7 +150,7 @@ public class Resources implements GameConstants {
 	public void addScoreEntry(ScoreEntry scoreEntry) {
 		if (scoreEntry != null)
 			scoreEntries.add(scoreEntry);
-		scoreEntries.sort((s1, s2) -> s1.getScore() - s2.getScore());
+		scoreEntries.sort((s1, s2) -> s2.getScore() - s1.getScore());
 	}
 
 	/**
