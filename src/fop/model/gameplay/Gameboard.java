@@ -16,6 +16,8 @@ import java.util.ArrayDeque;
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.SortedMap;
+import java.util.TreeMap;
 
 import fop.base.Edge;
 import fop.base.Node;
@@ -357,7 +359,6 @@ public class Gameboard extends Observable<Gameboard> {
 			}
 			// After adding the points to the overall points of the player, set the score to
 			// 1 again
-
 		}
 	}
 
@@ -397,11 +398,27 @@ public class Gameboard extends Observable<Gameboard> {
 		boolean completed = true; // Is the feature completed? Is set to false if a node is visited that does not
 									// connect to any other tile
 
+		///// take first feature node into queue
 		queue.push(nodeList.remove(0));
 		// Iterate as long as the queue is not empty
 		// Remember: queue defines a connected graph
 
 		// TODO
+		SortedMap<Player, Integer> players = new TreeMap<Player, Integer>();
+		while (!queue.isEmpty()) {
+			FeatureNode node = (FeatureNode) queue.pop();
+			if (node.hasMeeple())
+				node.getPlayer();
+
+			List<Edge<FeatureType>> edges = graph.getEdges(node);
+			for (Edge<FeatureType> edge : edges) {
+				Node<FeatureType> nextNode = edge.getOtherNode(node);
+				if (!visitedNodes.contains(nextNode)) {
+					queue.push(nextNode);
+					visitedNodes.add(nextNode);
+				}
+			}
+		}
 
 		// Hint:
 		// If there is one straight positioned node that does not connect to another
