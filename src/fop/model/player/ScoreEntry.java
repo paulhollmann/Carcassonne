@@ -12,9 +12,9 @@ public class ScoreEntry implements Comparable<ScoreEntry> {
 	/**
 	 * creates a score entry
 	 *
-	 * @param name
-	 * @param score
-	 * @param date
+	 * @param name the name of the player
+	 * @param score the score of the player
+	 * @param date the date of the game
 	 */
 	public ScoreEntry(String name, int score, Date date) {
 		this.name = name;
@@ -25,7 +25,7 @@ public class ScoreEntry implements Comparable<ScoreEntry> {
 	/**
 	 * creates a score entry via player
 	 *
-	 * @param player
+	 * @param player the player thats score should be saved
 	 */
 	public ScoreEntry(Player player) {
 		this.name = player.getName();
@@ -44,7 +44,7 @@ public class ScoreEntry implements Comparable<ScoreEntry> {
 	/**
 	 * prints a new high score entry
 	 *
-	 * @param printWriter
+	 * @param printWriter the printWriter used to print
 	 */
 	public void write(PrintWriter printWriter) {
 		// TODO
@@ -53,7 +53,7 @@ public class ScoreEntry implements Comparable<ScoreEntry> {
 
 	/**
 	 * reads a score entry and checks if it is allowed
-	 * @param line
+	 * @param line the file line to be evaluated
 	 * @return a new ScoreEntry iff valid else null
 	 */
 	public static ScoreEntry read(String line) {
@@ -73,7 +73,7 @@ public class ScoreEntry implements Comparable<ScoreEntry> {
 	/**
 	 * returns the current Date
 	 *
-	 * @return
+	 * @return the date
 	 */
 	public Date getDate() {
 		return date;
@@ -82,7 +82,7 @@ public class ScoreEntry implements Comparable<ScoreEntry> {
 	/**
 	 * returns the name
 	 *
-	 * @return
+	 * @return the name
 	 */
 	public String getName() {
 		return this.name;
@@ -91,7 +91,7 @@ public class ScoreEntry implements Comparable<ScoreEntry> {
 	/**
 	 * returns the score
 	 *
-	 * @return
+	 * @return the score
 	 */
 	public int getScore() {
 		return this.score;

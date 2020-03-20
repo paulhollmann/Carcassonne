@@ -122,7 +122,6 @@ public class Resources implements GameConstants {
 	 */
 
 	private void loadScoreEntries() throws IOException {
-		// TODO
 		scoreEntries = new ArrayList<ScoreEntry>();
 		BufferedReader br = new BufferedReader(new FileReader(HIGHSCORE_FILE));
 		String line = "";
@@ -133,7 +132,6 @@ public class Resources implements GameConstants {
 		}
 		br.close();
 		scoreEntries.sort((s1, s2) -> s2.getScore() - s1.getScore());
-		// TODO check sorting maybe wrong way
 	}
 
 	/**
@@ -154,7 +152,8 @@ public class Resources implements GameConstants {
 	}
 
 	/**
-	 * @throws IOException
+	 * deletes the file and the data
+	 * @throws IOException if FILE can not be loaded
 	 */
 	public void clearEntries() throws IOException {
 		PrintWriter pw = new PrintWriter(HIGHSCORE_FILE);
@@ -163,10 +162,20 @@ public class Resources implements GameConstants {
 		loadScoreEntries();
 	}
 
+
+	/**
+	 * @return a list of all entries
+	 */
 	public List<ScoreEntry> getScoreEntries() {
 		return scoreEntries;
 	}
 
+	/**
+	 * @param name file path
+	 * @return the loaded font
+	 * @throws IOException if loading problem
+	 * @throws FontFormatException if wrong format
+	 */
 	private Font loadFont(String name) throws IOException, FontFormatException {
 		InputStream is = Resources.class.getClassLoader().getResourceAsStream(name);
 		Font f = Font.createFont(Font.TRUETYPE_FONT, is);
@@ -175,6 +184,9 @@ public class Resources implements GameConstants {
 		return f.deriveFont(20f);
 	}
 
+	/**
+	 * @return the font
+	 */
 	public Font getCelticFont() {
 		return this.celticFont;
 	}
