@@ -338,7 +338,7 @@ public class Gameboard extends Observable<Gameboard> {
 				// Check all surrounding tiles and add the points
 				for (int j = -1; j <= 1; j++) {
 					for (int j2 = -1; j2 <= 1; j2++) {
-						if (board[x + j][y] != null)
+						if (board[x + j][y + j2] != null)
 							score++;
 					}
 				}
