@@ -347,7 +347,7 @@ public class Gameboard extends Observable<Gameboard> {
 				for (int j = -1; j <= 1; j++) {
 					for (int j2 = -1; j2 <= 1; j2++) {
 						// Test auf Brettgröße
-						if ((x + j >= 0 && x + j <= 143) || (y + j2 >= 0 && y + j2 <= 143)) { 
+						if ((x + j >= 0 && x + j <= 143) || (y + j2 >= 0 && y + j2 <= 143)) {
 							if (board[x + j][y + j2] != null) {
 								score++;
 							}
@@ -414,6 +414,24 @@ public class Gameboard extends Observable<Gameboard> {
 		// Remember: queue defines a connected graph
 
 		// TODO
+
+		List<Node<FeatureType>> visitedNodeList = new ArrayList<Node<FeatureType>>();
+		while (!queue.isEmpty()) {
+			Node<FeatureType> queueNode = queue.getFirst();
+			for (Edge<FeatureType> edge : graph.getEdges(queueNode)) {
+				Node<FeatureType> conectedNode = null;
+
+				conectedNode = edge.getOtherNode(queueNode);
+
+				if (!visitedNodeList.contains(conectedNode)) {
+					queue.push(conectedNode);
+					nodeList.remove(conectedNode);
+				}
+			}
+			visitedNodeList.add(queueNode);
+			queue.remove(queueNode);
+		}
+
 		SortedMap<Player, Integer> players = new TreeMap<Player, Integer>();
 		while (!queue.isEmpty()) {
 			FeatureNode node = (FeatureNode) queue.pop();
