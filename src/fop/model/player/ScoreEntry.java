@@ -97,13 +97,4 @@ public class ScoreEntry implements Comparable<ScoreEntry> {
 		return this.score;
 	}
 
-	/**
-	 * Creates a string array
-	 *
-	 * @return the values as an string array
-	 */
-	public String[] toArray() {
-		return new String[] { this.getDate().toString(), this.getName(), Integer.toString(this.getScore()) };
-	}
-
 }

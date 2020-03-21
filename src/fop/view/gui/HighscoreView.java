@@ -70,8 +70,8 @@ public class HighscoreView extends View {
 		scoreTable.setRowSorter(sorter);
 		sorter.setComparator(0, (s1, s2) -> {
 			try {
-				Date d1 = new SimpleDateFormat("(zzz) EEE dd MMM yyyy HH:mm:ss").parse(s1.toString());
-				Date d2 = new SimpleDateFormat("(zzz) EEE dd MMM yyyy HH:mm:ss").parse(s2.toString());
+				Date d1 = new SimpleDateFormat("EEE dd MMM yyyy HH:mm:ss").parse(s1.toString());
+				Date d2 = new SimpleDateFormat("EEE dd MMM yyyy HH:mm:ss").parse(s2.toString());
 				return (int) (d1.getTime() - d2.getTime());
 			} catch (Exception e) {
 				return 0;
