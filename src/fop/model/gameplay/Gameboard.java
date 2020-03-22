@@ -79,12 +79,7 @@ public class Gameboard extends Observable<Gameboard> {
 			if (t.getNode(TOP).getType() == ROAD) {
 				graph.addEdge(t.getNode(TOPLEFT), topTile.getNode(BOTTOMLEFT));
 				graph.addEdge(t.getNode(TOPRIGHT), topTile.getNode(BOTTOMRIGHT));
-			} else if (t.getNode(LEFT).getType() == ROAD
-					&& topTile.getNode(LEFT).getType() == ROAD)
-				graph.addEdge(t.getNode(TOPLEFT), topTile.getNode(BOTTOMLEFT));
-			else if (t.getNode(RIGHT).getType() == ROAD
-					&& topTile.getNode(RIGHT).getType() == ROAD)
-				graph.addEdge(t.getNode(TOPRIGHT), topTile.getNode(BOTTOMRIGHT));
+			}
 		}
 
 		// Check left tile
@@ -96,12 +91,7 @@ public class Gameboard extends Observable<Gameboard> {
 			if (t.getNode(LEFT).getType() == ROAD) {
 				graph.addEdge(t.getNode(TOPLEFT), leftTile.getNode(TOPRIGHT));
 				graph.addEdge(t.getNode(BOTTOMLEFT), leftTile.getNode(BOTTOMRIGHT));
-			} else if (t.getNode(TOP).getType() == ROAD
-					&& leftTile.getNode(TOP).getType() == ROAD)
-				graph.addEdge(t.getNode(TOPLEFT), leftTile.getNode(TOPRIGHT));
-			else if (t.getNode(BOTTOM).getType() == ROAD
-					&& leftTile.getNode(BOTTOM).getType() == ROAD)
-				graph.addEdge(t.getNode(BOTTOMLEFT), leftTile.getNode(BOTTOMRIGHT));
+			}
 		}
 
 		// Check right tile
@@ -113,12 +103,7 @@ public class Gameboard extends Observable<Gameboard> {
 			if (t.getNode(RIGHT).getType() == ROAD) {
 				graph.addEdge(t.getNode(TOPRIGHT), rightTile.getNode(TOPLEFT));
 				graph.addEdge(t.getNode(BOTTOMRIGHT), rightTile.getNode(BOTTOMLEFT));
-			} else if (t.getNode(TOP).getType() == ROAD
-					&& rightTile.getNode(TOP).getType() == ROAD)
-				graph.addEdge(t.getNode(TOPRIGHT), rightTile.getNode(TOPLEFT));
-			else if (t.getNode(BOTTOM).getType() == ROAD
-					&& rightTile.getNode(BOTTOM).getType() == ROAD)
-				graph.addEdge(t.getNode(BOTTOMRIGHT), rightTile.getNode(BOTTOMLEFT));
+			}
 		}
 
 		// Check bottom tile
@@ -130,12 +115,7 @@ public class Gameboard extends Observable<Gameboard> {
 			if (t.getNode(BOTTOM).getType() == ROAD) {
 				graph.addEdge(t.getNode(BOTTOMLEFT), bottomTile.getNode(TOPLEFT));
 				graph.addEdge(t.getNode(BOTTOMRIGHT), bottomTile.getNode(TOPRIGHT));
-			} else if (t.getNode(LEFT).getType() == ROAD
-					&& bottomTile.getNode(LEFT).getType() == ROAD)
-				graph.addEdge(t.getNode(BOTTOMLEFT), bottomTile.getNode(TOPLEFT));
-			else if (t.getNode(RIGHT).getType() == ROAD
-					&& bottomTile.getNode(RIGHT).getType() == ROAD)
-				graph.addEdge(t.getNode(BOTTOMRIGHT), bottomTile.getNode(TOPRIGHT));
+			}
 		}
 
 		// This might be helpful:
