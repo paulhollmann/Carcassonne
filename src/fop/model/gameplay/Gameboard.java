@@ -457,15 +457,70 @@ public class Gameboard extends Observable<Gameboard> {
 		}
 		return null;
 	}
-	
+
 	/**
 	 * Returns Position for a given node.
-	 * @param node
+	 * 
+	 * @param node A FeatureNode
 	 * @return Position
 	 */
 	private Position getNodePositionOnTile(FeatureNode node) {
 		Tile t = getTileContainingNode(node);
 		return t.getPositionOfNode(node);
+	}
+
+	/**
+	 * Hilfsmethode zur Bestimmung der zu überprüfenden Nachbar-Tiles
+	 * 
+	 * @param node FeatureNode
+	 * @return Vector
+	 */
+	private Vector getPositionVector(FeatureNode node) {
+		Position p = getNodePositionOnTile(node);
+		switch (p) {
+		case BOTTOM:
+			return new Vector(0, -1);
+		case LEFT:
+			return new Vector(-1, 0);
+		case TOP:
+			return new Vector(0, 1);
+		case RIGHT:
+			return new Vector(1, 0);
+		case BOTTOMRIGHT:
+			return new Vector(1, -1);
+		case BOTTOMLEFT:
+			return new Vector(-1, -1);
+		case TOPRIGHT:
+			return new Vector(1, 1);
+		case TOPLEFT:
+			return new Vector(-1, 1);
+		default:
+			return null;
+		}
+	}
+
+	/**
+	 * Testet ob Node an einer freien Kante eines Tiles liegt. In diesem Fall ist
+	 * die zugehörige Straße/Wiese/Stadt nicht abgeschlossen.
+	 * 
+	 * @param node FeatureNode
+	 * @return true wenn nicht abgeschlossen
+	 */
+	private boolean isNodeOpen(FeatureNode node) {
+		Tile t = getTileContainingNode(node);
+		Vector v = getPositionVector(node);
+		// Testet ob in Richtung des Vektors ein Tile existiert
+		if (v.x != 0) {
+			if (board[t.x + v.x][t.y] == null) {
+				return true;
+			}
+		}
+		if (v.y != 0) {
+			if (board[t.x][t.y + v.y] == null) {
+				return true;
+			}
+		}
+		return false;
 	}
 
 	/**
