@@ -457,6 +457,16 @@ public class Gameboard extends Observable<Gameboard> {
 		}
 		return null;
 	}
+	
+	/**
+	 * Returns Position for a given node.
+	 * @param node
+	 * @return Position
+	 */
+	private Position getNodePositionOnTile(FeatureNode node) {
+		Tile t = getTileContainingNode(node);
+		return t.getPositionOfNode(node);
+	}
 
 	/**
 	 * Returns the spots on the most recently placed tile on which it is allowed to

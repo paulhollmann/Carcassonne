@@ -87,6 +87,21 @@ public class Tile {
 	public FeatureNode getNode(Position position) {
 		return nodes.get(position);
 	}
+	
+	/**
+	 * returns Position for a given node on tile
+	 * 
+	 * @param node
+	 * @return
+	 */
+	public Position getPositionOfNode(FeatureNode node) {
+		for (Position p : nodes.keySet()) {
+			if (nodes.get(p) == node) {
+				return p;
+			}
+		}
+		return null;
+	}
 
 	/**
 	 * checks if given node is available
