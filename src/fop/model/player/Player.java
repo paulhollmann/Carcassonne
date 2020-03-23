@@ -60,6 +60,13 @@ public class Player implements PlayerMethods {
 		meeples++;
 	}
 
+	/*
+	 * This method iterates over the gameboard and places a tile at the first possible place
+	 * 
+	 * @param Gameplay
+	 * @param Tile
+	 */
+	
 	public void draw(GamePlay gp, Tile tile) {
 		GameController gc = gp.getGameController();
 		// TODO
@@ -82,6 +89,12 @@ public class Player implements PlayerMethods {
 		}
 	}
 
+	/*
+	 * This method places if possible a Meeple on the newest tile on the gameboard
+	 * 
+	 * @param GamePlay
+	 */
+	
 	public void placeMeeple(GamePlay gp) {
 		GameController gc = gp.getGameController();
 		// TODO
