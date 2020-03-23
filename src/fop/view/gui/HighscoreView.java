@@ -2,24 +2,16 @@ package fop.view.gui;
 
 import java.awt.event.ActionEvent;
 import java.text.SimpleDateFormat;
-import java.util.Comparator;
+import java.util.Date;
 import java.util.LinkedList;
 
-import javax.swing.ButtonGroup;
 import javax.swing.JButton;
-import javax.swing.JComponent;
 import javax.swing.JLabel;
-import javax.swing.JRadioButton;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
-import javax.swing.table.TableColumn;
-import javax.swing.text.AttributeSet;
-import javax.swing.text.Document;
-import javax.swing.text.Element;
-import javax.swing.text.TableView.TableRow;
+import javax.swing.table.TableModel;
+import javax.swing.table.TableRowSorter;
 
-import fop.controller.GameController;
-import fop.model.interfaces.GameConstants;
 import fop.model.interfaces.GameMethods;
 import fop.model.interfaces.MessagesConstants;
 import fop.model.player.ScoreEntry;
@@ -31,15 +23,11 @@ import fop.view.components.gui.Resources;
  *
  */
 public class HighscoreView extends View {
-
 	private JButton btnBack;
 	private JButton btnClear;
 	private JTable scoreTable;
 	private JLabel lblTitle;
 	private JScrollPane scrollPane;
-	private String[]  headerData;
-	
-	
 
 	public HighscoreView(GameWindow gameWindow) {
 		super(gameWindow);
@@ -62,29 +50,38 @@ public class HighscoreView extends View {
 		btnBack = createButton("Back");
 		btnClear = createButton("Delete");
 		lblTitle = createLabel("Highscores", 45, true);
-
-		
 		// TODO
-
 		Resources resources = Resources.getInstance();
 		String[][] rowData = new String[resources.getScoreEntries().size()][3];
 		LinkedList<ScoreEntry> localScores = new LinkedList<>(resources.getScoreEntries());
 		int i = 0;
 		for (ScoreEntry se : localScores) {
-			rowData[i] = se.toArray();
+			rowData[i][0] =  new SimpleDateFormat("(zzz) EEE dd MMM yyyy HH:mm:ss").format(se.getDate());
+			rowData[i][1] = se.getName();
+			rowData[i][2] = Integer.toString(se.getScore());
 			i++;
 		}
-		
-		
-		headerData = new String[]{"Date", "Name", "Score"};
+
+		Object[] headerData = new Object[] { "Date", "Name", "Score" };
 		scoreTable = new JTable(rowData, headerData);
+		scoreTable.setAutoCreateRowSorter(true);
+		scoreTable.setDefaultEditor(Object.class, null);
+		TableRowSorter<TableModel> sorter = new TableRowSorter<>(scoreTable.getModel());
+		scoreTable.setRowSorter(sorter);
+		sorter.setComparator(0, (s1, s2) -> {
+			try {
+				Date d1 = new SimpleDateFormat("EEE dd MMM yyyy HH:mm:ss").parse(s1.toString());
+				Date d2 = new SimpleDateFormat("EEE dd MMM yyyy HH:mm:ss").parse(s2.toString());
+				return (int) (d1.getTime() - d2.getTime());
+			} catch (Exception e) {
+				return 0;
+			}
+		});
+		sorter.sort();
 		scrollPane = new JScrollPane(scoreTable);
-
 		add(scrollPane);
-		
-		}
-	
 
+	}
 
 	@Override
 	public void actionPerformed(ActionEvent actionEvent) {
