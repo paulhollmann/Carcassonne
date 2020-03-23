@@ -56,7 +56,7 @@ public class HighscoreView extends View {
 		LinkedList<ScoreEntry> localScores = new LinkedList<>(resources.getScoreEntries());
 		int i = 0;
 		for (ScoreEntry se : localScores) {
-			rowData[i][0] =  new SimpleDateFormat("(zzz) EEE dd MMM yyyy HH:mm:ss").format(se.getDate());
+			rowData[i][0] =  new SimpleDateFormat("EEE dd MMM yyyy HH:mm:ss").format(se.getDate());
 			rowData[i][1] = se.getName();
 			rowData[i][2] = Integer.toString(se.getScore());
 			i++;
