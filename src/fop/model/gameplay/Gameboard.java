@@ -14,10 +14,13 @@ import static fop.model.tile.Position.TOPRIGHT;
 
 import java.util.ArrayDeque;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.SortedMap;
 import java.util.TreeMap;
+import java.util.TreeSet;
 
 import fop.base.Edge;
 import fop.base.Node;
@@ -378,61 +381,99 @@ public class Gameboard extends Observable<Gameboard> {
 	public void calculatePoints(FeatureType type, State state) {
 		List<Node<FeatureType>> nodeList = new ArrayList<>(graph.getNodes(type));
 
-		// queue defines the connected graph. If this queue is empty, every node in this
-		// graph will be visited.
-		// if nodeList is non-empty, insert the next node of nodeList into this queue
-		ArrayDeque<Node<FeatureType>> queue = new ArrayDeque<>();
+		while (!nodeList.isEmpty()) {
 
-		int score = 0;
-		boolean completed = true; // Is the feature completed? Is set to false if a node is
-									// visited that does not
-									// connect to any other tile
+			// queue defines the connected graph. If this queue is empty, every node in this
+			// graph will be visited.
+			// if nodeList is non-empty, insert the next node of nodeList into this queue
+			ArrayDeque<Node<FeatureType>> queue = new ArrayDeque<>();
 
-		///// take first feature node into queue
-		queue.push(nodeList.remove(0));
-		// Iterate as long as the queue is not empty
-		// Remember: queue defines a connected graph
+			int score = 0;
+			boolean completed = true; // Is the feature completed? Is set to false if a node is
+										// visited that does not
+										// connect to any other tile
 
-		// TODO
+			///// take first feature node into queue
+			queue.push(nodeList.remove(0));
+			// Iterate as long as the queue is not empty
+			// Remember: queue defines a connected graph
+			List<Node<FeatureType>> visitedNodeList = new ArrayList<Node<FeatureType>>();
+			while (!queue.isEmpty()) {
+				Node<FeatureType> queueNode = queue.getFirst();
+				for (Edge<FeatureType> edge : graph.getEdges(queueNode)) {
+					Node<FeatureType> conectedNode = null;
 
-		List<Node<FeatureType>> visitedNodeList = new ArrayList<Node<FeatureType>>();
-		while (!queue.isEmpty()) {
-			Node<FeatureType> queueNode = queue.getFirst();
-			for (Edge<FeatureType> edge : graph.getEdges(queueNode)) {
-				Node<FeatureType> conectedNode = null;
+					conectedNode = edge.getOtherNode(queueNode);
 
-				conectedNode = edge.getOtherNode(queueNode);
+					if (!visitedNodeList.contains(conectedNode)) {
+						queue.push(conectedNode);
+						nodeList.remove(conectedNode);
+					}
+				}
+				visitedNodeList.add(queueNode);
+				queue.remove(queueNode);
+			}
 
-				if (!visitedNodeList.contains(conectedNode)) {
-					queue.push(conectedNode);
-					nodeList.remove(conectedNode);
+			// Hint:
+			// If there is one straight positioned node that does not connect to another
+			// tile, the feature cannot be completed.
+
+			HashMap<Player, Integer> players = new HashMap<Player, Integer>();
+			HashSet<Tile> tiles = new HashSet<Tile>();
+
+			for (Node<FeatureType> n : visitedNodeList) {
+				FeatureNode node = (FeatureNode) n;
+				// Zählen der Meeple
+				if (node.hasMeeple()) {
+					Player p = node.getPlayer();
+					if (!players.containsKey(p)) {
+						players.put(p, 1);
+					} else {
+						players.put(p, players.get(p) + 1);
+					}
+				}
+				// Test auf Abgeschlossenheit
+				if (isNodeOpen(node)) {
+					completed = false;
+				}
+				// Bestimmen aller beteiligten Tiles
+				tiles.add(getTileContainingNode(node));
+
+			}
+			int max = 0;
+			for (Player p : players.keySet()) {
+				if (max < players.get(p)) {
+					max = players.get(p);
 				}
 			}
-			visitedNodeList.add(queueNode);
-			queue.remove(queueNode);
-		}
-
-		SortedMap<Player, Integer> players = new TreeMap<Player, Integer>();
-		while (!queue.isEmpty()) {
-			FeatureNode node = (FeatureNode) queue.pop();
-			if (node.hasMeeple())
-				node.getPlayer();
-
-			List<Edge<FeatureType>> edges = graph.getEdges(node);
-			for (Edge<FeatureType> edge : edges) {
-				Node<FeatureType> nextNode = edge.getOtherNode(node);
-//				if (!visitedNodes.contains(nextNode)) {
-//					queue.push(nextNode);
-//					visitedNodes.add(nextNode);
-//				}
+			// Berechnung der Punkte
+			switch (type) {
+			case ROAD:
+				score = tiles.size();
+				break;
+			case FIELDS:
+				score = tiles.size() / 4;
+				break;
+			case CASTLE:
+				// Abfrage auf Wappen fehlt noch
+				if (completed) {
+					score = tiles.size() * 2;
+				} else {
+					score = tiles.size();
+				}
+				break;
+			default:
+				break;
+			}
+			// Zuschreiben der Punkte
+			if (completed || state == State.GAME_OVER) {
+				for (Player p : players.keySet()) {
+					if (max == players.get(p)) {
+						p.addScore(score);
+					}
+				}
 			}
 		}
-
-		// Hint:
-		// If there is one straight positioned node that does not connect to another
-		// tile, the feature cannot be completed.
-
-		// TODO
 	}
 
 	/**
