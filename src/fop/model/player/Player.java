@@ -1,6 +1,7 @@
 package fop.model.player;
 
 import java.util.Random;
+import java.util.ArrayList;
 
 import fop.controller.GameController;
 import fop.model.gameplay.GamePlay;
@@ -67,9 +68,9 @@ public class Player implements PlayerMethods {
 		
 		//x direction
 		outter:
-		for(int x=0;x<board.length;x++) {
+		for(int x=1;x<board.length-1;x++) {
 			//y direction
-			for(int y=0;y<board.length;y++) {
+			for(int y=1;y<board.length-1;y++) {
 				if(gc.getGameBoard().isTileAllowed(tile, x, y)) {
 					gc.getGameBoard().newTile(tile, x, y);
 					break outter;
@@ -91,12 +92,11 @@ public class Player implements PlayerMethods {
 		else {
 			//gc.getGameBoard().getMeepleSpots();
 			boolean[] meepleSpots = gc.getGameBoard().getMeepleSpots().clone();
-			
-			int trueSpots = 0;
+			ArrayList<Integer> trueIndexes = new ArrayList<>();
 			
 			for(int i =0;i<gc.getGameBoard().getMeepleSpots().length;i++) {
 				if(meepleSpots[i]) {
-					trueSpots += 1;
+					trueIndexes.add(i);
 				}
 				else {
 					//Do nothing
@@ -104,8 +104,36 @@ public class Player implements PlayerMethods {
 			}
 			
 			Random random = new Random();
-			int spot = random.nextInt(trueSpots);
-			//gp.placeMeeple(spot);
+			int spot = random.nextInt(trueIndexes.size());
+			int positionIndex = trueIndexes.get(spot);
+			
+			if(positionIndex == 0) {
+				gp.placeMeeple(Position.TOPLEFT);
+			}
+			else if(positionIndex == 1) {
+				gp.placeMeeple(Position.TOP);
+			}
+			else if(positionIndex == 2) {
+				gp.placeMeeple(Position.TOPRIGHT);
+			}
+			else if(positionIndex == 3) {
+				gp.placeMeeple(Position.LEFT);
+			}
+			else if(positionIndex == 4) {
+				gp.placeMeeple(Position.CENTER);
+			}
+			else if(positionIndex == 5) {
+				gp.placeMeeple(Position.RIGHT);
+			}
+			else if(positionIndex == 6) {
+				gp.placeMeeple(Position.BOTTOMLEFT);
+			}
+			else if(positionIndex == 7) {
+				gp.placeMeeple(Position.BOTTOM);
+			}
+			else {
+				gp.placeMeeple(Position.BOTTOMRIGHT);
+			}						
 		}
 		// to place a meeple, call gp.placeMeeple(...).
 	}
