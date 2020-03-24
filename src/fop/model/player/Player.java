@@ -72,18 +72,27 @@ public class Player implements PlayerMethods {
 		// TODO
 		
 		Tile[/*x*/][/*y*/] board = gc.getGameBoard().getBoard();
+		boolean positionUnavailable;
 		
 		//x direction
 		outter:
 		for(int x=1;x<board.length-1;x++) {
 			//y direction
 			for(int y=1;y<board.length-1;y++) {
-				if(gc.getGameBoard().isTileAllowed(tile, x, y)) {
+				positionUnavailable = false;
+				inner:
+				for(int i=0;i<gc.getGameBoard().getTiles().size();i++) {
+					int xOfExistingTile = gc.getGameBoard().getTiles().get(i).x;
+					int yOfExistingTile = gc.getGameBoard().getTiles().get(i).y;
+					
+					if(x == xOfExistingTile && y == yOfExistingTile) {
+						positionUnavailable = true;
+						break inner;
+					}
+				}
+				if(!positionUnavailable && gc.getGameBoard().isTileAllowed(tile, x, y)) {
 					gc.getGameBoard().newTile(tile, x, y);
 					break outter;
-				}
-				else {
-					//Do nothing
 				}
 			}
 		}
