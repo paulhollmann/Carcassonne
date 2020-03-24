@@ -379,9 +379,12 @@ public class Gameboard extends Observable<Gameboard> {
 	 * @param state The current game state.
 	 */
 	public void calculatePoints(FeatureType type, State state) {
+		System.out.println("=======================================");
 		List<Node<FeatureType>> nodeList = new ArrayList<>(graph.getNodes(type));
 
 		while (!nodeList.isEmpty()) {
+			System.out.println("------------------- Zusammenhangskomponente "
+					+ type.toString() + " ---------------------");
 
 			// queue defines the connected graph. If this queue is empty, every node in this
 			// graph will be visited.
@@ -440,12 +443,18 @@ public class Gameboard extends Observable<Gameboard> {
 				tiles.add(getTileContainingNode(node));
 
 			}
+			
+			//Log der Zusammenhangskomponente für Testzwecke
+			logTiles(tiles);
+			
 			int max = 0;
 			for (Player p : players.keySet()) {
 				if (max < players.get(p)) {
 					max = players.get(p);
 				}
 			}
+			
+			
 			// Berechnung der Punkte
 			switch (type) {
 			case ROAD:
@@ -455,11 +464,10 @@ public class Gameboard extends Observable<Gameboard> {
 				score = tiles.size() / 4;
 				break;
 			case CASTLE:
-				// Abfrage auf Wappen fehlt noch
 				if (completed) {
-					score = tiles.size() * 2;
+					score = (tiles.size() + amountCoatOfArms(tiles)) * 2;
 				} else {
-					score = tiles.size();
+					score = tiles.size() + amountCoatOfArms(tiles);
 				}
 				break;
 			default:
@@ -469,11 +477,44 @@ public class Gameboard extends Observable<Gameboard> {
 			if (completed || state == State.GAME_OVER) {
 				for (Player p : players.keySet()) {
 					if (max == players.get(p)) {
+						System.out.println("SPIELER " + p.getColor().toString() + " BEKOMMT SCORE: " + score);
 						p.addScore(score);
 					}
 				}
 			}
+			if (completed && state != State.GAME_OVER) {
+				returnAllMeepels(visitedNodeList);
+			}
 		}
+	}
+
+	private void returnAllMeepels(List<Node<FeatureType>> visitedNodeList) {
+		for (Node<FeatureType> n : visitedNodeList) {
+			FeatureNode node = (FeatureNode) n;
+			if (node.hasMeeple()) {
+				Player p = node.getPlayer();
+				node.setPlayer(null);
+				p.returnMeeple();
+			}
+		}
+	}
+	
+	private int amountCoatOfArms (HashSet<Tile> tiles) {
+		int count = 0;
+		for (Tile t : tiles) {
+			if (t.hasPennant()) {
+				count ++;
+			}
+		}
+		return count;
+	}
+	
+	private void logTiles (HashSet<Tile> tiles) {
+		System.out.print("Tile: ");
+		for (Tile t : tiles) {
+			System.out.print("[ " + t.x + ", " +  t.y + " ] ");
+		}
+		System.out.println();
 	}
 
 	/**
@@ -518,23 +559,24 @@ public class Gameboard extends Observable<Gameboard> {
 	 */
 	private Vector getPositionVector(FeatureNode node) {
 		Position p = getNodePositionOnTile(node);
+		// System.out.println("    Node Position auf Tile: " + p.toString());
 		switch (p) {
 		case BOTTOM:
-			return new Vector(0, -1);
+			return new Vector(0, 1);
 		case LEFT:
 			return new Vector(-1, 0);
 		case TOP:
-			return new Vector(0, 1);
+			return new Vector(0, -1);
 		case RIGHT:
 			return new Vector(1, 0);
 		case BOTTOMRIGHT:
-			return new Vector(1, -1);
-		case BOTTOMLEFT:
-			return new Vector(-1, -1);
-		case TOPRIGHT:
 			return new Vector(1, 1);
-		case TOPLEFT:
+		case BOTTOMLEFT:
 			return new Vector(-1, 1);
+		case TOPRIGHT:
+			return new Vector(1, -1);
+		case TOPLEFT:
+			return new Vector(-1, -1);
 		default:
 			return null;
 		}
