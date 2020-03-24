@@ -14,10 +14,13 @@ import static fop.model.tile.Position.TOPRIGHT;
 
 import java.util.ArrayDeque;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.SortedMap;
 import java.util.TreeMap;
+import java.util.TreeSet;
 
 import fop.base.Edge;
 import fop.base.Node;
@@ -382,63 +385,142 @@ public class Gameboard extends Observable<Gameboard> {
 	 * @param state The current game state.
 	 */
 	public void calculatePoints(FeatureType type, State state) {
+		System.out.println("=======================================");
 		List<Node<FeatureType>> nodeList = new ArrayList<>(graph.getNodes(type));
 
-		// queue defines the connected graph. If this queue is empty, every node in this
-		// graph will be visited.
-		// if nodeList is non-empty, insert the next node of nodeList into this queue
-		ArrayDeque<Node<FeatureType>> queue = new ArrayDeque<>();
+		while (!nodeList.isEmpty()) {
+			System.out.println("------------------- Zusammenhangskomponente "
+					+ type.toString() + " ---------------------");
 
-		int score = 0;
-		boolean completed = true; // Is the feature completed? Is set to false if a node is
-									// visited that does not
-									// connect to any other tile
+			// queue defines the connected graph. If this queue is empty, every node in this
+			// graph will be visited.
+			// if nodeList is non-empty, insert the next node of nodeList into this queue
+			ArrayDeque<Node<FeatureType>> queue = new ArrayDeque<>();
 
-		///// take first feature node into queue
-		queue.push(nodeList.remove(0));
-		// Iterate as long as the queue is not empty
-		// Remember: queue defines a connected graph
+			int score = 0;
+			boolean completed = true; // Is the feature completed? Is set to false if a node is
+										// visited that does not
+										// connect to any other tile
 
-		// TODO
+			///// take first feature node into queue
+			queue.push(nodeList.remove(0));
+			// Iterate as long as the queue is not empty
+			// Remember: queue defines a connected graph
+			List<Node<FeatureType>> visitedNodeList = new ArrayList<Node<FeatureType>>();
+			while (!queue.isEmpty()) {
+				Node<FeatureType> queueNode = queue.getFirst();
+				for (Edge<FeatureType> edge : graph.getEdges(queueNode)) {
+					Node<FeatureType> conectedNode = null;
 
-		List<Node<FeatureType>> visitedNodeList = new ArrayList<Node<FeatureType>>();
-		while (!queue.isEmpty()) {
-			Node<FeatureType> queueNode = queue.getFirst();
-			for (Edge<FeatureType> edge : graph.getEdges(queueNode)) {
-				Node<FeatureType> conectedNode = null;
+					conectedNode = edge.getOtherNode(queueNode);
 
-				conectedNode = edge.getOtherNode(queueNode);
+					if (!visitedNodeList.contains(conectedNode)) {
+						queue.push(conectedNode);
+						nodeList.remove(conectedNode);
+					}
+				}
+				visitedNodeList.add(queueNode);
+				queue.remove(queueNode);
+			}
 
-				if (!visitedNodeList.contains(conectedNode)) {
-					queue.push(conectedNode);
-					nodeList.remove(conectedNode);
+			// Hint:
+			// If there is one straight positioned node that does not connect to another
+			// tile, the feature cannot be completed.
+
+			HashMap<Player, Integer> players = new HashMap<Player, Integer>();
+			HashSet<Tile> tiles = new HashSet<Tile>();
+
+			for (Node<FeatureType> n : visitedNodeList) {
+				FeatureNode node = (FeatureNode) n;
+				// Zählen der Meeple
+				if (node.hasMeeple()) {
+					Player p = node.getPlayer();
+					if (!players.containsKey(p)) {
+						players.put(p, 1);
+					} else {
+						players.put(p, players.get(p) + 1);
+					}
+				}
+				// Test auf Abgeschlossenheit
+				if (isNodeOpen(node)) {
+					completed = false;
+				}
+				// Bestimmen aller beteiligten Tiles
+				tiles.add(getTileContainingNode(node));
+
+			}
+			
+			//Log der Zusammenhangskomponente für Testzwecke
+			logTiles(tiles);
+			
+			int max = 0;
+			for (Player p : players.keySet()) {
+				if (max < players.get(p)) {
+					max = players.get(p);
 				}
 			}
-			visitedNodeList.add(queueNode);
-			queue.remove(queueNode);
-		}
-
-		SortedMap<Player, Integer> players = new TreeMap<Player, Integer>();
-		while (!queue.isEmpty()) {
-			FeatureNode node = (FeatureNode) queue.pop();
-			if (node.hasMeeple())
-				node.getPlayer();
-
-			List<Edge<FeatureType>> edges = graph.getEdges(node);
-			for (Edge<FeatureType> edge : edges) {
-				Node<FeatureType> nextNode = edge.getOtherNode(node);
-//				if (!visitedNodes.contains(nextNode)) {
-//					queue.push(nextNode);
-//					visitedNodes.add(nextNode);
-//				}
+			
+			
+			// Berechnung der Punkte
+			switch (type) {
+			case ROAD:
+				score = tiles.size();
+				break;
+			case FIELDS:
+				score = tiles.size() / 4;
+				break;
+			case CASTLE:
+				if (completed) {
+					score = (tiles.size() + amountCoatOfArms(tiles)) * 2;
+				} else {
+					score = tiles.size() + amountCoatOfArms(tiles);
+				}
+				break;
+			default:
+				break;
+			}
+			// Zuschreiben der Punkte
+			if (completed || state == State.GAME_OVER) {
+				for (Player p : players.keySet()) {
+					if (max == players.get(p)) {
+						System.out.println("SPIELER " + p.getColor().toString() + " BEKOMMT SCORE: " + score);
+						p.addScore(score);
+					}
+				}
+			}
+			if (completed && state != State.GAME_OVER) {
+				returnAllMeepels(visitedNodeList);
 			}
 		}
+	}
 
-		// Hint:
-		// If there is one straight positioned node that does not connect to another
-		// tile, the feature cannot be completed.
-
-		// TODO
+	private void returnAllMeepels(List<Node<FeatureType>> visitedNodeList) {
+		for (Node<FeatureType> n : visitedNodeList) {
+			FeatureNode node = (FeatureNode) n;
+			if (node.hasMeeple()) {
+				Player p = node.getPlayer();
+				node.setPlayer(null);
+				p.returnMeeple();
+			}
+		}
+	}
+	
+	private int amountCoatOfArms (HashSet<Tile> tiles) {
+		int count = 0;
+		for (Tile t : tiles) {
+			if (t.hasPennant()) {
+				count ++;
+			}
+		}
+		return count;
+	}
+	
+	private void logTiles (HashSet<Tile> tiles) {
+		System.out.print("Tile: ");
+		for (Tile t : tiles) {
+			System.out.print("[ " + t.x + ", " +  t.y + " ] ");
+		}
+		System.out.println();
 	}
 
 	/**
@@ -483,23 +565,24 @@ public class Gameboard extends Observable<Gameboard> {
 	 */
 	private Vector getPositionVector(FeatureNode node) {
 		Position p = getNodePositionOnTile(node);
+		// System.out.println("    Node Position auf Tile: " + p.toString());
 		switch (p) {
 		case BOTTOM:
-			return new Vector(0, -1);
+			return new Vector(0, 1);
 		case LEFT:
 			return new Vector(-1, 0);
 		case TOP:
-			return new Vector(0, 1);
+			return new Vector(0, -1);
 		case RIGHT:
 			return new Vector(1, 0);
 		case BOTTOMRIGHT:
-			return new Vector(1, -1);
-		case BOTTOMLEFT:
-			return new Vector(-1, -1);
-		case TOPRIGHT:
 			return new Vector(1, 1);
-		case TOPLEFT:
+		case BOTTOMLEFT:
 			return new Vector(-1, 1);
+		case TOPRIGHT:
+			return new Vector(1, -1);
+		case TOPLEFT:
+			return new Vector(-1, -1);
 		default:
 			return null;
 		}
