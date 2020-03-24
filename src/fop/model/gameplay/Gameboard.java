@@ -74,7 +74,6 @@ public class Gameboard extends Observable<Gameboard> {
 		Tile t = board[x][y];
 
 		// Check top tile
-		// TODO
 		if (board[x][y - 1] != null) {
 			Tile topTile = board[x][y - 1];
 			graph.addEdge(t.getNode(TOP), topTile.getNode(BOTTOM));
@@ -86,7 +85,6 @@ public class Gameboard extends Observable<Gameboard> {
 		}
 
 		// Check left tile
-		// TODO
 		if (board[x - 1][y] != null) {
 			Tile leftTile = board[x - 1][y];
 			graph.addEdge(t.getNode(LEFT), leftTile.getNode(RIGHT));
@@ -98,7 +96,6 @@ public class Gameboard extends Observable<Gameboard> {
 		}
 
 		// Check right tile
-		// TODO
 		if (board[x + 1][y] != null) {
 			Tile rightTile = board[x + 1][y];
 			graph.addEdge(t.getNode(RIGHT), rightTile.getNode(LEFT));
@@ -110,7 +107,6 @@ public class Gameboard extends Observable<Gameboard> {
 		}
 
 		// Check bottom tile
-		// TODO
 		if (board[x][y + 1] != null) {
 			Tile bottomTile = board[x][y + 1];
 			graph.addEdge(t.getNode(BOTTOM), bottomTile.getNode(TOP));
@@ -153,7 +149,6 @@ public class Gameboard extends Observable<Gameboard> {
 
 		Tile[][] board = this.getBoard();
 		// Check top tile
-		// TODO
 		if (board[x][y - 1] != null) {
 			if (t.getNode(TOP).getType() == board[x][y - 1].getNode(BOTTOM).getType()) {
 				top = true;
@@ -163,7 +158,6 @@ public class Gameboard extends Observable<Gameboard> {
 			top = true;
 		}
 		// Check left tile
-		// TODO
 		if (board[x - 1][y] != null) {
 			if (t.getNode(LEFT).getType() == board[x - 1][y].getNode(RIGHT).getType()) {
 				left = true;
@@ -173,7 +167,6 @@ public class Gameboard extends Observable<Gameboard> {
 			left = true;
 		}
 		// Check right tile
-		// TODO
 		if (board[x + 1][y] != null) {
 			if (t.getNode(RIGHT).getType() == board[x + 1][y].getNode(LEFT).getType()) {
 				right = true;
@@ -183,7 +176,6 @@ public class Gameboard extends Observable<Gameboard> {
 			right = true;
 		}
 		// Check bottom tile
-		// TODO
 		if (board[x][y + 1] != null) {
 			if (t.getNode(BOTTOM).getType() == board[x][y + 1].getNode(TOP).getType()) {
 				bottom = true;
@@ -221,7 +213,6 @@ public class Gameboard extends Observable<Gameboard> {
 			int y = currentTile.y;
 
 			// check top
-			// TODO
 			if (board[x][y - 1] != null) {
 				if (isTileAllowed(newTile, x, y - 1)) {
 					return true;
@@ -242,7 +233,6 @@ public class Gameboard extends Observable<Gameboard> {
 			}
 
 			// check left
-			// TODO
 			if (board[x - 1][y] != null) {
 				if (isTileAllowed(newTile, x - 1, y)) {
 					return true;
@@ -263,7 +253,6 @@ public class Gameboard extends Observable<Gameboard> {
 			}
 
 			// check right
-			// TODO
 			if (board[x + 1][y] != null) {
 				if (isTileAllowed(newTile, x + 1, y)) {
 					return true;
@@ -284,7 +273,6 @@ public class Gameboard extends Observable<Gameboard> {
 			}
 
 			// check bottom
-			// TODO
 			if (board[x][y + 1] != null) {
 				if (isTileAllowed(newTile, x, y + 1)) {
 					return true;
