@@ -60,16 +60,15 @@ public class Player implements PlayerMethods {
 		meeples++;
 	}
 
-	/*
+	/**
 	 * This method iterates over the gameboard and places a tile at the first possible place
 	 * 
-	 * @param Gameplay
-	 * @param Tile
+	 * @param gp
+	 * @param tile
 	 */
 	
 	public void draw(GamePlay gp, Tile tile) {
 		GameController gc = gp.getGameController();
-		// TODO
 		
 		Tile[][] board = gc.getGameBoard().getBoard();
 		boolean positionAvailable;
@@ -90,13 +89,32 @@ public class Player implements PlayerMethods {
 						break inner;
 					}
 				}
-				System.out.println("Testing Tile at x: " + x + " y: " + y);
-				//System.out.println("PositionAvailable: " + positionAvailable);
-				//System.out.println("Tile Allowed: " + gc.getGameBoard().isTileAllowed(tile, x, y));
-				if(positionAvailable && gc.getGameBoard().isTileAllowed(tile, x, y)) {
-					gc.getGameBoard().newTile(tile, x, y);
-					System.out.println("AI placed a tile");
-					break outter;
+				if(positionAvailable) {
+					if(gc.getGameBoard().isTileAllowed(tile, x, y)) {
+						gc.getGameBoard().newTile(tile, x, y);
+						break outter;
+					}
+					else {
+						tile.rotateRight();
+						if(gc.getGameBoard().isTileAllowed(tile, x, y)) {
+							gc.getGameBoard().newTile(tile, x, y);
+							break outter;
+						}
+						else {
+							tile.rotateRight();
+							if(gc.getGameBoard().isTileAllowed(tile, x, y)) {
+								gc.getGameBoard().newTile(tile, x, y);
+								break outter;
+							}
+							else {
+								tile.rotateRight();
+								if(gc.getGameBoard().isTileAllowed(tile, x, y)) {
+									gc.getGameBoard().newTile(tile, x, y);
+									break outter;
+								}
+							}
+						}
+					}
 				}
 			}
 		}
@@ -128,15 +146,14 @@ public class Player implements PlayerMethods {
 		}
 	}*/
 	
-	/*
+	/**
 	 * This method places if possible a Meeple on the newest tile on the gameboard
 	 * 
-	 * @param GamePlay
+	 * @param gp
 	 */
 	
 	public void placeMeeple(GamePlay gp) {
 		GameController gc = gp.getGameController();
-		// TODO
 		// if no position is allowed, you have to call nextRound() by yourself.
 		if(gc.getGameBoard().getMeepleSpots() == null) {
 			gp.nextRound();
