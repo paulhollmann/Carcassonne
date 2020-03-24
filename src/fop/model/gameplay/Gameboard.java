@@ -154,6 +154,7 @@ public class Gameboard extends Observable<Gameboard> {
 		if (board[x][y - 1] != null) {
 			if (t.getNode(TOP).getType() == board[x][y - 1].getNode(BOTTOM).getType()) {
 				top = true;
+				System.out.println("Top not null");
 			}
 		} else {
 			topNull = true;
@@ -164,6 +165,7 @@ public class Gameboard extends Observable<Gameboard> {
 		if (board[x - 1][y] != null) {
 			if (t.getNode(LEFT).getType() == board[x - 1][y].getNode(RIGHT).getType()) {
 				left = true;
+				System.out.println("Left not null");
 			}
 		} else {
 			leftNull = true;
@@ -174,6 +176,7 @@ public class Gameboard extends Observable<Gameboard> {
 		if (board[x + 1][y] != null) {
 			if (t.getNode(RIGHT).getType() == board[x + 1][y].getNode(LEFT).getType()) {
 				right = true;
+				System.out.println("Right not null");
 			}
 		} else {
 			rightNull = true;
@@ -184,6 +187,7 @@ public class Gameboard extends Observable<Gameboard> {
 		if (board[x][y + 1] != null) {
 			if (t.getNode(BOTTOM).getType() == board[x][y + 1].getNode(TOP).getType()) {
 				bottom = true;
+				System.out.println("Bottom not null");
 			}
 		} else {
 			bottomNull = true;
@@ -194,8 +198,10 @@ public class Gameboard extends Observable<Gameboard> {
 		if (top && left && right && bottom) {
 			if (topNull && leftNull && rightNull && bottomNull) {
 				result = false;
+				System.out.println("Position has no neighbors?????????");
 			} else {
 				result = true;
+				System.out.println("Position has neighbors!!!!!!!!!!!!!");
 			}
 		}
 
