@@ -383,8 +383,8 @@ public class Gameboard extends Observable<Gameboard> {
 		List<Node<FeatureType>> nodeList = new ArrayList<>(graph.getNodes(type));
 
 		while (!nodeList.isEmpty()) {
-			System.out.println("------------------- Zusammenhangskomponente "
-					+ type.toString() + " ---------------------");
+			System.out.println(
+					"------------------- Zusammenhangskomponente " + type.toString() + " ---------------------");
 
 			// queue defines the connected graph. If this queue is empty, every node in this
 			// graph will be visited.
@@ -443,18 +443,17 @@ public class Gameboard extends Observable<Gameboard> {
 				tiles.add(getTileContainingNode(node));
 
 			}
-			
-			//Log der Zusammenhangskomponente für Testzwecke
+
+			// Log der Zusammenhangskomponente für Testzwecke
 			logTiles(tiles);
-			
+
 			int max = 0;
 			for (Player p : players.keySet()) {
 				if (max < players.get(p)) {
 					max = players.get(p);
 				}
 			}
-			
-			
+
 			// Berechnung der Punkte
 			switch (type) {
 			case ROAD:
@@ -498,21 +497,21 @@ public class Gameboard extends Observable<Gameboard> {
 			}
 		}
 	}
-	
-	private int amountCoatOfArms (HashSet<Tile> tiles) {
+
+	private int amountCoatOfArms(HashSet<Tile> tiles) {
 		int count = 0;
 		for (Tile t : tiles) {
 			if (t.hasPennant()) {
-				count ++;
+				count++;
 			}
 		}
 		return count;
 	}
-	
-	private void logTiles (HashSet<Tile> tiles) {
+
+	private void logTiles(HashSet<Tile> tiles) {
 		System.out.print("Tile: ");
 		for (Tile t : tiles) {
-			System.out.print("[ " + t.x + ", " +  t.y + " ] ");
+			System.out.print("[ " + t.x + ", " + t.y + " ] ");
 		}
 		System.out.println();
 	}
@@ -559,7 +558,7 @@ public class Gameboard extends Observable<Gameboard> {
 	 */
 	private Vector getPositionVector(FeatureNode node) {
 		Position p = getNodePositionOnTile(node);
-		// System.out.println("    Node Position auf Tile: " + p.toString());
+		// System.out.println(" Node Position auf Tile: " + p.toString());
 		switch (p) {
 		case BOTTOM:
 			return new Vector(0, 1);
