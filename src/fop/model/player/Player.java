@@ -71,7 +71,7 @@ public class Player implements PlayerMethods {
 		GameController gc = gp.getGameController();
 		// TODO
 		
-		Tile[/*x*/][/*y*/] board = gc.getGameBoard().getBoard();
+		Tile[][] board = gc.getGameBoard().getBoard();
 		boolean positionAvailable;
 		
 		//x direction
@@ -102,6 +102,32 @@ public class Player implements PlayerMethods {
 		}
 	}
 
+	/*public void draw(GamePlay gp, Tile tile) {
+		GameController gc = gp.getGameController();
+		
+		Tile[][] board = gc.getGameBoard().getBoard();
+		boolean positionAvailable = true;
+		
+		outer:
+		for(int x=1;x<board.length-1;x++) {
+			for(int y=1;y<board.length-1;y++) {
+				inner:
+				for(int i=0;i<gc.getGameBoard().getTiles().size();i++) {
+					int x2 = gc.getGameBoard().getTiles().get(i).x;
+					int y2 = gc.getGameBoard().getTiles().get(i).y;
+					if(x == x2 && y == y2) {
+						positionAvailable = false;
+						break inner;
+					}
+				}
+			System.out.println("Tile checked at x: "+x+" y: "+y);
+				if(positionAvailable = true && gc.getGameBoard().isTileAllowed(tile, x, y)) {
+					gc.getGameBoard().newTile(tile, x, y);
+				}
+			}
+		}
+	}*/
+	
 	/*
 	 * This method places if possible a Meeple on the newest tile on the gameboard
 	 * 
