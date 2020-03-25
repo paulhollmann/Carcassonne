@@ -134,7 +134,7 @@ public class Player implements PlayerMethods {
 			ArrayList<Integer> trueIndexes = new ArrayList<>();
 
 			for (int i = 0; i < gc.getGameBoard().getMeepleSpots().length; i++) {
-				if (meepleSpots[i]) {
+				if (gc.getGameBoard().getMeepleSpots()[i]) {
 					trueIndexes.add(i);
 				}
 			}
