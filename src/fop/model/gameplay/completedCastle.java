@@ -30,20 +30,4 @@ public class completedCastle {
 	public void setId(int id) {
 		this.id = id;
 	}
-
-	@Override
-	public boolean equals(Object o) {
-
-		if (o == this) {
-			return true;
-		}
-
-		if (!(o instanceof completedCastle)) {
-			return false;
-		}
-
-		completedCastle completedCastle = (completedCastle) o;
-
-		return (this.id == completedCastle.getId());
-	}
 }

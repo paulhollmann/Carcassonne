@@ -14,6 +14,7 @@ import static fop.model.tile.Position.TOPRIGHT;
 
 import java.util.ArrayDeque;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.LinkedList;
@@ -43,6 +44,7 @@ public class Gameboard extends Observable<Gameboard> {
 		tiles = new LinkedList<Tile>();
 		graph = new FeatureGraph();
 		castleIdCounter = 0;
+		completedCastles = new HashSet<completedCastle>();
 	}
 
 	// kann nicht im konstrukor erfolgen, weil erst observer gesetzt werden muss
@@ -358,21 +360,13 @@ public class Gameboard extends Observable<Gameboard> {
 	 * @param state The current game state.
 	 */
 	public void calculatePoints(State state) {
+		// state = State.GAME_OVER;
 		calculateMonasteries(state);
 		calculatePoints(CASTLE, state);
 		calculatePoints(ROAD, state);
-		calculatePoints(FIELDS, state);
-	}
-
-	/**
-	 * Calculates points for Fields (three points for each completed castle adjacent
-	 * to the Field)
-	 *
-	 * @param state The current game state.
-	 */
-	public void calculateFields() {
-		// TODO 6.3.2
-
+		if (state == State.GAME_OVER) {
+			calculatePoints(FIELDS, state);
+		}
 	}
 
 	/**
@@ -469,11 +463,12 @@ public class Gameboard extends Observable<Gameboard> {
 			}
 
 			// Abgeschlossene Städte werden gespeichert, um später offizielle Wiesenwertung
+			// zu berechnen
 			// (6.3.2) durchzuführen
 			if (officalFieldCalculation == true && state == State.GAME_OVER && type == CASTLE
 					&& completed == true) {
 				completedCastles.add(new completedCastle(visitedNodeList, castleIdCounter));
-				castleIdCounter ++;
+				castleIdCounter++;
 			}
 
 			// Log der Zusammenhangskomponente für Testzwecke
@@ -492,7 +487,11 @@ public class Gameboard extends Observable<Gameboard> {
 				score = tiles.size();
 				break;
 			case FIELDS:
-				score = tiles.size() / 4;
+				if (officalFieldCalculation == true) {
+					score = officialFieldScore(visitedNodeList);
+				} else {
+					score = tiles.size() / 4;
+				}
 				break;
 			case CASTLE:
 				if (completed) {
@@ -725,5 +724,73 @@ public class Gameboard extends Observable<Gameboard> {
 
 	public void setFeatureGraph(FeatureGraph graph) {
 		this.graph = graph;
+	}
+
+	/**
+	 * Calculates points for Fields (three points for each completed castle adjacent
+	 * to the Field)
+	 * 
+	 * @param fieldNodeList
+	 * @return
+	 *
+	 */
+	private int officialFieldScore(List<Node<FeatureType>> fieldNodeList) {
+		
+		
+		System.out.println("Start officialFieldScore");
+		// TODO 6.3.2
+		int score = 0;
+		HashSet<Integer> alreadyScoredCastleIds = new HashSet<Integer>();
+		for (Node<FeatureType> fieldNode : fieldNodeList) {
+			for (Node<FeatureType> castleNode : getAllNearbyCastleNodes(fieldNode)) {
+				for (completedCastle cc : completedCastles) {
+					if (cc.getCastleNodes().contains(castleNode)) {
+						if (!alreadyScoredCastleIds.contains(cc.getId())) {
+							alreadyScoredCastleIds.add(cc.getId());
+							score = score + 3;							
+						}
+					}
+				}
+			}
+		}
+		System.out.println("officialFieldScore für bearbeitete Wiese: " + score);
+		return score;
+
+	}
+
+	private List<Node<FeatureType>> getAllNearbyCastleNodes(Node<FeatureType> fieldNode) {
+		List<Node<FeatureType>> returnList = new ArrayList<Node<FeatureType>>();
+		Tile t = getTileContainingNode((FeatureNode) fieldNode);
+		Position p = getNodePositionOnTile((FeatureNode) fieldNode);
+		List<Position> possibleCastlePositions = getPossibleCastlePositions(p);
+		for (Position castlePosition : possibleCastlePositions) {
+			FeatureNode castleNode = (FeatureNode) t.getNode(castlePosition);
+			if (castleNode.getType() == CASTLE) {
+				returnList.add(castleNode);
+			}
+		}
+		return returnList;
+	}
+
+	private List<Position> getPossibleCastlePositions(Position p) {
+		switch (p) {
+		case BOTTOM:
+		case TOP:
+			return Arrays.asList(LEFT, RIGHT);
+		case RIGHT:
+		case LEFT:
+			return Arrays.asList(TOP, BOTTOM);
+		case BOTTOMRIGHT:
+			return Arrays.asList(BOTTOM, RIGHT);
+		case BOTTOMLEFT:
+			return Arrays.asList(BOTTOM, LEFT);
+		case TOPRIGHT:
+			return Arrays.asList(TOP, RIGHT);
+		case TOPLEFT:
+			return Arrays.asList(TOP, LEFT);
+		default:
+			return null;
+
+		}
 	}
 }
