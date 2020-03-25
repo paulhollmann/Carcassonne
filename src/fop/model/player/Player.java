@@ -129,8 +129,6 @@ public class Player implements PlayerMethods {
 		if (gc.getGameBoard().getMeepleSpots() == null) {
 			gp.nextRound();
 		} else {
-			// gc.getGameBoard().getMeepleSpots();
-			boolean[] meepleSpots = gc.getGameBoard().getMeepleSpots().clone();
 			ArrayList<Integer> trueIndexes = new ArrayList<>();
 
 			for (int i = 0; i < gc.getGameBoard().getMeepleSpots().length; i++) {
