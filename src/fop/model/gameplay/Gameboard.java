@@ -220,7 +220,7 @@ public class Gameboard extends Observable<Gameboard> {
 			int y = currentTile.y;
 
 			// check top
-			if (board[x][y - 1] != null) {
+			if (board[x][y - 1] == null) {
 				if (isTileAllowed(newTile, x, y - 1)) {
 					return true;
 				}
@@ -240,7 +240,7 @@ public class Gameboard extends Observable<Gameboard> {
 			}
 
 			// check left
-			if (board[x - 1][y] != null) {
+			if (board[x - 1][y] == null) {
 				if (isTileAllowed(newTile, x - 1, y)) {
 					return true;
 				}
@@ -260,7 +260,7 @@ public class Gameboard extends Observable<Gameboard> {
 			}
 
 			// check right
-			if (board[x + 1][y] != null) {
+			if (board[x + 1][y] == null) {
 				if (isTileAllowed(newTile, x + 1, y)) {
 					return true;
 				}
@@ -280,7 +280,7 @@ public class Gameboard extends Observable<Gameboard> {
 			}
 
 			// check bottom
-			if (board[x][y + 1] != null) {
+			if (board[x][y + 1] == null) {
 				if (isTileAllowed(newTile, x, y + 1)) {
 					return true;
 				}
