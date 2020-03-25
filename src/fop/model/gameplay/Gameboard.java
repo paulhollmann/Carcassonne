@@ -378,7 +378,7 @@ public class Gameboard extends Observable<Gameboard> {
 	 */
 	public boolean checkMissions() {
 		// TODO 6.3.3
-		// mission 1: check if one player has more than 3 completed CASTLE
+		// mission 1: check if one player has 3 more completed CASTLE the others
 		// note maybe move some elements of calculatePoints to a separate method to then
 		// check here
 
