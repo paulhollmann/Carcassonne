@@ -1,7 +1,6 @@
 package fop.model.gameplay;
 
 import static fop.model.tile.FeatureType.CASTLE;
-import static fop.model.tile.FeatureType.FIELDS;
 import static fop.model.tile.FeatureType.ROAD;
 import static fop.model.tile.Position.BOTTOM;
 import static fop.model.tile.Position.BOTTOMLEFT;
@@ -18,9 +17,6 @@ import java.util.HashMap;
 import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.List;
-import java.util.SortedMap;
-import java.util.TreeMap;
-import java.util.TreeSet;
 
 import fop.base.Edge;
 import fop.base.Node;
@@ -63,7 +59,7 @@ public class Gameboard extends Observable<Gameboard> {
 	 * Connects the nodes of all neighboring tiles facing the tile at given
 	 * coordinates x, y. It is assumed that the tile is placed according to the
 	 * rules.
-	 * 
+	 *
 	 * @param x coordinate
 	 * @param y coordinate
 	 */
@@ -129,7 +125,7 @@ public class Gameboard extends Observable<Gameboard> {
 	/**
 	 * Checks if the given tile could be placed at position x, y on the board
 	 * according to the rules.
-	 * 
+	 *
 	 * @param t The tile
 	 * @param x The x position on the board
 	 * @param y The y position on the board
@@ -203,7 +199,7 @@ public class Gameboard extends Observable<Gameboard> {
 	/**
 	 * Checks if the given tile would be allowed anywhere on the board adjacent to
 	 * other tiles and according to the rules.
-	 * 
+	 *
 	 * @param newTile The tile.
 	 * @return True if it is allowed to place the tile somewhere on the board, false
 	 *         if not.
@@ -350,7 +346,7 @@ public class Gameboard extends Observable<Gameboard> {
 	/**
 	 * Calculates points and adds them to the players score, if a feature was
 	 * completed. FIELDS are only calculated when the game is over.
-	 * 
+	 *
 	 * @param state The current game state.
 	 */
 	public void calculatePoints(State state) {
@@ -367,7 +363,7 @@ public class Gameboard extends Observable<Gameboard> {
 	/**
 	 * Calculates points for Fields (three points for each completed castle adjacent
 	 * to the Field)
-	 * 
+	 *
 	 * @param state The current game state.
 	 */
 	public void calculateFields(State state) {
@@ -377,11 +373,17 @@ public class Gameboard extends Observable<Gameboard> {
 
 	/**
 	 * checks if one of the missions in the game is accomplished
-	 * 
+	 *
 	 * @return true if mission is accomplished
 	 */
 	public boolean checkMissions() {
 		// TODO 6.3.3
+		// mission 1: check if one player has more than 3 completed CASTLE
+		// note maybe move some elements of calculatePoints to a separate method to then
+		// check here
+
+		// mission 2: ...
+
 		return false;
 	}
 
@@ -389,7 +391,7 @@ public class Gameboard extends Observable<Gameboard> {
 	 * Calculates and adds points to the players that scored a feature. If the given
 	 * state is GAME_OVER, points are added to the player with the most meeple on a
 	 * subgraph, even if it is not completed.
-	 * 
+	 *
 	 * @param type  The FeatureType that is supposed to be calculated.
 	 * @param state The current game state.
 	 */
@@ -534,7 +536,7 @@ public class Gameboard extends Observable<Gameboard> {
 
 	/**
 	 * Returns all Tiles on the Gameboard.
-	 * 
+	 *
 	 * @return all Tiles on the Gameboard.
 	 */
 	public List<Tile> getTiles() {
@@ -543,7 +545,7 @@ public class Gameboard extends Observable<Gameboard> {
 
 	/**
 	 * Returns the Tile containing the given FeatureNode.
-	 * 
+	 *
 	 * @param node A FeatureNode.
 	 * @return the Tile containing the given FeatureNode.
 	 */
@@ -557,7 +559,7 @@ public class Gameboard extends Observable<Gameboard> {
 
 	/**
 	 * Returns Position for a given node.
-	 * 
+	 *
 	 * @param node A FeatureNode
 	 * @return Position
 	 */
@@ -568,7 +570,7 @@ public class Gameboard extends Observable<Gameboard> {
 
 	/**
 	 * Hilfsmethode zur Bestimmung der zu überprüfenden Nachbar-Tiles
-	 * 
+	 *
 	 * @param node FeatureNode
 	 * @return Vector
 	 */
@@ -600,7 +602,7 @@ public class Gameboard extends Observable<Gameboard> {
 	/**
 	 * Testet ob Node an einer freien Kante eines Tiles liegt. In diesem Fall ist
 	 * die zugehörige Straße/Wiese/Stadt nicht abgeschlossen.
-	 * 
+	 *
 	 * @param node FeatureNode
 	 * @return true wenn nicht abgeschlossen
 	 */
@@ -624,7 +626,7 @@ public class Gameboard extends Observable<Gameboard> {
 	/**
 	 * Returns the spots on the most recently placed tile on which it is allowed to
 	 * place a meeple.
-	 * 
+	 *
 	 * @return The spots on which it is allowed to place a meeple as a boolean array
 	 *         representing the tile split in nine cells from top left, to right, to
 	 *         bottom right. If there is no spot available at all, returns null.
@@ -649,7 +651,7 @@ public class Gameboard extends Observable<Gameboard> {
 	/**
 	 * Checks if there are any meeple on the subgraph that FeatureNode n is a part
 	 * of.
-	 * 
+	 *
 	 * @param n The FeatureNode to be checked.
 	 * @return True if the given FeatureNode has any meeple on its subgraph, false
 	 *         if not.
@@ -678,7 +680,7 @@ public class Gameboard extends Observable<Gameboard> {
 
 	/**
 	 * Returns the newest tile.
-	 * 
+	 *
 	 * @return the newest tile.
 	 */
 	public Tile getNewestTile() {
@@ -688,7 +690,7 @@ public class Gameboard extends Observable<Gameboard> {
 	/**
 	 * Places a meeple of given player at given position on the most recently placed
 	 * tile (it is only allowed to place meeple on the most recent tile).
-	 * 
+	 *
 	 * @param position The position the meeple is supposed to be placed on on the
 	 *                 tile (separated in a 3x3 grid).
 	 * @param player   The owner of the meeple.
