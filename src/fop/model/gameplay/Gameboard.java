@@ -1,5 +1,6 @@
 package fop.model.gameplay;
 
+import static fop.model.tile.FeatureType.FIELDS;
 import static fop.model.tile.FeatureType.CASTLE;
 import static fop.model.tile.FeatureType.ROAD;
 import static fop.model.tile.Position.BOTTOM;
@@ -29,15 +30,19 @@ import fop.model.tile.Tile;
 
 public class Gameboard extends Observable<Gameboard> {
 
+	private boolean officalFieldCalculation = true;
 	private Tile[][] board;
 	private List<Tile> tiles;
 	private FeatureGraph graph;
 	private Tile newestTile;
+	private HashSet<completedCastle> completedCastles;
+	private int castleIdCounter;
 
 	public Gameboard() {
 		board = new Tile[144][144];
 		tiles = new LinkedList<Tile>();
 		graph = new FeatureGraph();
+		castleIdCounter = 0;
 	}
 
 	// kann nicht im konstrukor erfolgen, weil erst observer gesetzt werden muss
@@ -353,14 +358,10 @@ public class Gameboard extends Observable<Gameboard> {
 	 * @param state The current game state.
 	 */
 	public void calculatePoints(State state) {
-		// Fields are only calculated on final scoring.
-		if (state == State.GAME_OVER)
-			calculateFields(state);
-		// calculatePoints(FIELDS, state);
-
+		calculateMonasteries(state);
 		calculatePoints(CASTLE, state);
 		calculatePoints(ROAD, state);
-		calculateMonasteries(state);
+		calculatePoints(FIELDS, state);
 	}
 
 	/**
@@ -369,7 +370,7 @@ public class Gameboard extends Observable<Gameboard> {
 	 *
 	 * @param state The current game state.
 	 */
-	public void calculateFields(State state) {
+	public void calculateFields() {
 		// TODO 6.3.2
 
 	}
@@ -401,13 +402,13 @@ public class Gameboard extends Observable<Gameboard> {
 	public void calculatePoints(FeatureType type, State state) {
 		// TODO 6.1.4 b)
 		System.out.println("=======================================");
-		
-		//Liste mit allen Knoten eines types
+
+		// Liste mit allen Knoten eines types
 		List<Node<FeatureType>> nodeList = new ArrayList<>(graph.getNodes(type));
 
 		while (!nodeList.isEmpty()) {
-			System.out.println(
-					"------------------- Zusammenhangskomponente " + type.toString() + " ---------------------");
+			System.out.println("------------------- Zusammenhangskomponente " + type.toString()
+					+ " ---------------------");
 
 			// queue defines the connected graph. If this queue is empty, every node in this
 			// graph will be visited.
@@ -427,13 +428,13 @@ public class Gameboard extends Observable<Gameboard> {
 			while (!queue.isEmpty()) {
 				Node<FeatureType> queueNode = queue.getFirst();
 				for (Edge<FeatureType> edge : graph.getEdges(queueNode)) {
-					Node<FeatureType> conectedNode = null;
+					Node<FeatureType> connectedNode = null;
 
-					conectedNode = edge.getOtherNode(queueNode);
+					connectedNode = edge.getOtherNode(queueNode);
 
-					if (!visitedNodeList.contains(conectedNode)) {
-						queue.push(conectedNode);
-						nodeList.remove(conectedNode);
+					if (!visitedNodeList.contains(connectedNode)) {
+						queue.push(connectedNode);
+						nodeList.remove(connectedNode);
 					}
 				}
 				visitedNodeList.add(queueNode);
@@ -465,6 +466,14 @@ public class Gameboard extends Observable<Gameboard> {
 				// Bestimmen aller beteiligten Tiles
 				tiles.add(getTileContainingNode(node));
 
+			}
+
+			// Abgeschlossene Städte werden gespeichert, um später offizielle Wiesenwertung
+			// (6.3.2) durchzuführen
+			if (officalFieldCalculation == true && state == State.GAME_OVER && type == CASTLE
+					&& completed == true) {
+				completedCastles.add(new completedCastle(visitedNodeList, castleIdCounter));
+				castleIdCounter ++;
 			}
 
 			// Log der Zusammenhangskomponente für Testzwecke
@@ -499,7 +508,8 @@ public class Gameboard extends Observable<Gameboard> {
 			if (completed || state == State.GAME_OVER) {
 				for (Player p : players.keySet()) {
 					if (max == players.get(p)) {
-						System.out.println("SPIELER " + p.getColor().toString() + " BEKOMMT SCORE: " + score);
+						System.out.println("SPIELER " + p.getColor().toString()
+								+ " BEKOMMT SCORE: " + score);
 						p.addScore(score);
 					}
 				}
