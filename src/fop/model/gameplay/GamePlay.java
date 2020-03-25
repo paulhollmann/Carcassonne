@@ -62,6 +62,9 @@ public class GamePlay extends Observable<List<Player>> implements GamePlayMethod
 			gc.setState(State.GAME_OVER);
 		else {
 			gc.getGameBoard().calculatePoints(gc.getState());
+			// 6.3.3
+			if (gc.getGameBoard().checkMissions())
+				gc.setState(State.GAME_OVER);
 			gc.getGameBoard().push(gc.getGameBoard());
 			gc.incrementRound();
 			gc.setState(State.PLACING_TILE);
@@ -173,6 +176,9 @@ public class GamePlay extends Observable<List<Player>> implements GamePlayMethod
 		gc.getGameBoard().push(gc.getGameBoard());
 		push(gc.getPlayers());
 		gc.getGameView().getToolbarPanel().showSkipButton(false);
+		
+		// TODO 6.3.3
+		// Anpassung für Missionen?
 		gc.getGameView().setStatusbarPanel(MessagesConstants.getWinnersMessage(getWinners(gc.getPlayers())),
 				WINNING_MESSAGE_COLOR);
 

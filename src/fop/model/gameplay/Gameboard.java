@@ -73,6 +73,7 @@ public class Gameboard extends Observable<Gameboard> {
 
 		Tile t = board[x][y];
 
+		// TODO 6.1.3
 		// Check top tile
 		if (board[x][y - 1] != null) {
 			Tile topTile = board[x][y - 1];
@@ -148,6 +149,8 @@ public class Gameboard extends Observable<Gameboard> {
 		boolean bottomNull = false;
 
 		Tile[][] board = this.getBoard();
+
+		// TODO 6.1.1
 		// Check top tile
 		if (board[x][y - 1] != null) {
 			if (t.getNode(TOP).getType() == board[x][y - 1].getNode(BOTTOM).getType()) {
@@ -206,6 +209,7 @@ public class Gameboard extends Observable<Gameboard> {
 	 *         if not.
 	 */
 	public boolean isTileAllowedAnywhere(Tile newTile) {
+		// TODO 6.1.2
 		// Iterate over all tiles
 		for (int i = 0; i < tiles.size(); i++) {
 			Tile currentTile = tiles.get(i);
@@ -302,6 +306,7 @@ public class Gameboard extends Observable<Gameboard> {
 	 * each adjacent tile).
 	 */
 	public void calculateMonasteries(State state) {
+		// TODO 6.1.4 a)
 		for (int i = 0; i < tiles.size(); i++) {
 			Tile currentTile = tiles.get(i);
 
@@ -351,11 +356,33 @@ public class Gameboard extends Observable<Gameboard> {
 	public void calculatePoints(State state) {
 		// Fields are only calculated on final scoring.
 		if (state == State.GAME_OVER)
-			calculatePoints(FIELDS, state);
+			calculateFields(state);
+		// calculatePoints(FIELDS, state);
 
 		calculatePoints(CASTLE, state);
 		calculatePoints(ROAD, state);
 		calculateMonasteries(state);
+	}
+
+	/**
+	 * Calculates points for Fields (three points for each completed castle adjacent
+	 * to the Field)
+	 * 
+	 * @param state The current game state.
+	 */
+	public void calculateFields(State state) {
+		// TODO 6.3.2
+
+	}
+
+	/**
+	 * checks if one of the missions in the game is accomplished
+	 * 
+	 * @return true if mission is accomplished
+	 */
+	public boolean checkMissions() {
+		// TODO 6.3.3
+		return false;
 	}
 
 	/**
@@ -367,6 +394,7 @@ public class Gameboard extends Observable<Gameboard> {
 	 * @param state The current game state.
 	 */
 	public void calculatePoints(FeatureType type, State state) {
+		// TODO 6.1.4 b)
 		System.out.println("=======================================");
 		List<Node<FeatureType>> nodeList = new ArrayList<>(graph.getNodes(type));
 
