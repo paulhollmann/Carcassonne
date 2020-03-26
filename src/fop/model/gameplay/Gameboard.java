@@ -381,22 +381,25 @@ public class Gameboard extends Observable<Gameboard> {
 		// note maybe move some elements of calculatePoints to a separate method to then
 		// check here
 		HashMap<Player, Integer> pca = playersCastleAmounts();
-		Player player1 = pca.get(Players.getPLayers().get(0)) > pca.get(Players.getPLayers().get(1))
-				? Players.getPLayers().get(0)
-				: Players.getPLayers().get(1);
-		Player player2 = pca.get(Players.getPLayers().get(0)) > pca.get(Players.getPLayers().get(1))
-				? Players.getPLayers().get(1)
-				: Players.getPLayers().get(0);
-		for (Player player : Players.getPLayers()) {
-			if (pca.get(player) > pca.get(player1)) {
-				player2 = player1;
-				player1 = player;
-			} else if (pca.get(player) > pca.get(player2)) {
-				player2 = player;
+
+		Player player = Players.getPLayers().get(0);
+		int amount = pca.get(player);
+
+		for (Player p : Players.getPLayers()) {
+			if (pca.get(p) > amount) {
+				amount = pca.get(p);
+				player = p;
 			}
 		}
-		if (pca.get(player1) - pca.get(player2) >= 3)
-			return player1;
+
+		boolean missionAccomplished = amount >= 3;
+		for (Player p : Players.getPLayers()) {
+			if (p != player && amount - pca.get(p) < 3) {
+				missionAccomplished = false;
+			}
+		}
+		if (missionAccomplished)
+			return player;
 		return null;
 	}
 
