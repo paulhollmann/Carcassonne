@@ -512,6 +512,11 @@ public class Gameboard extends Observable<Gameboard> {
 		}
 	}
 
+	/**
+     * returns all Meeples on a List of Nodes
+     *
+     * @param visitedNodeList List of Node where Meeples should be removed from
+     */
 	private void returnAllMeepels(List<Node<FeatureType>> visitedNodeList) {
 		for (Node<FeatureType> n : visitedNodeList) {
 			FeatureNode node = (FeatureNode) n;
@@ -528,11 +533,6 @@ public class Gameboard extends Observable<Gameboard> {
      *
      * @param tiles Set of Tiles
      * @return Integer representing the amount of pennants
-     */
-/**
-     * returns all Meeples on a List of Nodes
-     *
-     * @param visitedNodeList List of Node where Meeples should be removed from
      */
 	private int amountCoatOfPennants(HashSet<Tile> tiles) {
 		int count = 0;
