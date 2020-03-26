@@ -404,15 +404,11 @@ public class Gameboard extends Observable<Gameboard> {
 	 */
 	public void calculatePoints(FeatureType type, State state) {
 		// TODO 6.1.4 b)
-		System.out.println("=======================================");
-
 		// Liste mit allen Knoten eines types
 		List<Node<FeatureType>> nodeList = new ArrayList<>(graph.getNodes(type));
 
 		while (!nodeList.isEmpty()) {
-			System.out.println("------------------- Zusammenhangskomponente " + type.toString()
-					+ " ---------------------");
-
+			
 			// queue defines the connected graph. If this queue is empty, every node in this
 			// graph will be visited.
 			// if nodeList is non-empty, insert the next node of nodeList into this queue
@@ -476,7 +472,7 @@ public class Gameboard extends Observable<Gameboard> {
 			}
 
 			// Log der Zusammenhangskomponente für Testzwecke
-			logTiles(tiles);
+			// logTiles(tiles);
 
 			// Berechnung der maximalen Anzahl an gleichfarbigen Meeple
 			int max = 0;
@@ -512,8 +508,6 @@ public class Gameboard extends Observable<Gameboard> {
 			if (completed || state == State.GAME_OVER) {
 				for (Player p : players.keySet()) {
 					if (max == players.get(p)) {
-						System.out.println("SPIELER " + p.getColor().toString()
-								+ " BEKOMMT SCORE: " + score);
 						p.addScore(score);
 					}
 				}
@@ -597,13 +591,15 @@ public class Gameboard extends Observable<Gameboard> {
 		return count;
 	}
 
-	private void logTiles(HashSet<Tile> tiles) {
-		System.out.print("Tile: ");
-		for (Tile t : tiles) {
-			System.out.print("[ " + t.x + ", " + t.y + " ] ");
-		}
-		System.out.println();
-	}
+	//// Methode zum Testen
+	
+//	private void logTiles(HashSet<Tile> tiles) {
+//		System.out.print("Tile: ");
+//		for (Tile t : tiles) {
+//			System.out.print("[ " + t.x + ", " + t.y + " ] ");
+//		}
+//		System.out.println();
+//	}
 
 	/**
 	 * Returns all Tiles on the Gameboard.
@@ -647,7 +643,6 @@ public class Gameboard extends Observable<Gameboard> {
 	 */
 	private Vector getPositionVector(FeatureNode node) {
 		Position p = getNodePositionOnTile(node);
-		// System.out.println(" Node Position auf Tile: " + p.toString());
 		switch (p) {
 		case BOTTOM:
 			return new Vector(0, 1);
@@ -793,7 +788,6 @@ public class Gameboard extends Observable<Gameboard> {
 	 */
 	private int officialFieldScore(List<Node<FeatureType>> fieldNodeList) {
 
-		System.out.println("Start officialFieldScore");
 		// TODO 6.3.2
 		int score = 0;
 		HashSet<Integer> alreadyScoredCastleIds = new HashSet<Integer>();
@@ -809,7 +803,6 @@ public class Gameboard extends Observable<Gameboard> {
 				}
 			}
 		}
-		System.out.println("officialFieldScore für bearbeitete Wiese: " + score);
 		return score;
 
 	}
