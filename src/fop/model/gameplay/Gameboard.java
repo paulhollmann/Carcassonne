@@ -304,6 +304,8 @@ public class Gameboard extends Observable<Gameboard> {
 		// no valid position was found
 		return false;
 	}
+	
+	// --------------------------- 6.1.4 calculate Points - methods --------------------------------------------------
 
 	/**
 	 * Calculates points for monasteries (one point for the monastery and one for
@@ -361,58 +363,11 @@ public class Gameboard extends Observable<Gameboard> {
 	 * @param state The current game state.
 	 */
 	public void calculatePoints(State state) {
-		// state = State.GAME_OVER;
 		calculateMonasteries(state);
 		calculatePoints(CASTLE, state);
 		calculatePoints(ROAD, state);
-		if (state == State.GAME_OVER) {
+		if (state == State.GAME_OVER)
 			calculatePoints(FIELDS, state);
-		}
-	}
-
-	/**
-	 * checks if mission1 in the game is accomplished
-	 *
-	 * @return the winning player iff mission is accomplished, else null
-	 */
-	public Player checkMission1() {
-		// TODO 6.3.3
-		// mission 1: check if one player has 3 more completed CASTLE the others
-		HashMap<Player, Integer> pca = playersCastleAmounts();
-
-		Player player = Players.getPLayers().get(0);
-		int amount = pca.get(player);
-
-		// find player with max castles
-		for (Player p : Players.getPLayers()) {
-			if (pca.get(p) > amount) {
-				amount = pca.get(p);
-				player = p;
-			}
-		}
-
-		// check if amount of castles greater than 3
-		boolean missionAccomplished = amount >= 3;
-		// check if every player has more than 3 castles less than player with most
-		for (Player p : Players.getPLayers()) {
-			if (p != player && amount - pca.get(p) < 3) {
-				missionAccomplished = false;
-			}
-		}
-		// return player who accomplished mission iff boolean is set
-		if (missionAccomplished)
-			return player;
-		return null;
-	}
-
-	/**
-	 * checks if mission2 in the game is accomplished
-	 *
-	 * @return the winning player iff mission is accomplished, else null
-	 */
-	public Player checkMission2() {
-		// TODO Auto-generated method stub
-		return null;
 	}
 
 	/**
@@ -491,9 +446,6 @@ public class Gameboard extends Observable<Gameboard> {
 				castleIdCounter++;
 			}
 
-			// Log der Zusammenhangskomponente für Testzwecke
-			// logTiles(tiles);
-
 			// Berechnung der maximalen Anzahl an gleichfarbigen Meeple
 			int max = 0;
 			for (Player p : players.keySet()) {
@@ -516,9 +468,9 @@ public class Gameboard extends Observable<Gameboard> {
 				break;
 			case CASTLE:
 				if (completed) {
-					score = (tiles.size() + amountCoatOfPennants(tiles)) * 2;
+					score = (tiles.size() + amountOfPennants(tiles)) * 2;
 				} else {
-					score = tiles.size() + amountCoatOfPennants(tiles);
+					score = tiles.size() + amountOfPennants(tiles);
 				}
 				break;
 			default:
@@ -539,43 +491,6 @@ public class Gameboard extends Observable<Gameboard> {
 	}
 
 	/**
-	 * Returns in a list each player ruling a city, multiples
-	 *
-	 * @return List of players that rule a castle
-	 */
-	public List<Player> playersRulingCastles() {
-		// Liste mit allen Knoten eines typs
-		List<Node<FeatureType>> nodeList = new ArrayList<>(graph.getNodes(FeatureType.CASTLE));
-
-		List<Player> playersWithCastle = new ArrayList<Player>();
-
-		// check all castle nodes
-		while (!nodeList.isEmpty()) {
-			// queue defines the connected graph
-			ArrayDeque<Node<FeatureType>> queue = new ArrayDeque<>();
-			queue.push(nodeList.remove(0));
-
-			List<Node<FeatureType>> castleList = new ArrayList<Node<FeatureType>>();
-			// check all nodes of a connected castle
-			while (!queue.isEmpty()) {
-				Node<FeatureType> queueNode = queue.getFirst();
-				// check all connections
-				for (Edge<FeatureType> edge : graph.getEdges(queueNode)) {
-					Node<FeatureType> connectedNode = edge.getOtherNode(queueNode);
-					if (!castleList.contains(connectedNode)) {
-						queue.push(connectedNode);
-						nodeList.remove(connectedNode);
-					}
-				}
-				castleList.add(queueNode);
-				queue.remove(queueNode);
-			}
-			playersWithCastle.addAll(whichPlayerLeadsTheCastle(castleList));
-		}
-		return playersWithCastle;
-	}
-
-	/**
 	 * Gibt eine Liste zurück, die den Spieler enthält, der die meisten Meeple der
 	 * überprüften Stadt enthält. Haben zwei Spieler gleich viele Meeple in der
 	 * Stadt, enthält die Liste diese beiden Spieler. Ist die Stadt unbesetzt, so
@@ -584,7 +499,7 @@ public class Gameboard extends Observable<Gameboard> {
 	 * @param castleList zu überprüfende Stadt in Form einer Liste mit allen
 	 *                   Castle-Nodes
 	 */
-	public List<Player> whichPlayerLeadsTheCastle(List<Node<FeatureType>> castleList) {
+	public List<Player> whichPlayersRuleCastle(List<Node<FeatureType>> castleList) {
 
 		List<Player> listOfCastleLeadingPlayers = new ArrayList<Player>();
 		HashMap<Player, Integer> players = new HashMap<Player, Integer>();
@@ -620,31 +535,6 @@ public class Gameboard extends Observable<Gameboard> {
 	}
 
 	/**
-	 * This method calculates the amount of castles a player leads and returns a
-	 * HashMap with the Player as the key and the castle amount as value
-	 *
-	 * @return a HashMap with the Player as the key and the amount of castles it
-	 *         leads as value
-	 */
-
-	public HashMap<Player, Integer> playersCastleAmounts() {
-		List<Player> playerCastles = playersRulingCastles();
-		HashMap<Player, Integer> result = new HashMap<Player, Integer>();
-
-		for (int i = 0; i < Players.getPLayers().size(); i++) {
-			Player player = Players.getPLayers().get(i);
-			int castleCount = 0;
-			for (int j = 0; j < playerCastles.size(); j++) {
-				if (playerCastles.get(j).equals(player)) {
-					castleCount += 1;
-				}
-			}
-			result.put(player, castleCount);
-		}
-		return result;
-	}
-
-	/**
 	 * returns all Meeples on a List of Nodes
 	 *
 	 * @param visitedNodeList List of Node where Meeples should be removed from
@@ -666,7 +556,7 @@ public class Gameboard extends Observable<Gameboard> {
 	 * @param tiles Set of Tiles
 	 * @return Integer representing the amount of pennants
 	 */
-	private int amountCoatOfPennants(HashSet<Tile> tiles) {
+	private int amountOfPennants(HashSet<Tile> tiles) {
 		int count = 0;
 		for (Tile t : tiles) {
 			if (t.hasPennant()) {
@@ -773,6 +663,8 @@ public class Gameboard extends Observable<Gameboard> {
 		}
 		return false;
 	}
+	
+	// --------------------------- end of calculate Points - methods --------------------------------------------------
 
 	/**
 	 * Returns the spots on the most recently placed tile on which it is allowed to
@@ -862,13 +754,15 @@ public class Gameboard extends Observable<Gameboard> {
 	public void setFeatureGraph(FeatureGraph graph) {
 		this.graph = graph;
 	}
+	
+	// --------------------------- 6.3.2 official Field score - methods --------------------------------------------------
 
 	/**
-	 * Calculates points for Fields (three points for each completed castle adjacent
-	 * to the Field)
+	 * Calculates the score for a field (three points for each completed castle adjacent
+	 * to the field)
 	 *
-	 * @param fieldNodeList
-	 * @return
+	 * @param fieldNodeList list of Nodes belonging to a field
+	 * @return score for a field
 	 *
 	 */
 	private int officialFieldScore(List<Node<FeatureType>> fieldNodeList) {
@@ -892,20 +786,32 @@ public class Gameboard extends Observable<Gameboard> {
 
 	}
 
+	/**
+	 * searches for all castle nodes on the same Tile as the given field Node
+	 * 
+	 * @param fieldNode node of type field
+	 * @return all castle nodes on the same tile as fieldNode
+	 */
 	private List<Node<FeatureType>> getAllNearbyCastleNodes(Node<FeatureType> fieldNode) {
 		List<Node<FeatureType>> returnList = new ArrayList<Node<FeatureType>>();
 		Tile t = getTileContainingNode((FeatureNode) fieldNode);
 		Position p = getNodePositionOnTile((FeatureNode) fieldNode);
 		List<Position> possibleCastlePositions = getPossibleCastlePositions(p);
 		for (Position castlePosition : possibleCastlePositions) {
-			FeatureNode castleNode = t.getNode(castlePosition);
-			if (castleNode.getType() == CASTLE) {
-				returnList.add(castleNode);
+			FeatureNode possibleCastleNode = t.getNode(castlePosition);
+			if (possibleCastleNode.getType() == CASTLE) {
+				returnList.add(possibleCastleNode);
 			}
 		}
 		return returnList;
 	}
 
+	/**
+	 * returns the possible locations of a castle for a given location of a field
+	 * 
+	 * @param p position of a field on a tile
+	 * @return list of positions where a castle is possible
+	 */
 	private List<Position> getPossibleCastlePositions(Position p) {
 		switch (p) {
 		case BOTTOM:
@@ -926,6 +832,116 @@ public class Gameboard extends Observable<Gameboard> {
 			return null;
 
 		}
+	}
+	
+	// --------------------------- 6.3.3 Mission - methods --------------------------------------------------
+	
+	/**
+	 * checks if mission1 in the game is accomplished
+	 *
+	 * @return the winning player iff mission is accomplished, else null
+	 */
+	public Player checkMission1() {
+		// TODO 6.3.3
+		// mission 1: check if one player has 3 more completed CASTLE the others
+		HashMap<Player, Integer> pca = playersCastleAmounts();
+
+		Player player = Players.getPLayers().get(0);
+		int amount = pca.get(player);
+
+		// find player with max castles
+		for (Player p : Players.getPLayers()) {
+			if (pca.get(p) > amount) {
+				amount = pca.get(p);
+				player = p;
+			}
+		}
+
+		// check if amount of castles greater than 3
+		boolean missionAccomplished = amount >= 3;
+		// check if every player has more than 3 castles less than player with most
+		for (Player p : Players.getPLayers()) {
+			if (p != player && amount - pca.get(p) < 3) {
+				missionAccomplished = false;
+			}
+		}
+		// return player who accomplished mission iff boolean is set
+		if (missionAccomplished)
+			return player;
+		return null;
+	}
+	
+	/**
+	 * This method calculates the amount of castles a player leads and returns a
+	 * HashMap with the Player as the key and the castle amount as value
+	 *
+	 * @return a HashMap with the Player as the key and the amount of castles it
+	 *         leads as value
+	 */
+
+	public HashMap<Player, Integer> playersCastleAmounts() {
+		List<Player> playerCastles = playersRulingCastles();
+		HashMap<Player, Integer> result = new HashMap<Player, Integer>();
+
+		for (int i = 0; i < Players.getPLayers().size(); i++) {
+			Player player = Players.getPLayers().get(i);
+			int castleCount = 0;
+			for (int j = 0; j < playerCastles.size(); j++) {
+				if (playerCastles.get(j).equals(player)) {
+					castleCount += 1;
+				}
+			}
+			result.put(player, castleCount);
+		}
+		return result;
+	}
+	
+	/**
+	 * Returns in a list each player ruling a city, multiples
+	 *
+	 * @return List of players that rule a castle
+	 */
+	public List<Player> playersRulingCastles() {
+		// Liste mit allen Knoten eines typs
+		List<Node<FeatureType>> nodeList = new ArrayList<>(graph.getNodes(FeatureType.CASTLE));
+
+		List<Player> playersWithCastle = new ArrayList<Player>();
+
+		// check all castle nodes
+		while (!nodeList.isEmpty()) {
+			// queue defines the connected graph
+			ArrayDeque<Node<FeatureType>> queue = new ArrayDeque<>();
+			queue.push(nodeList.remove(0));
+
+			List<Node<FeatureType>> castleList = new ArrayList<Node<FeatureType>>();
+			// check all nodes of a connected castle
+			while (!queue.isEmpty()) {
+				Node<FeatureType> queueNode = queue.getFirst();
+				// check all connections
+				for (Edge<FeatureType> edge : graph.getEdges(queueNode)) {
+					Node<FeatureType> connectedNode = edge.getOtherNode(queueNode);
+					if (!castleList.contains(connectedNode)) {
+						queue.push(connectedNode);
+						nodeList.remove(connectedNode);
+					}
+				}
+				castleList.add(queueNode);
+				queue.remove(queueNode);
+			}
+			playersWithCastle.addAll(whichPlayersRuleCastle(castleList));
+		}
+		return playersWithCastle;
+	}
+
+
+	/**
+	 * checks if mission2 in the game is accomplished
+	 *
+	 * @return the winning player iff mission is accomplished, else null
+	 */
+	public Player checkMission2() {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 }
