@@ -382,7 +382,7 @@ public class Gameboard extends Observable<Gameboard> {
 		// check here
 		HashMap<Player, Integer> pca = playersCastleAmounts();
 		Player player1 = Players.getPLayers().get(0);
-		Player player2 = Players.getPLayers().get(0);
+		Player player2 = Players.getPLayers().get(1);
 		for (Player player : Players.getPLayers()) {
 			if (pca.get(player) > pca.get(player1)) {
 				player2 = player1;
