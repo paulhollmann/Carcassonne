@@ -58,16 +58,22 @@ public class GamePlay extends Observable<List<Player>> implements GamePlayMethod
 	public void nextRound() {
 		if (!currentPlayer().getName().equals("AI"))
 			gc.getGameBoardPanel().removeTempMeepleOverlay();
+		// 6.3.3
+		if (gc.getGameBoard().checkMission1() != null)
+			gc.setState(State.GAME_OVER);
 		if (gc.getTileStack().remainingTiles() == 0)
 			gc.setState(State.GAME_OVER);
 		else {
 			gc.getGameBoard().calculatePoints(gc.getState());
-			// 6.3.3
-			if (gc.getGameBoard().checkMissions())
+			if (gc.getGameBoard().checkMission2() != null)
 				gc.setState(State.GAME_OVER);
-			gc.getGameBoard().push(gc.getGameBoard());
-			gc.incrementRound();
-			gc.setState(State.PLACING_TILE);
+			else {
+				// !! maybe up in if
+				gc.getGameBoard().push(gc.getGameBoard());
+
+				gc.incrementRound();
+				gc.setState(State.PLACING_TILE);
+			}
 		}
 	}
 
@@ -176,13 +182,27 @@ public class GamePlay extends Observable<List<Player>> implements GamePlayMethod
 		gc.getGameBoard().push(gc.getGameBoard());
 		push(gc.getPlayers());
 		gc.getGameView().getToolbarPanel().showSkipButton(false);
-		
+
 		// TODO 6.3.3
 		// Anpassung für Missionen?
-		gc.getGameView().setStatusbarPanel(MessagesConstants.getWinnersMessage(getWinners(gc.getPlayers())),
-				WINNING_MESSAGE_COLOR);
+		if (gc.getGameBoard().checkMission1() != null) {
+			gc.getGameView().setStatusbarPanel(
+					MessagesConstants.getMissionWinnerMessage(gc.getGameBoard().checkMission1(), 1),
+					WINNING_MESSAGE_COLOR);
+			MessagesConstants.showMissionWinner(gc.getGameBoard().checkMission1(), 1);
+		} else if (gc.getGameBoard().checkMission2() != null) {
+			gc.getGameView().setStatusbarPanel(
+					MessagesConstants.getMissionWinnerMessage(gc.getGameBoard().checkMission2(), 1),
+					WINNING_MESSAGE_COLOR);
+			MessagesConstants.showMissionWinner(gc.getGameBoard().checkMission2(), 2);
+		}
 
-		MessagesConstants.showWinner(getWinners(gc.getPlayers()));
+		else {
+			gc.getGameView().setStatusbarPanel(MessagesConstants.getWinnersMessage(getWinners(gc.getPlayers())),
+					WINNING_MESSAGE_COLOR);
+
+			MessagesConstants.showWinner(getWinners(gc.getPlayers()));
+		}
 		GameMethods.GoToMainMenu();
 	}
 

@@ -13,7 +13,7 @@ public interface MessagesConstants {
 
 	/**
 	 * which player has to place a tile
-	 * 
+	 *
 	 * @param name
 	 * @return
 	 */
@@ -23,7 +23,7 @@ public interface MessagesConstants {
 
 	/**
 	 * which player has to place a meeple
-	 * 
+	 *
 	 * @param name
 	 * @return
 	 */
@@ -33,7 +33,7 @@ public interface MessagesConstants {
 
 	/**
 	 * if player does not have a placing option
-	 * 
+	 *
 	 * @param name
 	 * @return
 	 */
@@ -43,7 +43,7 @@ public interface MessagesConstants {
 
 	/**
 	 * creates the winner message with the list of winners
-	 * 
+	 *
 	 * @param winners
 	 */
 	public static void showWinner(List<Player> winners) {
@@ -61,10 +61,20 @@ public interface MessagesConstants {
 
 		}
 	}
+	/**
+	 * creates the winner message with the mission winner
+	 *
+	 * @param winner
+	 */
+	public static void showMissionWinner(Player winner, int mission) {
+			JOptionPane.showMessageDialog(null, "Mission "+mission+" geschafft: Der Gewinner ist " + winner.getName(), null,
+					JOptionPane.CLOSED_OPTION);
+	}
+
 
 	/**
 	 * Generates a string listing all winners and their score.
-	 * 
+	 *
 	 * @return A string listing all winners and their score.
 	 */
 
@@ -89,8 +99,24 @@ public interface MessagesConstants {
 	}
 
 	/**
+	 * Generates a string listing the mission winner and the mission number.
+	 *
+	 * @return A string listing the mission winner and the mission number.
+	 */
+	public static String getMissionWinnerMessage(Player winner, int mission) {
+		String message = "Game over! ";
+		message += winner.getName() + " won, by completing Mission " + mission;
+
+		ScoreEntry scoreEntry = new ScoreEntry(winner);
+		Resources.getInstance().addScoreEntry(scoreEntry);
+
+		return message;
+	}
+
+
+	/**
 	 * returns if highscore should be deleted
-	 * 
+	 *
 	 * @return
 	 */
 	public static int deleteHighScore() {

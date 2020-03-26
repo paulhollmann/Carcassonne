@@ -370,19 +370,27 @@ public class Gameboard extends Observable<Gameboard> {
 	}
 
 	/**
-	 * checks if one of the missions in the game is accomplished
+	 * checks if  mission1 in the game is accomplished
 	 *
-	 * @return true if mission is accomplished
+	 * @return the winning player iff mission is accomplished, else null
 	 */
-	public boolean checkMissions() {
+	public Player checkMission1() {
 		// TODO 6.3.3
 		// mission 1: check if one player has 3 more completed CASTLE the others
 		// note maybe move some elements of calculatePoints to a separate method to then
 		// check here
+		return null;
+	}
 
-		// mission 2: ...
 
-		return false;
+	/**
+	 * checks if  mission2 in the game is accomplished
+	 *
+	 * @return the winning player iff mission is accomplished, else null
+	 */
+	public Player checkMission2() {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 	/**
@@ -796,4 +804,6 @@ public class Gameboard extends Observable<Gameboard> {
 
 		}
 	}
+
+
 }
