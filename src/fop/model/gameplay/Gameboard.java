@@ -378,13 +378,12 @@ public class Gameboard extends Observable<Gameboard> {
 	public Player checkMission1() {
 		// TODO 6.3.3
 		// mission 1: check if one player has 3 more completed CASTLE the others
-		// note maybe move some elements of calculatePoints to a separate method to then
-		// check here
 		HashMap<Player, Integer> pca = playersCastleAmounts();
 
 		Player player = Players.getPLayers().get(0);
 		int amount = pca.get(player);
 
+		// find player with max castles
 		for (Player p : Players.getPLayers()) {
 			if (pca.get(p) > amount) {
 				amount = pca.get(p);
@@ -392,12 +391,15 @@ public class Gameboard extends Observable<Gameboard> {
 			}
 		}
 
+		// check if amount of castles greater than 3
 		boolean missionAccomplished = amount >= 3;
+		// check if every player has more than 3 castles less than player with most
 		for (Player p : Players.getPLayers()) {
 			if (p != player && amount - pca.get(p) < 3) {
 				missionAccomplished = false;
 			}
 		}
+		// return player who accomplished mission iff boolean is set
 		if (missionAccomplished)
 			return player;
 		return null;
