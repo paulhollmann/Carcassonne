@@ -1,7 +1,7 @@
 package fop.model.gameplay;
 
-import static fop.model.tile.FeatureType.FIELDS;
 import static fop.model.tile.FeatureType.CASTLE;
+import static fop.model.tile.FeatureType.FIELDS;
 import static fop.model.tile.FeatureType.ROAD;
 import static fop.model.tile.Position.BOTTOM;
 import static fop.model.tile.Position.BOTTOMLEFT;
@@ -66,7 +66,7 @@ public class Gameboard extends Observable<Gameboard> {
 	 * Connects the nodes of all neighboring tiles facing the tile at given
 	 * coordinates x, y. It is assumed that the tile is placed according to the
 	 * rules.
-	 * 
+	 *
 	 * @param x coordinate
 	 * @param y coordinate
 	 */
@@ -307,7 +307,7 @@ public class Gameboard extends Observable<Gameboard> {
 	/**
 	 * Calculates points for monasteries (one point for the monastery and one for
 	 * each adjacent tile).
-	 * 
+	 *
 	 * @param state state of game
 	 */
 	public void calculateMonasteries(State state) {
@@ -401,20 +401,19 @@ public class Gameboard extends Observable<Gameboard> {
 		List<Node<FeatureType>> nodeList = new ArrayList<>(graph.getNodes(type));
 
 		while (!nodeList.isEmpty()) {
-			System.out.println("------------------- Zusammenhangskomponente " + type.toString()
-					+ " ---------------------");
+			System.out.println(
+					"------------------- Zusammenhangskomponente " + type.toString() + " ---------------------");
 
 			// queue defines the connected graph. If this queue is empty, every node in this
 			// graph will be visited.
 			// if nodeList is non-empty, insert the next node of nodeList into this queue
 			ArrayDeque<Node<FeatureType>> queue = new ArrayDeque<>();
-
 			int score = 0;
-			boolean completed = true; // Is the feature completed? Is set to false if a node is
-										// visited that does not
-										// connect to any other tile
-
-			///// take first feature node into queue
+			boolean completed = true;
+			// Is the feature completed? Is set to false if a node is
+			// visited that does not
+			// connect to any other tile
+			// take first feature node into queue
 			queue.push(nodeList.remove(0));
 			// Iterate as long as the queue is not empty
 			// Remember: queue defines a connected graph
@@ -422,10 +421,7 @@ public class Gameboard extends Observable<Gameboard> {
 			while (!queue.isEmpty()) {
 				Node<FeatureType> queueNode = queue.getFirst();
 				for (Edge<FeatureType> edge : graph.getEdges(queueNode)) {
-					Node<FeatureType> connectedNode = null;
-
-					connectedNode = edge.getOtherNode(queueNode);
-
+					Node<FeatureType> connectedNode = edge.getOtherNode(queueNode);
 					if (!visitedNodeList.contains(connectedNode)) {
 						queue.push(connectedNode);
 						nodeList.remove(connectedNode);
@@ -459,14 +455,12 @@ public class Gameboard extends Observable<Gameboard> {
 				}
 				// Bestimmen aller beteiligten Tiles
 				tiles.add(getTileContainingNode(node));
-
 			}
 
 			// Abgeschlossene Städte werden gespeichert, um später offizielle Wiesenwertung
 			// zu berechnen
 			// (6.3.2) durchzuführen
-			if (officalFieldCalculation == true && state == State.GAME_OVER && type == CASTLE
-					&& completed == true) {
+			if (officalFieldCalculation == true && state == State.GAME_OVER && type == CASTLE && completed == true) {
 				completedCastles.add(new completedCastle(visitedNodeList, castleIdCounter));
 				castleIdCounter++;
 			}
@@ -507,8 +501,7 @@ public class Gameboard extends Observable<Gameboard> {
 			if (completed || state == State.GAME_OVER) {
 				for (Player p : players.keySet()) {
 					if (max == players.get(p)) {
-						System.out.println("SPIELER " + p.getColor().toString()
-								+ " BEKOMMT SCORE: " + score);
+						System.out.println("SPIELER " + p.getColor().toString() + " BEKOMMT SCORE: " + score);
 						p.addScore(score);
 					}
 				}
@@ -550,7 +543,7 @@ public class Gameboard extends Observable<Gameboard> {
 
 	/**
 	 * Returns all Tiles on the Gameboard.
-	 * 
+	 *
 	 * @return all Tiles on the Gameboard.
 	 */
 	public List<Tile> getTiles() {
@@ -559,7 +552,7 @@ public class Gameboard extends Observable<Gameboard> {
 
 	/**
 	 * Returns the Tile containing the given FeatureNode.
-	 * 
+	 *
 	 * @param node A FeatureNode.
 	 * @return the Tile containing the given FeatureNode.
 	 */
@@ -573,7 +566,7 @@ public class Gameboard extends Observable<Gameboard> {
 
 	/**
 	 * Returns Position for a given node.
-	 * 
+	 *
 	 * @param node A FeatureNode
 	 * @return Position
 	 */
@@ -584,7 +577,7 @@ public class Gameboard extends Observable<Gameboard> {
 
 	/**
 	 * Hilfsmethode zur Bestimmung der zu überprüfenden Nachbar-Tiles
-	 * 
+	 *
 	 * @param node FeatureNode
 	 * @return Vector
 	 */
@@ -616,7 +609,7 @@ public class Gameboard extends Observable<Gameboard> {
 	/**
 	 * Testet ob Node an einer freien Kante eines Tiles liegt. In diesem Fall ist
 	 * die zugehörige Straße/Wiese/Stadt nicht abgeschlossen.
-	 * 
+	 *
 	 * @param node FeatureNode
 	 * @return true wenn nicht abgeschlossen
 	 */
@@ -640,7 +633,7 @@ public class Gameboard extends Observable<Gameboard> {
 	/**
 	 * Returns the spots on the most recently placed tile on which it is allowed to
 	 * place a meeple.
-	 * 
+	 *
 	 * @return The spots on which it is allowed to place a meeple as a boolean array
 	 *         representing the tile split in nine cells from top left, to right, to
 	 *         bottom right. If there is no spot available at all, returns null.
@@ -665,7 +658,7 @@ public class Gameboard extends Observable<Gameboard> {
 	/**
 	 * Checks if there are any meeple on the subgraph that FeatureNode n is a part
 	 * of.
-	 * 
+	 *
 	 * @param n The FeatureNode to be checked.
 	 * @return True if the given FeatureNode has any meeple on its subgraph, false
 	 *         if not.
@@ -694,7 +687,7 @@ public class Gameboard extends Observable<Gameboard> {
 
 	/**
 	 * Returns the newest tile.
-	 * 
+	 *
 	 * @return the newest tile.
 	 */
 	public Tile getNewestTile() {
@@ -704,7 +697,7 @@ public class Gameboard extends Observable<Gameboard> {
 	/**
 	 * Places a meeple of given player at given position on the most recently placed
 	 * tile (it is only allowed to place meeple on the most recent tile).
-	 * 
+	 *
 	 * @param position The position the meeple is supposed to be placed on on the
 	 *                 tile (separated in a 3x3 grid).
 	 * @param player   The owner of the meeple.
@@ -729,14 +722,13 @@ public class Gameboard extends Observable<Gameboard> {
 	/**
 	 * Calculates points for Fields (three points for each completed castle adjacent
 	 * to the Field)
-	 * 
+	 *
 	 * @param fieldNodeList
 	 * @return
 	 *
 	 */
 	private int officialFieldScore(List<Node<FeatureType>> fieldNodeList) {
-		
-		
+
 		System.out.println("Start officialFieldScore");
 		// TODO 6.3.2
 		int score = 0;
@@ -747,7 +739,7 @@ public class Gameboard extends Observable<Gameboard> {
 					if (cc.getCastleNodes().contains(castleNode)) {
 						if (!alreadyScoredCastleIds.contains(cc.getId())) {
 							alreadyScoredCastleIds.add(cc.getId());
-							score = score + 3;							
+							score = score + 3;
 						}
 					}
 				}
@@ -764,7 +756,7 @@ public class Gameboard extends Observable<Gameboard> {
 		Position p = getNodePositionOnTile((FeatureNode) fieldNode);
 		List<Position> possibleCastlePositions = getPossibleCastlePositions(p);
 		for (Position castlePosition : possibleCastlePositions) {
-			FeatureNode castleNode = (FeatureNode) t.getNode(castlePosition);
+			FeatureNode castleNode = t.getNode(castlePosition);
 			if (castleNode.getType() == CASTLE) {
 				returnList.add(castleNode);
 			}
