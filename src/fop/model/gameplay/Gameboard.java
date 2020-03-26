@@ -380,6 +380,19 @@ public class Gameboard extends Observable<Gameboard> {
 		// mission 1: check if one player has 3 more completed CASTLE the others
 		// note maybe move some elements of calculatePoints to a separate method to then
 		// check here
+		HashMap<Player, Integer> pca = playersCastleAmounts();
+		Player player1 = Players.getPLayers().get(0);
+		Player player2 = Players.getPLayers().get(0);
+		for (Player player : Players.getPLayers()) {
+			if (pca.get(player) > pca.get(player1)) {
+				player2 = player1;
+				player1 = player;
+			} else if (pca.get(player) > pca.get(player2)) {
+				player2 = player;
+			}
+		}
+		if (pca.get(player1) - pca.get(player2) >= 3)
+			return player1;
 		return null;
 	}
 
@@ -515,10 +528,10 @@ public class Gameboard extends Observable<Gameboard> {
 			}
 		}
 	}
-	
+
 	/**
 	 * Returns in a list each player ruling a city, multiples
-	 * 
+	 *
 	 * @return List of players that rule a castle
 	 */
 	public List<Player> playersRulingCastles() {
@@ -558,7 +571,7 @@ public class Gameboard extends Observable<Gameboard> {
 	 * überprüften Stadt enthält. Haben zwei Spieler gleich viele Meeple in der
 	 * Stadt, enthält die Liste diese beiden Spieler. Ist die Stadt unbesetzt, so
 	 * ist die Liste leer.
-	 * 
+	 *
 	 * @param castleList zu überprüfende Stadt in Form einer Liste mit allen
 	 *                   Castle-Nodes
 	 */
@@ -596,28 +609,30 @@ public class Gameboard extends Observable<Gameboard> {
 		}
 		return listOfCastleLeadingPlayers;
 	}
-	
+
 	/**
-	 * This method calculates the amount of castles a player leads
-	 * and returns a HashMap with the Player as the key and the castle amount as value
-	 * 
-	 * @return a HashMap with the Player as the key and the amount of castles it leads as value
+	 * This method calculates the amount of castles a player leads and returns a
+	 * HashMap with the Player as the key and the castle amount as value
+	 *
+	 * @return a HashMap with the Player as the key and the amount of castles it
+	 *         leads as value
 	 */
-	
-	public HashMap<Player,Integer> playersCastleAmounts(){
+
+	public HashMap<Player, Integer> playersCastleAmounts() {
 		List<Player> playerCastles = playersRulingCastles();
-		HashMap<Player,Integer> result = new HashMap<Player,Integer>();
-		
-		for(int i=0;i<Players.getPLayers().size();i++) {
+		HashMap<Player, Integer> result = new HashMap<Player, Integer>();
+
+		for (int i = 0; i < Players.getPLayers().size(); i++) {
 			Player player = Players.getPLayers().get(i);
 			int castleCount = 0;
-			for(int j=0;j<playerCastles.size();j++) {
-				if(playerCastles.get(j).equals(player)) {
+			for (int j = 0; j < playerCastles.size(); j++) {
+				if (playerCastles.get(j).equals(player)) {
 					castleCount += 1;
 				}
 			}
 			result.put(player, castleCount);
 		}
+		return result;
 	}
 
 	/**
