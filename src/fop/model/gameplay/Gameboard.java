@@ -515,6 +515,43 @@ public class Gameboard extends Observable<Gameboard> {
 			}
 		}
 	}
+	
+	/**
+	 * Returns in a list each player ruling a city, multiples
+	 * 
+	 * @return List of players that rule a castle
+	 */
+	public List<Player> playersRulingCastles() {
+		// Liste mit allen Knoten eines typs
+		List<Node<FeatureType>> nodeList = new ArrayList<>(graph.getNodes(FeatureType.CASTLE));
+
+		List<Player> playersWithCastle = new ArrayList<Player>();
+
+		// check all castle nodes
+		while (!nodeList.isEmpty()) {
+			// queue defines the connected graph
+			ArrayDeque<Node<FeatureType>> queue = new ArrayDeque<>();
+			queue.push(nodeList.remove(0));
+
+			List<Node<FeatureType>> castleList = new ArrayList<Node<FeatureType>>();
+			// check all nodes of a connected castle
+			while (!queue.isEmpty()) {
+				Node<FeatureType> queueNode = queue.getFirst();
+				// check all connections
+				for (Edge<FeatureType> edge : graph.getEdges(queueNode)) {
+					Node<FeatureType> connectedNode = edge.getOtherNode(queueNode);
+					if (!castleList.contains(connectedNode)) {
+						queue.push(connectedNode);
+						nodeList.remove(connectedNode);
+					}
+				}
+				castleList.add(queueNode);
+				queue.remove(queueNode);
+			}
+			playersWithCastle.addAll(whichPlayerLeadsTheCastle(castleList));
+		}
+		return playersWithCastle;
+	}
 
 	/**
 	 * Gibt eine Liste zurück, die den Spieler enthält, der die meisten Meeple der
@@ -568,7 +605,7 @@ public class Gameboard extends Observable<Gameboard> {
 	 */
 	
 	public HashMap<Player,Integer> playersCastleAmounts(){
-		List<Player> playerCastles = whichPlayerLeadsTheCastle(/*castleList*/);
+		List<Player> playerCastles = playersRulingCastles();
 		HashMap<Player,Integer> result = new HashMap<Player,Integer>();
 		
 		for(int i=0;i<Players.getPLayers().size();i++) {
