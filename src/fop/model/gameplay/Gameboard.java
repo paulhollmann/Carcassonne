@@ -25,6 +25,7 @@ import fop.base.Node;
 import fop.model.graph.FeatureGraph;
 import fop.model.graph.FeatureNode;
 import fop.model.player.Player;
+import fop.model.player.Players;
 import fop.model.tile.FeatureType;
 import fop.model.tile.Position;
 import fop.model.tile.Tile;
@@ -401,8 +402,8 @@ public class Gameboard extends Observable<Gameboard> {
 		List<Node<FeatureType>> nodeList = new ArrayList<>(graph.getNodes(type));
 
 		while (!nodeList.isEmpty()) {
-			System.out.println(
-					"------------------- Zusammenhangskomponente " + type.toString() + " ---------------------");
+			System.out.println("------------------- Zusammenhangskomponente " + type.toString()
+					+ " ---------------------");
 
 			// queue defines the connected graph. If this queue is empty, every node in this
 			// graph will be visited.
@@ -460,7 +461,8 @@ public class Gameboard extends Observable<Gameboard> {
 			// Abgeschlossene Städte werden gespeichert, um später offizielle Wiesenwertung
 			// zu berechnen
 			// (6.3.2) durchzuführen
-			if (officalFieldCalculation == true && state == State.GAME_OVER && type == CASTLE && completed == true) {
+			if (officalFieldCalculation == true && state == State.GAME_OVER && type == CASTLE
+					&& completed == true) {
 				completedCastles.add(new completedCastle(visitedNodeList, castleIdCounter));
 				castleIdCounter++;
 			}
@@ -468,6 +470,7 @@ public class Gameboard extends Observable<Gameboard> {
 			// Log der Zusammenhangskomponente für Testzwecke
 			logTiles(tiles);
 
+			// Berechnung der maximalen Anzahl an gleichfarbigen Meeple
 			int max = 0;
 			for (Player p : players.keySet()) {
 				if (max < players.get(p)) {
@@ -501,7 +504,8 @@ public class Gameboard extends Observable<Gameboard> {
 			if (completed || state == State.GAME_OVER) {
 				for (Player p : players.keySet()) {
 					if (max == players.get(p)) {
-						System.out.println("SPIELER " + p.getColor().toString() + " BEKOMMT SCORE: " + score);
+						System.out.println("SPIELER " + p.getColor().toString()
+								+ " BEKOMMT SCORE: " + score);
 						p.addScore(score);
 					}
 				}
@@ -513,10 +517,51 @@ public class Gameboard extends Observable<Gameboard> {
 	}
 
 	/**
-     * returns all Meeples on a List of Nodes
-     *
-     * @param visitedNodeList List of Node where Meeples should be removed from
-     */
+	 * Gibt eine Liste zurück, die den Spieler enthält, der die meisten Meeple der überprüften Stadt enthält.
+	 * Haben zwei Spieler gleich viele Meeple in der Stadt, enthält die Liste diese beiden Spieler.
+	 * Ist die Stadt unbesetzt, so ist die Liste leer.
+	 * @param castleList zu überprüfende Stadt in Form einer Liste mit allen Castle-Nodes
+	 */
+	public List<Player> wichPlayerLeadsTheCastle(List<Node<FeatureType>> castleList) {
+
+		List<Player> listOfCastleLeadingPlayers = new ArrayList<Player>();
+		HashMap<Player, Integer> players = new HashMap<Player, Integer>();
+
+		for (Node<FeatureType> n : castleList) {
+			FeatureNode node = (FeatureNode) n;
+			// Zählen der Meeple
+			if (node.hasMeeple()) {
+				Player p = node.getPlayer();
+				if (!players.containsKey(p)) {
+					players.put(p, 1);
+				} else {
+					players.put(p, players.get(p) + 1);
+				}
+			}
+		}
+
+		// Berechnung der maximalen Anzahl an gleichfarbigen Meeple
+		int max = 0;
+		for (Player p : players.keySet()) {
+			if (max < players.get(p)) {
+				max = players.get(p);
+			}
+		}
+
+		// Bestimmen der Player mit den meisten Meeple in der Stadt
+		for (Player p : players.keySet()) {
+			if (max == players.get(p)) {
+				listOfCastleLeadingPlayers.add(p);
+			}
+		}
+		return listOfCastleLeadingPlayers;
+	}
+
+	/**
+	 * returns all Meeples on a List of Nodes
+	 *
+	 * @param visitedNodeList List of Node where Meeples should be removed from
+	 */
 	private void returnAllMeepels(List<Node<FeatureType>> visitedNodeList) {
 		for (Node<FeatureType> n : visitedNodeList) {
 			FeatureNode node = (FeatureNode) n;
@@ -529,11 +574,11 @@ public class Gameboard extends Observable<Gameboard> {
 	}
 
 	/**
-     * returns amount of pennants on the HashSet of Tiles
-     *
-     * @param tiles Set of Tiles
-     * @return Integer representing the amount of pennants
-     */
+	 * returns amount of pennants on the HashSet of Tiles
+	 *
+	 * @param tiles Set of Tiles
+	 * @return Integer representing the amount of pennants
+	 */
 	private int amountCoatOfPennants(HashSet<Tile> tiles) {
 		int count = 0;
 		for (Tile t : tiles) {
