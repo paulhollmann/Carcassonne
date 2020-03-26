@@ -30,6 +30,7 @@ public class StartGame extends View implements GameConstants {
 
 	private JLabel lblTitle;
 	private JLabel lblPlayerCount;
+	private JLabel lblMissions;
 
 	private NumberChooser playerCount;
 
@@ -77,6 +78,9 @@ public class StartGame extends View implements GameConstants {
 
 			offsetY += 40;
 		}
+		
+		offsetY += 40;
+		lblMissions.setLocation((this.getWidth() - lblMissions.getWidth() - 25) / 2, offsetY);
 
 		// Button bar
 		offsetY = this.getHeight() - BUTTON_SIZE.height - 25;
@@ -112,6 +116,8 @@ public class StartGame extends View implements GameConstants {
 				add(c);
 		}
 
+		lblMissions = createLabel("In this game the Mission feature is activated! " + System.lineSeparator() + " You win by having 3 more castles than all of your opponents or by achiving a lead of 20 more points.", 12);
+		
 		// Buttons
 		btnBack = createButton("Back");
 		btnStart = createButton("Start");
