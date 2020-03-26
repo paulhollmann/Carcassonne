@@ -304,8 +304,8 @@ public class Gameboard extends Observable<Gameboard> {
 		// no valid position was found
 		return false;
 	}
-	
-	// --------------------------- 6.1.4 calculate Points - methods --------------------------------------------------
+
+	// -------------------- 6.1.4 calculate Points - methods --------------------
 
 	/**
 	 * Calculates points for monasteries (one point for the monastery and one for
@@ -339,6 +339,9 @@ public class Gameboard extends Observable<Gameboard> {
 					}
 				}
 
+				if (state == State.GAME_OVER) {
+					centerNode.getPlayer().addScore(score);
+				} else
 				// Points are given if the landscape is complete or the game is over
 				// Meeples are only returned while game is running and monasterie is surrounded
 				// by 8 other tiles
@@ -347,9 +350,7 @@ public class Gameboard extends Observable<Gameboard> {
 					centerNode.getPlayer().returnMeeple();
 					centerNode.setPlayer(null);
 				}
-				if (state == State.GAME_OVER) {
-					centerNode.getPlayer().addScore(score);
-				}
+
 			}
 			// After adding the points to the overall points of the player, set the score to
 			// 1 again
@@ -663,8 +664,8 @@ public class Gameboard extends Observable<Gameboard> {
 		}
 		return false;
 	}
-	
-	// --------------------------- end of calculate Points - methods --------------------------------------------------
+
+	// -------------------- end of calculate Points - methods --------------------
 
 	/**
 	 * Returns the spots on the most recently placed tile on which it is allowed to
@@ -754,12 +755,12 @@ public class Gameboard extends Observable<Gameboard> {
 	public void setFeatureGraph(FeatureGraph graph) {
 		this.graph = graph;
 	}
-	
-	// --------------------------- 6.3.2 official Field score - methods --------------------------------------------------
+
+	// ------------------ 6.3.2 official Field score - methods ------------------
 
 	/**
-	 * Calculates the score for a field (three points for each completed castle adjacent
-	 * to the field)
+	 * Calculates the score for a field (three points for each completed castle
+	 * adjacent to the field)
 	 *
 	 * @param fieldNodeList list of Nodes belonging to a field
 	 * @return score for a field
@@ -833,9 +834,9 @@ public class Gameboard extends Observable<Gameboard> {
 
 		}
 	}
-	
-	// --------------------------- 6.3.3 Mission - methods --------------------------------------------------
-	
+
+	// -------------------- 6.3.3 Mission - methods --------------------
+
 	/**
 	 * checks if mission1 in the game is accomplished
 	 *
@@ -870,7 +871,7 @@ public class Gameboard extends Observable<Gameboard> {
 			return player;
 		return null;
 	}
-	
+
 	/**
 	 * This method calculates the amount of castles a player leads and returns a
 	 * HashMap with the Player as the key and the castle amount as value
@@ -895,7 +896,7 @@ public class Gameboard extends Observable<Gameboard> {
 		}
 		return result;
 	}
-	
+
 	/**
 	 * Returns in a list each player ruling a city, multiples
 	 *
@@ -932,7 +933,6 @@ public class Gameboard extends Observable<Gameboard> {
 		}
 		return playersWithCastle;
 	}
-
 
 	/**
 	 * checks if mission2 in the game is accomplished
