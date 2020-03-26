@@ -371,7 +371,7 @@ public class Gameboard extends Observable<Gameboard> {
 	}
 
 	/**
-	 * checks if  mission1 in the game is accomplished
+	 * checks if mission1 in the game is accomplished
 	 *
 	 * @return the winning player iff mission is accomplished, else null
 	 */
@@ -383,9 +383,8 @@ public class Gameboard extends Observable<Gameboard> {
 		return null;
 	}
 
-
 	/**
-	 * checks if  mission2 in the game is accomplished
+	 * checks if mission2 in the game is accomplished
 	 *
 	 * @return the winning player iff mission is accomplished, else null
 	 */
@@ -408,7 +407,7 @@ public class Gameboard extends Observable<Gameboard> {
 		List<Node<FeatureType>> nodeList = new ArrayList<>(graph.getNodes(type));
 
 		while (!nodeList.isEmpty()) {
-			
+
 			// queue defines the connected graph. If this queue is empty, every node in this
 			// graph will be visited.
 			// if nodeList is non-empty, insert the next node of nodeList into this queue
@@ -465,8 +464,7 @@ public class Gameboard extends Observable<Gameboard> {
 			// Abgeschlossene Städte werden gespeichert, um später offizielle Wiesenwertung
 			// zu berechnen
 			// (6.3.2) durchzuführen
-			if (officalFieldCalculation == true && state == State.GAME_OVER && type == CASTLE
-					&& completed == true) {
+			if (officalFieldCalculation == true && state == State.GAME_OVER && type == CASTLE && completed == true) {
 				completedCastles.add(new completedCastle(visitedNodeList, castleIdCounter));
 				castleIdCounter++;
 			}
@@ -519,12 +517,15 @@ public class Gameboard extends Observable<Gameboard> {
 	}
 
 	/**
-	 * Gibt eine Liste zurück, die den Spieler enthält, der die meisten Meeple der überprüften Stadt enthält.
-	 * Haben zwei Spieler gleich viele Meeple in der Stadt, enthält die Liste diese beiden Spieler.
-	 * Ist die Stadt unbesetzt, so ist die Liste leer.
-	 * @param castleList zu überprüfende Stadt in Form einer Liste mit allen Castle-Nodes
+	 * Gibt eine Liste zurück, die den Spieler enthält, der die meisten Meeple der
+	 * überprüften Stadt enthält. Haben zwei Spieler gleich viele Meeple in der
+	 * Stadt, enthält die Liste diese beiden Spieler. Ist die Stadt unbesetzt, so
+	 * ist die Liste leer.
+	 * 
+	 * @param castleList zu überprüfende Stadt in Form einer Liste mit allen
+	 *                   Castle-Nodes
 	 */
-	public List<Player> wichPlayerLeadsTheCastle(List<Node<FeatureType>> castleList) {
+	public List<Player> whichPlayerLeadsTheCastle(List<Node<FeatureType>> castleList) {
 
 		List<Player> listOfCastleLeadingPlayers = new ArrayList<Player>();
 		HashMap<Player, Integer> players = new HashMap<Player, Integer>();
@@ -592,7 +593,7 @@ public class Gameboard extends Observable<Gameboard> {
 	}
 
 	//// Methode zum Testen
-	
+
 //	private void logTiles(HashSet<Tile> tiles) {
 //		System.out.print("Tile: ");
 //		for (Tile t : tiles) {
@@ -842,6 +843,5 @@ public class Gameboard extends Observable<Gameboard> {
 
 		}
 	}
-
 
 }
