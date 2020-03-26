@@ -70,7 +70,6 @@ public class GamePlay extends Observable<List<Player>> implements GamePlayMethod
 			else {
 				// !! maybe up in if
 				gc.getGameBoard().push(gc.getGameBoard());
-
 				gc.incrementRound();
 				gc.setState(State.PLACING_TILE);
 			}
