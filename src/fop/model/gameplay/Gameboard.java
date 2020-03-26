@@ -559,6 +559,29 @@ public class Gameboard extends Observable<Gameboard> {
 		}
 		return listOfCastleLeadingPlayers;
 	}
+	
+	/**
+	 * This method calculates the amount of castles a player leads
+	 * and returns a HashMap with the Player as the key and the castle amount as value
+	 * 
+	 * @return a HashMap with the Player as the key and the amount of castles it leads as value
+	 */
+	
+	public HashMap<Player,Integer> playersCastleAmounts(){
+		List<Player> playerCastles = whichPlayerLeadsTheCastle(/*castleList*/);
+		HashMap<Player,Integer> result = new HashMap<Player,Integer>();
+		
+		for(int i=0;i<Players.getPLayers().size();i++) {
+			Player player = Players.getPLayers().get(i);
+			int castleCount = 0;
+			for(int j=0;j<playerCastles.size();j++) {
+				if(playerCastles.get(j).equals(player)) {
+					castleCount += 1;
+				}
+			}
+			result.put(player, castleCount);
+		}
+	}
 
 	/**
 	 * returns all Meeples on a List of Nodes
