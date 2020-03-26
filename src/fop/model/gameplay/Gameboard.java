@@ -789,7 +789,7 @@ public class Gameboard extends Observable<Gameboard> {
 
 	/**
 	 * searches for all castle nodes on the same Tile as the given field Node
-	 * 
+	 *
 	 * @param fieldNode node of type field
 	 * @return all castle nodes on the same tile as fieldNode
 	 */
@@ -809,7 +809,7 @@ public class Gameboard extends Observable<Gameboard> {
 
 	/**
 	 * returns the possible locations of a castle for a given location of a field
-	 * 
+	 *
 	 * @param p position of a field on a tile
 	 * @return list of positions where a castle is possible
 	 */
@@ -940,7 +940,31 @@ public class Gameboard extends Observable<Gameboard> {
 	 * @return the winning player iff mission is accomplished, else null
 	 */
 	public Player checkMission2() {
-		// TODO Auto-generated method stub
+		// TODO 6.3.3
+		// mission 2: check if one player has 20 more current points than the others
+
+		Player player = Players.getPLayers().get(0);
+		int score = player.getScore();
+		// find player with max score
+		for (Player p : Players.getPLayers()) {
+			if (p.getScore() > score) {
+				score = p.getScore();
+				player = p;
+			}
+		}
+
+		// check if score greater than 20
+		boolean missionAccomplished = score >= 20;
+		// check if every player has more than 20 score points less than player with
+		// the most points
+		for (Player p : Players.getPLayers()) {
+			if (p != player && score - p.getScore() < 20) {
+				missionAccomplished = false;
+			}
+		}
+		// return player who accomplished mission iff boolean is set
+		if (missionAccomplished)
+			return player;
 		return null;
 	}
 
