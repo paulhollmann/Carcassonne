@@ -489,9 +489,9 @@ public class Gameboard extends Observable<Gameboard> {
 				break;
 			case CASTLE:
 				if (completed) {
-					score = (tiles.size() + amountCoatOfArms(tiles)) * 2;
+					score = (tiles.size() + amountCoatOfPennants(tiles)) * 2;
 				} else {
-					score = tiles.size() + amountCoatOfArms(tiles);
+					score = tiles.size() + amountCoatOfPennants(tiles);
 				}
 				break;
 			default:
@@ -523,7 +523,18 @@ public class Gameboard extends Observable<Gameboard> {
 		}
 	}
 
-	private int amountCoatOfArms(HashSet<Tile> tiles) {
+	/**
+     * returns amount of pennants on the HashSet of Tiles
+     *
+     * @param tiles Set of Tiles
+     * @return Integer representing the amount of pennants
+     */
+/**
+     * returns all Meeples on a List of Nodes
+     *
+     * @param visitedNodeList List of Node where Meeples should be removed from
+     */
+	private int amountCoatOfPennants(HashSet<Tile> tiles) {
 		int count = 0;
 		for (Tile t : tiles) {
 			if (t.hasPennant()) {
