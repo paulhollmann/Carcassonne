@@ -492,50 +492,6 @@ public class Gameboard extends Observable<Gameboard> {
 	}
 
 	/**
-	 * Gibt eine Liste zurück, die den Spieler enthält, der die meisten Meeple der
-	 * überprüften Stadt enthält. Haben zwei Spieler gleich viele Meeple in der
-	 * Stadt, enthält die Liste diese beiden Spieler. Ist die Stadt unbesetzt, so
-	 * ist die Liste leer.
-	 *
-	 * @param castleList zu überprüfende Stadt in Form einer Liste mit allen
-	 *                   Castle-Nodes
-	 */
-	public List<Player> whichPlayersRuleCastle(List<Node<FeatureType>> castleList) {
-
-		List<Player> listOfCastleLeadingPlayers = new ArrayList<Player>();
-		HashMap<Player, Integer> players = new HashMap<Player, Integer>();
-
-		for (Node<FeatureType> n : castleList) {
-			FeatureNode node = (FeatureNode) n;
-			// Zählen der Meeple
-			if (node.hasMeeple()) {
-				Player p = node.getPlayer();
-				if (!players.containsKey(p)) {
-					players.put(p, 1);
-				} else {
-					players.put(p, players.get(p) + 1);
-				}
-			}
-		}
-
-		// Berechnung der maximalen Anzahl an gleichfarbigen Meeple
-		int max = 0;
-		for (Player p : players.keySet()) {
-			if (max < players.get(p)) {
-				max = players.get(p);
-			}
-		}
-
-		// Bestimmen der Player mit den meisten Meeple in der Stadt
-		for (Player p : players.keySet()) {
-			if (max == players.get(p)) {
-				listOfCastleLeadingPlayers.add(p);
-			}
-		}
-		return listOfCastleLeadingPlayers;
-	}
-
-	/**
 	 * returns all Meeples on a List of Nodes
 	 *
 	 * @param visitedNodeList List of Node where Meeples should be removed from
@@ -932,6 +888,50 @@ public class Gameboard extends Observable<Gameboard> {
 			playersWithCastle.addAll(whichPlayersRuleCastle(castleList));
 		}
 		return playersWithCastle;
+	}
+
+	/**
+	 * Gibt eine Liste zurück, die den Spieler enthält, der die meisten Meeple der
+	 * überprüften Stadt enthält. Haben zwei Spieler gleich viele Meeple in der
+	 * Stadt, enthält die Liste diese beiden Spieler. Ist die Stadt unbesetzt, so
+	 * ist die Liste leer.
+	 *
+	 * @param castleList zu überprüfende Stadt in Form einer Liste mit allen
+	 *                   Castle-Nodes
+	 */
+	public List<Player> whichPlayersRuleCastle(List<Node<FeatureType>> castleList) {
+
+		List<Player> listOfCastleLeadingPlayers = new ArrayList<Player>();
+		HashMap<Player, Integer> players = new HashMap<Player, Integer>();
+
+		for (Node<FeatureType> n : castleList) {
+			FeatureNode node = (FeatureNode) n;
+			// Zählen der Meeple
+			if (node.hasMeeple()) {
+				Player p = node.getPlayer();
+				if (!players.containsKey(p)) {
+					players.put(p, 1);
+				} else {
+					players.put(p, players.get(p) + 1);
+				}
+			}
+		}
+
+		// Berechnung der maximalen Anzahl an gleichfarbigen Meeple
+		int max = 0;
+		for (Player p : players.keySet()) {
+			if (max < players.get(p)) {
+				max = players.get(p);
+			}
+		}
+
+		// Bestimmen der Player mit den meisten Meeple in der Stadt
+		for (Player p : players.keySet()) {
+			if (max == players.get(p)) {
+				listOfCastleLeadingPlayers.add(p);
+			}
+		}
+		return listOfCastleLeadingPlayers;
 	}
 
 	/**
