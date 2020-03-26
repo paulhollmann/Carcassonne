@@ -44,7 +44,7 @@ public interface MessagesConstants {
 	/**
 	 * creates the winner message with the list of winners
 	 *
-	 * @param winners
+	 * @param winners all winners
 	 */
 	public static void showWinner(List<Player> winners) {
 		if (winners.size() == 1) {
@@ -61,19 +61,23 @@ public interface MessagesConstants {
 
 		}
 	}
+
 	/**
 	 * creates the winner message with the mission winner
 	 *
-	 * @param winner
+	 * @param winner  the player that completed the mission, and therefore has won
+	 *                the game
+	 * @param mission the completed number of the mission that was completed
 	 */
 	public static void showMissionWinner(Player winner, int mission) {
-			JOptionPane.showMessageDialog(null, "Mission "+mission+" geschafft: Der Gewinner ist " + winner.getName(), null,
-					JOptionPane.CLOSED_OPTION);
+		JOptionPane.showMessageDialog(null, "Mission " + mission + " geschafft: Der Gewinner ist " + winner.getName(),
+				null, JOptionPane.CLOSED_OPTION);
 	}
-
 
 	/**
 	 * Generates a string listing all winners and their score.
+	 *
+	 * @param winners all winners
 	 *
 	 * @return A string listing all winners and their score.
 	 */
@@ -101,6 +105,10 @@ public interface MessagesConstants {
 	/**
 	 * Generates a string listing the mission winner and the mission number.
 	 *
+	 * @param winner  the player that completed the mission, and therefore has won
+	 *                the game
+	 * @param mission the completed number of the mission that was completed
+	 *
 	 * @return A string listing the mission winner and the mission number.
 	 */
 	public static String getMissionWinnerMessage(Player winner, int mission) {
@@ -112,7 +120,6 @@ public interface MessagesConstants {
 
 		return message;
 	}
-
 
 	/**
 	 * returns if highscore should be deleted
