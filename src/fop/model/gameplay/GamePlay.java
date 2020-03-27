@@ -178,6 +178,7 @@ public class GamePlay extends Observable<List<Player>> implements GamePlayMethod
 	public void game_Over_Mode() {
 		// TODO 6.3.3
 		if (gc.getGameBoard().checkMission1() != null) {
+			gc.getGameBoard().calculatePoints(gc.getState());
 			gc.getGameView().setStatusbarPanel(
 					MessagesConstants.getMissionWinnerMessage(gc.getGameBoard().checkMission1(), 1),
 					WINNING_MESSAGE_COLOR);
