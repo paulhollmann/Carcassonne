@@ -56,7 +56,7 @@ public class HighscoreView extends View {
 		LinkedList<ScoreEntry> localScores = new LinkedList<>(resources.getScoreEntries());
 		int i = 0;
 		for (ScoreEntry se : localScores) {
-			rowData[i][0] =  new SimpleDateFormat("EEE dd MMM yyyy HH:mm:ss").format(se.getDate());
+			rowData[i][0] = new SimpleDateFormat("EEE dd MMM yyyy HH:mm:ss").format(se.getDate());
 			rowData[i][1] = se.getName();
 			rowData[i][2] = Integer.toString(se.getScore());
 			i++;
@@ -77,6 +77,16 @@ public class HighscoreView extends View {
 				return 0;
 			}
 		});
+		sorter.setComparator(2, (s1, s2) -> {
+			try {
+				int i1 = Integer.parseInt(s1.toString());
+				int i2 = Integer.parseInt(s2.toString());
+				return i1 - i2;
+			} catch (Exception e) {
+				return 0;
+			}
+		});
+
 		sorter.sort();
 		scrollPane = new JScrollPane(scoreTable);
 		add(scrollPane);
