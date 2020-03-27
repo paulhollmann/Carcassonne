@@ -96,7 +96,7 @@ public class Resources implements GameConstants {
 	 *                     Schreiben auftreten.
 	 */
 	private void saveScoreEntries() throws IOException {
-		// TODO
+		// TODO 6.2
 		PrintWriter pw = new PrintWriter(HIGHSCORE_FILE);
 		for (ScoreEntry se : scoreEntries) {
 			se.write(pw);
@@ -122,6 +122,7 @@ public class Resources implements GameConstants {
 	 */
 
 	private void loadScoreEntries() throws IOException {
+		// TODO 6.2
 		scoreEntries = new ArrayList<ScoreEntry>();
 		BufferedReader br = new BufferedReader(new FileReader(HIGHSCORE_FILE));
 		String line = "";
@@ -146,6 +147,7 @@ public class Resources implements GameConstants {
 	 */
 
 	public void addScoreEntry(ScoreEntry scoreEntry) {
+		// TODO 6.2.1
 		if (scoreEntry != null)
 			scoreEntries.add(scoreEntry);
 		scoreEntries.sort((s1, s2) -> s2.getScore() - s1.getScore());

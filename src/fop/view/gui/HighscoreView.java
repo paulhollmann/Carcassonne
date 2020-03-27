@@ -50,7 +50,7 @@ public class HighscoreView extends View {
 		btnBack = createButton("Back");
 		btnClear = createButton("Delete");
 		lblTitle = createLabel("Highscores", 45, true);
-		// TODO
+		// TODO 6.3.1
 		Resources resources = Resources.getInstance();
 		String[][] rowData = new String[resources.getScoreEntries().size()][3];
 		LinkedList<ScoreEntry> localScores = new LinkedList<>(resources.getScoreEntries());

@@ -47,7 +47,7 @@ public class ScoreEntry implements Comparable<ScoreEntry> {
 	 * @param printWriter the printWriter used to print
 	 */
 	public void write(PrintWriter printWriter) {
-		// TODO
+		// TODO 6.2
 		printWriter.append(this.getName() + ";" + this.getDate().getTime() + ";" + this.getScore());
 	}
 
@@ -57,7 +57,7 @@ public class ScoreEntry implements Comparable<ScoreEntry> {
 	 * @return a new ScoreEntry iff valid else null
 	 */
 	public static ScoreEntry read(String line) {
-		// TODO
+		// TODO 6.2
 		try {
 			String[] data = line.split(";");
 			if (!data[0].isEmpty())
