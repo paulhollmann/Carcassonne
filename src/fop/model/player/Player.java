@@ -64,8 +64,8 @@ public class Player implements PlayerMethods {
 	 * This method iterates over the gameboard and places a tile at the first
 	 * possible place
 	 * 
-	 * @param gp
-	 * @param tile
+	 * @param gp the gameplay object
+	 * @param tile a tile drawn from the stack
 	 */
 
 	public void draw(GamePlay gp, Tile tile) {
@@ -120,7 +120,7 @@ public class Player implements PlayerMethods {
 	/**
 	 * This method places if possible a Meeple on the newest tile on the gameboard
 	 * 
-	 * @param gp
+	 * @param gp the gameplay object
 	 */
 
 	public void placeMeeple(GamePlay gp) {
