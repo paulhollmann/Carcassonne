@@ -58,7 +58,7 @@ public class GamePlay extends Observable<List<Player>> implements GamePlayMethod
 	public void nextRound() {
 		if (!currentPlayer().getName().equals("AI"))
 			gc.getGameBoardPanel().removeTempMeepleOverlay();
-		// 6.3.3
+		// TODO 6.3.3
 		if (gc.getGameBoard().checkMission1() != null)
 			gc.setState(State.GAME_OVER);
 		if (gc.getTileStack().remainingTiles() == 0)
@@ -68,7 +68,6 @@ public class GamePlay extends Observable<List<Player>> implements GamePlayMethod
 			if (gc.getGameBoard().checkMission2() != null)
 				gc.setState(State.GAME_OVER);
 			else {
-				// !! maybe up in if
 				gc.getGameBoard().push(gc.getGameBoard());
 				gc.incrementRound();
 				gc.setState(State.PLACING_TILE);
@@ -178,7 +177,6 @@ public class GamePlay extends Observable<List<Player>> implements GamePlayMethod
 
 	public void game_Over_Mode() {
 		// TODO 6.3.3
-		// Anpassung für Missionen?
 		if (gc.getGameBoard().checkMission1() != null) {
 			gc.getGameView().setStatusbarPanel(
 					MessagesConstants.getMissionWinnerMessage(gc.getGameBoard().checkMission1(), 1),
