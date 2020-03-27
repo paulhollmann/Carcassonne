@@ -177,11 +177,6 @@ public class GamePlay extends Observable<List<Player>> implements GamePlayMethod
 	}
 
 	public void game_Over_Mode() {
-		gc.getGameBoard().calculatePoints(gc.getState());
-		gc.getGameBoard().push(gc.getGameBoard());
-		push(gc.getPlayers());
-		gc.getGameView().getToolbarPanel().showSkipButton(false);
-
 		// TODO 6.3.3
 		// Anpassung für Missionen?
 		if (gc.getGameBoard().checkMission1() != null) {
@@ -191,15 +186,17 @@ public class GamePlay extends Observable<List<Player>> implements GamePlayMethod
 			MessagesConstants.showMissionWinner(gc.getGameBoard().checkMission1(), 1);
 		} else if (gc.getGameBoard().checkMission2() != null) {
 			gc.getGameView().setStatusbarPanel(
-					MessagesConstants.getMissionWinnerMessage(gc.getGameBoard().checkMission2(), 1),
+					MessagesConstants.getMissionWinnerMessage(gc.getGameBoard().checkMission2(), 2),
 					WINNING_MESSAGE_COLOR);
 			MessagesConstants.showMissionWinner(gc.getGameBoard().checkMission2(), 2);
 		}
-
 		else {
+			gc.getGameBoard().calculatePoints(gc.getState());
+			gc.getGameBoard().push(gc.getGameBoard());
+			push(gc.getPlayers());
+			gc.getGameView().getToolbarPanel().showSkipButton(false);
 			gc.getGameView().setStatusbarPanel(MessagesConstants.getWinnersMessage(getWinners(gc.getPlayers())),
 					WINNING_MESSAGE_COLOR);
-
 			MessagesConstants.showWinner(getWinners(gc.getPlayers()));
 		}
 		GameMethods.GoToMainMenu();
