@@ -744,10 +744,10 @@ public class Gameboard extends Observable<Gameboard> {
 	}
 
 	/**
-	 * searches for all castle nodes on the same Tile as the given field Node
+	 * searches for all castle nodes whitch are next to the given field-node on its tile
 	 *
 	 * @param fieldNode node of type field
-	 * @return all castle nodes on the same tile as fieldNode
+	 * @return List of all (0-2) castle nodes next to the given field-node
 	 */
 	private List<Node<FeatureType>> getAllNearbyCastleNodes(Node<FeatureType> fieldNode) {
 		List<Node<FeatureType>> returnList = new ArrayList<Node<FeatureType>>();
