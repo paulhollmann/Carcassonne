@@ -61,7 +61,7 @@ public class GamePlay extends Observable<List<Player>> implements GamePlayMethod
 		// TODO 6.3.3
 		if (gc.getGameBoard().checkMission1() != null)
 			gc.setState(State.GAME_OVER);
-		if (gc.getTileStack().remainingTiles() == 0)
+		else if (gc.getTileStack().remainingTiles() == 0)
 			gc.setState(State.GAME_OVER);
 		else {
 			gc.getGameBoard().calculatePoints(gc.getState());
